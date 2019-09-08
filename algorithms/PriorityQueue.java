@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 class PriorityQueue {
 	
-	private static final int DEFAULT_CAPACITY = 42;
+	private static final int DEFAULT_CAPACITY = 2;
 	
 	private int[] heap;
 	private int length;
@@ -16,7 +16,7 @@ class PriorityQueue {
 	}
 	
 	public void add(int value) {
-		if (length > heap.length) {
+		if (length >= heap.length) {
 			blowUp();
 		}
 		heap[length++] = value;

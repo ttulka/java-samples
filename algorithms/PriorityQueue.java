@@ -1,63 +1,45 @@
 import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
 
-class PriorityQueue {
+class PriorityQueue<T extends Comparable> {
 	
-	private static final int DEFAULT_CAPACITY = 2;
+	private final List<T> heap = new ArrayList<>();
 	
-	private int[] heap;
-	private int length;
-	
-	public PriorityQueue(int initCapacity) {
-		this.heap = new int[initCapacity];
+	public void add(T value) {
+		heap.add(value);
+		swim(heap, heap.size() - 1);
 	}
 	
-	public PriorityQueue() {
-		this(DEFAULT_CAPACITY);
-	}
-	
-	public void add(int value) {
-		if (length >= heap.length) {
-			blowUp();
-		}
-		heap[length++] = value;
-		swim(heap, length - 1);
-	}
-	
-	public int remove() {
-		return heap[--length];
+	public T remove() {
+		return heap.remove(heap.size() - 1);
 	}
 
-	private void swim(int[] heap, int index) {
+	private void swim(List<T> heap, int index) {
 		int parentIndex = parentIndex(index);
-		if (heap[index] > heap[parentIndex]) {
+		if (heap.get(index).compareTo(heap.get(parentIndex)) > 0) {
 			swap(heap, index, parentIndex); 
 			swim(heap, parentIndex);
 		}
 	}
 	
-	private void swap(int[] arr, int index1, int index2) {
-		int value = arr[index1];
-		arr[index1] = arr[index2];
-		arr[index2] = value;
+	private void swap(List<T> list, int index1, int index2) {
+		T value = list.get(index1);
+		list.set(index1, list.get(index2));
+		list.set(index2, value);
 	}
 	
 	private int parentIndex(int index) {
 		return index / 2;
 	}
 	
-	private void blowUp() {
-		int[] buffer = new int[length + DEFAULT_CAPACITY];
-		System.arraycopy(heap, 0, buffer, 0, length);
-		heap = buffer;
-	}
-	
 	@Override
 	public String toString() {
-		return Arrays.toString(Arrays.copyOf(heap, length));
+		return heap.toString();
 	}
 	
 	public static void main(String[] args) {
-		PriorityQueue queue = new PriorityQueue();
+		PriorityQueue<Integer> queue = new PriorityQueue<>();
 		queue.add(3);
 		queue.add(1);
 		queue.add(5);

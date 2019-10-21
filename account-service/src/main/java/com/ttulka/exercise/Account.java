@@ -19,15 +19,10 @@ import lombok.NonNull;
 public class Account {
 
     private Long id;
-
     private String username;
-
     private String email;
-
     private byte[] encryptedPassword;
-
     private String salt;
-
     private ZonedDateTime lastLogin;
 
     public Account(@NonNull String username, @NonNull String email, @NonNull String password) {

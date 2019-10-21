@@ -28,12 +28,12 @@ public class InMemoryAccountRepository implements PersistenceInterface {
         }
         accountEntries.put(id,
            new AccountEntry(
-                   id,
-                   account.getUsername(),
-                   account.getEmail(),
-                   account.getEncryptedPassword(),
-                   account.getSalt(),
-                   account.getLastLogin()
+               id,
+               account.getUsername(),
+               account.getEmail(),
+               account.getEncryptedPassword().clone(),
+               account.getSalt(),
+               account.getLastLogin()
            ));
     }
 
@@ -45,7 +45,7 @@ public class InMemoryAccountRepository implements PersistenceInterface {
                 entry.id,
                 entry.username,
                 entry.email,
-                entry.encryptedPassword,
+                entry.encryptedPassword.clone(),
                 entry.salt,
                 entry.lastLogin
             );
@@ -62,7 +62,7 @@ public class InMemoryAccountRepository implements PersistenceInterface {
                     entry.id,
                     entry.username,
                     entry.email,
-                    entry.encryptedPassword,
+                    entry.encryptedPassword.clone(),
                     entry.salt,
                     entry.lastLogin
                 ))
@@ -79,15 +79,9 @@ public class InMemoryAccountRepository implements PersistenceInterface {
     private class AccountEntry {
 
         public long id;
-
         public String username;
-
         public String email;
-
         public byte[] encryptedPassword;
-
         public String salt;
-
-        public ZonedDateTime lastLogin;
-    }
+        public ZonedDateTime lastLogin;    }
 }

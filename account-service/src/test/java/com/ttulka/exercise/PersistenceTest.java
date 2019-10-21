@@ -108,4 +108,19 @@ class PersistenceTest {
         Account updatedAccount = repo.findById(account.getId());
         assertThat(updatedAccount.getLastLogin()).isEqualTo(editedLastLogin);
     }
+
+    @Test
+    void attributes_are_not_persisted_without_calling_save() {
+        PersistenceInterface repo = new InMemoryAccountRepository();
+
+        Account account = new Account(UUID.randomUUID().toString(), "test@example.com", "pwd1");
+        repo.save(account);
+
+        byte[] encryptedPassword = account.getEncryptedPassword().clone();
+
+        account.getEncryptedPassword()[0] += 1;
+
+        Account account2 = repo.findById(account.getId());
+        assertThat(account2.getEncryptedPassword()).isEqualTo(encryptedPassword);
+    }
 }

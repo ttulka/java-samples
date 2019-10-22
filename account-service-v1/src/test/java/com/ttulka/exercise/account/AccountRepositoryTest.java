@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PersistenceTest {
+class AccountRepositoryTest {
 
     @Test
     void valid_entity_is_saved() {

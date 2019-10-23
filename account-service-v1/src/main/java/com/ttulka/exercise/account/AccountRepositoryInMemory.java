@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
-class InMemoryAccountRepository implements AccountRepository {
+class AccountRepositoryInMemory implements AccountRepository {
 
     private final Map<Long, AccountEntry> accountEntries = new HashMap<>();
     private final AtomicLong idSequence = new AtomicLong();

@@ -12,7 +12,7 @@ class AccountRepositoryTest {
 
     @Test
     void valid_entity_is_saved() {
-        AccountRepository repo = new InMemoryAccountRepository();
+        AccountRepository repo = new AccountRepositoryInMemory();
 
         String username = UUID.randomUUID().toString();
         Account account = new Account(username, "test@example.com", "pwd1");
@@ -23,7 +23,7 @@ class AccountRepositoryTest {
 
     @Test
     void saved_entity_is_to_find_by_id() {
-        AccountRepository repo = new InMemoryAccountRepository();
+        AccountRepository repo = new AccountRepositoryInMemory();
 
         String username = UUID.randomUUID().toString();
         Account account = new Account(username, "test@example.com", "pwd1");
@@ -39,7 +39,7 @@ class AccountRepositoryTest {
 
     @Test
     void saved_entity_is_to_find_by_username() {
-        AccountRepository repo = new InMemoryAccountRepository();
+        AccountRepository repo = new AccountRepositoryInMemory();
 
         String username = UUID.randomUUID().toString();
         Account account = new Account(username, "test@example.com", "pwd1");
@@ -55,7 +55,7 @@ class AccountRepositoryTest {
 
     @Test
     void non_existing_entity_is_not_to_find_by_id() {
-        AccountRepository repo = new InMemoryAccountRepository();
+        AccountRepository repo = new AccountRepositoryInMemory();
 
         Optional<Account> foundAccount = repo.byId(Long.MAX_VALUE);
         assertThat(foundAccount).isNotNull();
@@ -64,7 +64,7 @@ class AccountRepositoryTest {
 
     @Test
     void non_existing_entity_is_not_to_find_by_username() {
-        AccountRepository repo = new InMemoryAccountRepository();
+        AccountRepository repo = new AccountRepositoryInMemory();
 
         Optional<Account> foundAccount = repo.byUsername(UUID.randomUUID().toString());
         assertThat(foundAccount).isNotNull();
@@ -73,7 +73,7 @@ class AccountRepositoryTest {
 
     @Test
     void deleted_entity_is_not_to_find() {
-        AccountRepository repo = new InMemoryAccountRepository();
+        AccountRepository repo = new AccountRepositoryInMemory();
 
         String username = UUID.randomUUID().toString();
         Account account = new Account(username, "test@example.com", "pwd1");
@@ -88,7 +88,7 @@ class AccountRepositoryTest {
 
     @Test
     void already_saved_entity_is_updated_when_saved_again() {
-        AccountRepository repo = new InMemoryAccountRepository();
+        AccountRepository repo = new AccountRepositoryInMemory();
 
         String username = UUID.randomUUID().toString();
         Account account = new Account(username, "test@example.com", "pwd1");
@@ -102,7 +102,7 @@ class AccountRepositoryTest {
 
     @Test
     void lastLogin_is_updated_after_entity_was_updated() {
-        AccountRepository repo = new InMemoryAccountRepository();
+        AccountRepository repo = new AccountRepositoryInMemory();
 
         String username = UUID.randomUUID().toString();
         Account account = new Account(username, "test@example.com", "pwd1");
@@ -118,7 +118,7 @@ class AccountRepositoryTest {
 
     @Test
     void attributes_are_not_persisted_without_calling_save() {
-        AccountRepository repo = new InMemoryAccountRepository();
+        AccountRepository repo = new AccountRepositoryInMemory();
 
         Account account = new Account(UUID.randomUUID().toString(), "test@example.com", "pwd1");
         repo.save(account);

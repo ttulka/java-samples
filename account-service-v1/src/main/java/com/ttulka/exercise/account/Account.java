@@ -16,7 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "username")
-class Account {
+public class Account {
 
     private Long id;
     private String username;
@@ -25,7 +25,7 @@ class Account {
     private String salt;
     private ZonedDateTime lastLoggedIn;
 
-    public Account(@NonNull String username, @NonNull String email, @NonNull String password) {
+    Account(@NonNull String username, @NonNull String email, @NonNull String password) {
         this.username = username;
         this.email = email;
         this.salt = String.valueOf(new Random().nextInt());

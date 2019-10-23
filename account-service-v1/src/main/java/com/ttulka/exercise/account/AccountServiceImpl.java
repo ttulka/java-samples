@@ -10,7 +10,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class RegisteredAccountService implements AccountService {
+public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository repository;
 

@@ -16,7 +16,7 @@ class AccountServiceTest {
 
     @Test
     void registered_account_with_correct_password_can_log_in() {
-        AccountService accountService = new RegisteredAccountService(new InMemoryAccountRepository());
+        AccountService accountService = new AccountServiceImpl(new InMemoryAccountRepository());
 
         String username = UUID.randomUUID().toString();
         accountService.register(username, "test@example.com", "pwd1");
@@ -27,7 +27,7 @@ class AccountServiceTest {
 
     @Test
     void once_registered_a_username_cannot_be_registered_again() {
-        AccountService accountService = new RegisteredAccountService(new InMemoryAccountRepository());
+        AccountService accountService = new AccountServiceImpl(new InMemoryAccountRepository());
 
         String username = UUID.randomUUID().toString();
         accountService.register(username, "test@example.com", "pwd1");
@@ -38,7 +38,7 @@ class AccountServiceTest {
 
     @Test
     void non_existing_account_cannot_log_in() {
-        AccountService accountService = new RegisteredAccountService(new InMemoryAccountRepository());
+        AccountService accountService = new AccountServiceImpl(new InMemoryAccountRepository());
 
         assertThrows(AccountNotFoundException.class, () ->
                 accountService.login("this user does not exist", "password"));
@@ -46,7 +46,7 @@ class AccountServiceTest {
 
     @Test
     void existing_account_with_wrong_password_cannot_log_in() {
-        AccountService accountService = new RegisteredAccountService(new InMemoryAccountRepository());
+        AccountService accountService = new AccountServiceImpl(new InMemoryAccountRepository());
 
         String username = UUID.randomUUID().toString();
         accountService.register(username, "test@example.com", "pwd1");
@@ -57,7 +57,7 @@ class AccountServiceTest {
 
     @Test
     void deleted_account_cannot_log_in() {
-        AccountService accountService = new RegisteredAccountService(new InMemoryAccountRepository());
+        AccountService accountService = new AccountServiceImpl(new InMemoryAccountRepository());
 
         String username = UUID.randomUUID().toString();
         accountService.register(username, "test@example.com", "pwd1");
@@ -70,7 +70,7 @@ class AccountServiceTest {
 
     @Test
     void account_is_logged_in_since_before_logged_in_for_the_last_time() {
-        AccountService accountService = new RegisteredAccountService(new InMemoryAccountRepository());
+        AccountService accountService = new AccountServiceImpl(new InMemoryAccountRepository());
 
         String username = UUID.randomUUID().toString();
         accountService.register(username, "test@example.com", "pwd1");
@@ -83,7 +83,7 @@ class AccountServiceTest {
 
     @Test
     void account_not_logged_in_since_after_logged_in_for_the_last_time() {
-        AccountService accountService = new RegisteredAccountService(new InMemoryAccountRepository());
+        AccountService accountService = new AccountServiceImpl(new InMemoryAccountRepository());
 
         String username = UUID.randomUUID().toString();
         accountService.register(username, "test@example.com", "pwd1");
@@ -96,7 +96,7 @@ class AccountServiceTest {
 
     @Test
     void account_not_logged_in_since_now_after_been_registered() {
-        AccountService accountService = new RegisteredAccountService(new InMemoryAccountRepository());
+        AccountService accountService = new AccountServiceImpl(new InMemoryAccountRepository());
 
         String username = UUID.randomUUID().toString();
         accountService.register(username, "test@example.com", "pwd1");

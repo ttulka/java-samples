@@ -18,12 +18,14 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "username")
 public class Account {
 
-    private Long id;
-    private String username;
-    private String email;
+    private final String username;
+    private final String email;
+
     private byte[] encryptedPassword;
     private String salt;
     private ZonedDateTime lastLoggedIn;
+
+    private Long id;
 
     Account(@NonNull String username, @NonNull String email, @NonNull String password) {
         this.username = username;

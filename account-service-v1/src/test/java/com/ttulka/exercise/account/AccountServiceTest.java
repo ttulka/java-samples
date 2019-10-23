@@ -105,4 +105,40 @@ class AccountServiceTest {
         boolean loggedInAfter = accountService.hasLoggedInSince(username, afterRegistration);
         assertThat(loggedInAfter).isFalse();
     }
+
+    @Test
+    void password_is_changed() {
+        AccountService accountService = new AccountServiceImpl(new InMemoryAccountRepository());
+
+        String username = UUID.randomUUID().toString();
+        accountService.register(username, "test@example.com", "pwd1");
+
+        accountService.changePassword(username, "pwd1", "updated");
+
+        Account account = accountService.login(username, "updated");
+        assertThat(account).isNotNull();
+    }
+
+    @Test
+    void change_password_catches_an_invalid_old_password() {
+        AccountService accountService = new AccountServiceImpl(new InMemoryAccountRepository());
+
+        String username = UUID.randomUUID().toString();
+        accountService.register(username, "test@example.com", "pwd1");
+
+        assertThrows(InvalidLoginException.class, () ->
+                accountService.changePassword(username, "wrong password", "updated"));
+    }
+
+    @Test
+    void old_password_invalid_after_changed() {
+        AccountService accountService = new AccountServiceImpl(new InMemoryAccountRepository());
+
+        String username = UUID.randomUUID().toString();
+        accountService.register(username, "test@example.com", "pwd1");
+
+        accountService.changePassword(username, "pwd1", "updated");
+
+        assertThrows(InvalidLoginException.class, () -> accountService.login(username, "pwd1"));
+    }
 }

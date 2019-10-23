@@ -1,6 +1,9 @@
 package com.ttulka.exercise.account;
 
 import java.time.ZonedDateTime;
+import java.util.UUID;
+
+import com.ttulka.exercise.account.exception.InvalidLoginException;
 
 import org.junit.jupiter.api.Test;
 
@@ -86,5 +89,21 @@ class AccountTest {
         account.login();
 
         assertThat(account.hasLoggedInSince(ZonedDateTime.now().plusSeconds(1))).isFalse();
+    }
+
+    @Test
+    void password_is_changed() {
+        Account account = new Account("test", "test@example.com", "pwd1");
+        account.changePassword("updated");
+
+        assertThat(account.canLogin("updated")).isTrue();
+    }
+
+    @Test
+    void old_password_invalid_after_changed() {
+        Account account = new Account("test", "test@example.com", "pwd1");
+        account.changePassword("updated");
+
+        assertThat(account.canLogin("pwd1")).isFalse();
     }
 }

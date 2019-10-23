@@ -46,6 +46,7 @@ public interface AccountService {
      * @param username    the username
      * @param oldPassword the old password
      * @param newPassword the new password
+     * @throws AccountServiceException if any error occurs
      */
     void changePassword(String username, String oldPassword, String newPassword);
 

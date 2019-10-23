@@ -10,9 +10,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
-/**
- * The encryption can be very simple, we don't put much emphasis on the encryption algorithm.
- */
 @Getter
 @Setter
 @EqualsAndHashCode(of = "username")

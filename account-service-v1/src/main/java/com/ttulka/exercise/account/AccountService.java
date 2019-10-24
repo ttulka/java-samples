@@ -5,7 +5,7 @@ import java.time.ZonedDateTime;
 import com.ttulka.exercise.account.exception.AccountServiceException;
 
 /**
- * Service for account management.
+ * Service for the Account.
  */
 public interface AccountService {
 

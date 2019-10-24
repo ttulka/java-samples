@@ -76,6 +76,9 @@ class AccountRepositoryInMemory implements AccountRepository {
         }
     }
 
+    /**
+     * Persistent Entity for the Account.
+     */
     @AllArgsConstructor
     @EqualsAndHashCode(of = "id")
     private class AccountEntry {

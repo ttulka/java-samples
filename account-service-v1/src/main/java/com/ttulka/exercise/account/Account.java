@@ -10,6 +10,9 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
+/**
+ * Aggregate for the Account.
+ */
 @Getter
 @Setter
 @EqualsAndHashCode(of = "username")

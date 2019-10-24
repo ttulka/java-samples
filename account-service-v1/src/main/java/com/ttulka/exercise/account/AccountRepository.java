@@ -3,7 +3,7 @@ package com.ttulka.exercise.account;
 import java.util.Optional;
 
 /**
- * Repository for account persistence.
+ * Repository for the Account.
  */
 interface AccountRepository {
 

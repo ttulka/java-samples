@@ -13,10 +13,10 @@ Implement an Account service in DDD manner (OOP).
 
 ```
 [AccountImpl] ──────────┐
-      ▼                 │
-  <Account>             ↓
-      ↑         <AccountEntities> ◄ [AccountEntitiesInMemory]
-  <Accounts>            ↑
-      ▲                 │
+ ↑      ▼               │
+ |  <Account>           ↓
+ |      ↑        <AccountEntities> ◄ [AccountEntitiesInMemory]
+ |  <Accounts>          ↑
+ |      ▲               │
 [AccountsImpl] ─────────┘
 ```

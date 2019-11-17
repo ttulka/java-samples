@@ -21,7 +21,7 @@ public interface Accounts {
     Account register(String username, String password, String email);
 
     /**
-     * Logs in the user, if the username exists and the password is correct. Updates the last setLastLogin date
+     * Logs in the user, if the username exists and the password is correct. Updates the last logged date
      *
      * @param username the username
      * @param password the clear text password

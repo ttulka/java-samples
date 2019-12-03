@@ -16,17 +16,17 @@ class AccountEntriesInMemory implements AccountEntries {
     private final AtomicLong idSequence = new AtomicLong();
 
     @Override
-    public long save(@NonNull AccountEntries.AccountEntry entry) {
+    public long save(@NonNull AccountEntries.Entry entry) {
         long id = entry.id != null ? entry.id : idSequence.incrementAndGet();
         accountEntries.put(id, new AccountEntity(id, entry.username, entry.email, entry.encryptedPassword.clone(), entry.salt, entry.lastLoggedIn));
         return id;
     }
 
     @Override
-    public Optional<AccountEntry> byId(long id) {
+    public Optional<Entry> byId(long id) {
         if (accountEntries.containsKey(id)) {
             AccountEntity entry = accountEntries.get(id);
-            return Optional.of(new AccountEntry(
+            return Optional.of(new Entry(
                     entry.id,
                     entry.username,
                     entry.email,
@@ -39,11 +39,11 @@ class AccountEntriesInMemory implements AccountEntries {
     }
 
     @Override
-    public Optional<AccountEntry> byUsername(@NonNull String username) {
+    public Optional<Entry> byUsername(@NonNull String username) {
         return accountEntries.values().stream()
                 .filter(entry -> username.equals(entry.username))
                 .findAny()
-                .map(entry -> new AccountEntry(
+                .map(entry -> new Entry(
                         entry.id,
                         entry.username,
                         entry.email,

@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
 @EqualsAndHashCode(of = "username")
-class AccountImpl implements Account {
+class PersistentAccount implements Account {
 
     private final String username;
     private final String email;
@@ -24,8 +24,8 @@ class AccountImpl implements Account {
 
     private final AccountEntries entries;
 
-    AccountImpl(@NonNull String username, @NonNull String email, @NonNull String password,
-                @NonNull AccountEntries entries) {
+    PersistentAccount(@NonNull String username, @NonNull String email, @NonNull String password,
+                      @NonNull AccountEntries entries) {
         this.username = username;
         this.email = email;
         this.salt = String.valueOf(new Random().nextInt());
@@ -33,10 +33,10 @@ class AccountImpl implements Account {
         this.entries = entries;
     }
 
-    AccountImpl(long id, @NonNull String username, @NonNull String email,
-                @NonNull byte[] encryptedPassword, @NonNull String salt,
-                ZonedDateTime lastLoggedIn,
-                @NonNull AccountEntries entries) {
+    PersistentAccount(long id, @NonNull String username, @NonNull String email,
+                      @NonNull byte[] encryptedPassword, @NonNull String salt,
+                      ZonedDateTime lastLoggedIn,
+                      @NonNull AccountEntries entries) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -73,7 +73,7 @@ class AccountImpl implements Account {
         if (isRegistered()) {
             throw new AccountAlreadyRegisteredException(username);
         }
-        id = entries.save(new AccountEntries.AccountEntry(
+        id = entries.save(new AccountEntries.Entry(
                 null, username, email, encryptedPassword, salt, lastLoggedIn));
     }
 
@@ -86,7 +86,7 @@ class AccountImpl implements Account {
 
     private void update() {
         if (isRegistered()) {
-            entries.save(new AccountEntries.AccountEntry(
+            entries.save(new AccountEntries.Entry(
                     id, username, email, encryptedPassword, salt, lastLoggedIn));
         }
     }

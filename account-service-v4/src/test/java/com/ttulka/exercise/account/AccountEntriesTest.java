@@ -13,7 +13,7 @@ class AccountEntriesTest {
     @Test
     void account_is_saved_with_a_new_id() {
         AccountEntries entries = new AccountEntriesInMemory();
-        Long id = entries.save(new AccountEntries.AccountEntry(
+        Long id = entries.save(new AccountEntries.Entry(
                 null, UUID.randomUUID().toString(), "test@example.com", "secret".getBytes(), "salt", ZonedDateTime.now()));
 
         assertThat(id).isNotNull();
@@ -22,10 +22,10 @@ class AccountEntriesTest {
     @Test
     void saved_account_is_to_find_by_id() {
         AccountEntries entries = new AccountEntriesInMemory();
-        Long id = entries.save(new AccountEntries.AccountEntry(
+        Long id = entries.save(new AccountEntries.Entry(
                 null, UUID.randomUUID().toString(), "test@example.com", "secret".getBytes(), "salt", ZonedDateTime.now()));
 
-        Optional<AccountEntries.AccountEntry> foundAccountEntry = entries.byId(id);
+        Optional<AccountEntries.Entry> foundAccountEntry = entries.byId(id);
         assertThat(foundAccountEntry).isNotNull();
         assertThat(foundAccountEntry.isPresent()).isTrue();
     }
@@ -34,9 +34,9 @@ class AccountEntriesTest {
     void saved_account_is_to_find_by_username() {
         AccountEntries entries = new AccountEntriesInMemory();
         String username = UUID.randomUUID().toString();
-        entries.save(new AccountEntries.AccountEntry(
+        entries.save(new AccountEntries.Entry(
                 null, username, "test@example.com", "secret".getBytes(), "salt", ZonedDateTime.now()));
-        Optional<AccountEntries.AccountEntry> foundAccountEntry = entries.byUsername(username);
+        Optional<AccountEntries.Entry> foundAccountEntry = entries.byUsername(username);
 
         assertThat(foundAccountEntry).isNotNull();
         assertThat(foundAccountEntry.isPresent()).isTrue();
@@ -45,7 +45,7 @@ class AccountEntriesTest {
     @Test
     void non_saved_account_is_not_to_find_by_id() {
         AccountEntries entries = new AccountEntriesInMemory();
-        Optional<AccountEntries.AccountEntry> foundAccountEntry = entries.byId(Long.MAX_VALUE);
+        Optional<AccountEntries.Entry> foundAccountEntry = entries.byId(Long.MAX_VALUE);
 
         assertThat(foundAccountEntry).isNotNull();
         assertThat(foundAccountEntry.isPresent()).isFalse();
@@ -54,7 +54,7 @@ class AccountEntriesTest {
     @Test
     void non_saved_account_is_not_to_find_by_username() {
         AccountEntries entries = new AccountEntriesInMemory();
-        Optional<AccountEntries.AccountEntry> foundAccountEntry = entries.byUsername(UUID.randomUUID().toString());
+        Optional<AccountEntries.Entry> foundAccountEntry = entries.byUsername(UUID.randomUUID().toString());
 
         assertThat(foundAccountEntry).isNotNull();
         assertThat(foundAccountEntry.isPresent()).isFalse();
@@ -63,11 +63,11 @@ class AccountEntriesTest {
     @Test
     void deleted_account_is_not_to_find() {
         AccountEntries entries = new AccountEntriesInMemory();
-        Long id = entries.save(new AccountEntries.AccountEntry(
+        Long id = entries.save(new AccountEntries.Entry(
                 null, UUID.randomUUID().toString(), "test@example.com", "secret".getBytes(), "salt", ZonedDateTime.now()));
         entries.delete(id);
 
-        Optional<AccountEntries.AccountEntry> foundAccountEntry = entries.byId(id);
+        Optional<AccountEntries.Entry> foundAccountEntry = entries.byId(id);
         assertThat(foundAccountEntry).isNotNull();
         assertThat(foundAccountEntry.isPresent()).isFalse();
     }
@@ -77,10 +77,10 @@ class AccountEntriesTest {
         AccountEntries entries = new AccountEntriesInMemory();
         String username = UUID.randomUUID().toString();
         ZonedDateTime now = ZonedDateTime.now();
-        Long id = entries.save(new AccountEntries.AccountEntry(
+        Long id = entries.save(new AccountEntries.Entry(
                 null, username, "test@example.com", "secret".getBytes(), "salt", now));
 
-        AccountEntries.AccountEntry savedEntry = entries.byId(id).get();
+        AccountEntries.Entry savedEntry = entries.byId(id).get();
         assertThat(savedEntry.id).isEqualTo(id);
         assertThat(savedEntry.username).isEqualTo(username);
         assertThat(savedEntry.email).isEqualTo("test@example.com");
@@ -94,15 +94,15 @@ class AccountEntriesTest {
         AccountEntries entries = new AccountEntriesInMemory();
         String username = UUID.randomUUID().toString();
         ZonedDateTime now = ZonedDateTime.now();
-        Long id = entries.save(new AccountEntries.AccountEntry(
+        Long id = entries.save(new AccountEntries.Entry(
                 null, username, "test@example.com", "secret".getBytes(), "salt", now));
 
-        Long updatedId = entries.save(new AccountEntries.AccountEntry(
+        Long updatedId = entries.save(new AccountEntries.Entry(
                 id, username, "updated@example.com", "updated".getBytes(), "updated", now.plusMinutes(1)));
 
         assertThat(updatedId).isEqualTo(id);
 
-        AccountEntries.AccountEntry savedEntry = entries.byId(id).get();
+        AccountEntries.Entry savedEntry = entries.byId(id).get();
         assertThat(savedEntry.id).isEqualTo(id);
         assertThat(savedEntry.username).isEqualTo(username);
         assertThat(savedEntry.email).isEqualTo("updated@example.com");
@@ -114,14 +114,14 @@ class AccountEntriesTest {
     @Test
     void attributes_are_not_persisted_without_calling_save() {
         AccountEntries entries = new AccountEntriesInMemory();
-        AccountEntries.AccountEntry entry = new AccountEntries.AccountEntry(
+        AccountEntries.Entry entry = new AccountEntries.Entry(
                 null, UUID.randomUUID().toString(), "test@example.com", "secret".getBytes(), "salt", ZonedDateTime.now());
         Long id = entries.save(entry);
 
         byte[] encryptedPassword = entry.encryptedPassword.clone();
         entry.encryptedPassword[0] += 1;
 
-        Optional<AccountEntries.AccountEntry> entry2 = entries.byId(id);
+        Optional<AccountEntries.Entry> entry2 = entries.byId(id);
         assertThat(entry2.get().encryptedPassword).isEqualTo(encryptedPassword);
     }
 }

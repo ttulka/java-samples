@@ -11,16 +11,16 @@ import lombok.RequiredArgsConstructor;
  */
 interface AccountEntries {
 
-    long save(AccountEntry entry);
+    long save(Entry entry);
 
-    Optional<AccountEntry> byId(long id);
+    Optional<Entry> byId(long id);
 
-    Optional<AccountEntry> byUsername(String username);;
+    Optional<Entry> byUsername(String username);;
 
     void delete(long id);
 
     @RequiredArgsConstructor
-    class AccountEntry {
+    class Entry {
 
         public final Long id;
         public final @NonNull String username;

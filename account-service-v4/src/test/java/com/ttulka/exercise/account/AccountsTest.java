@@ -18,7 +18,7 @@ class AccountsTest {
 
     @Test
     void registered_account_with_correct_password_can_log_in() {
-        Accounts accounts = new AccountsImpl(entries);
+        Accounts accounts = new PersistentAccounts(entries);
 
         String username = UUID.randomUUID().toString();
         accounts.register(username, "test@example.com", "pwd1");
@@ -29,7 +29,7 @@ class AccountsTest {
 
     @Test
     void once_registered_a_username_cannot_be_registered_again() {
-        Accounts accounts = new AccountsImpl(entries);
+        Accounts accounts = new PersistentAccounts(entries);
 
         String username = UUID.randomUUID().toString();
         accounts.register(username, "test@example.com", "pwd1");
@@ -40,7 +40,7 @@ class AccountsTest {
 
     @Test
     void non_existing_account_cannot_log_in() {
-        Accounts accounts = new AccountsImpl(entries);
+        Accounts accounts = new PersistentAccounts(entries);
 
         assertThrows(AccountNotFoundException.class, () ->
                 accounts.login("this user does not exist", "password"));
@@ -48,7 +48,7 @@ class AccountsTest {
 
     @Test
     void existing_account_with_wrong_password_cannot_log_in() {
-        Accounts accounts = new AccountsImpl(entries);
+        Accounts accounts = new PersistentAccounts(entries);
 
         String username = UUID.randomUUID().toString();
         accounts.register(username, "test@example.com", "pwd1");
@@ -59,7 +59,7 @@ class AccountsTest {
 
     @Test
     void deleted_account_cannot_log_in() {
-        Accounts accounts = new AccountsImpl(entries);
+        Accounts accounts = new PersistentAccounts(entries);
 
         String username = UUID.randomUUID().toString();
         accounts.register(username, "test@example.com", "pwd1");
@@ -72,7 +72,7 @@ class AccountsTest {
 
     @Test
     void account_is_logged_in_since_before_logged_in_for_the_last_time() {
-        Accounts accounts = new AccountsImpl(entries);
+        Accounts accounts = new PersistentAccounts(entries);
 
         String username = UUID.randomUUID().toString();
         accounts.register(username, "test@example.com", "pwd1");
@@ -85,7 +85,7 @@ class AccountsTest {
 
     @Test
     void account_not_logged_in_since_after_logged_in_for_the_last_time() {
-        Accounts accounts = new AccountsImpl(entries);
+        Accounts accounts = new PersistentAccounts(entries);
 
         String username = UUID.randomUUID().toString();
         accounts.register(username, "test@example.com", "pwd1");
@@ -98,7 +98,7 @@ class AccountsTest {
 
     @Test
     void account_not_logged_in_since_now_after_been_registered() {
-        Accounts accounts = new AccountsImpl(entries);
+        Accounts accounts = new PersistentAccounts(entries);
 
         String username = UUID.randomUUID().toString();
         accounts.register(username, "test@example.com", "pwd1");
@@ -110,7 +110,7 @@ class AccountsTest {
 
     @Test
     void password_is_changed() {
-        Accounts accounts = new AccountsImpl(entries);
+        Accounts accounts = new PersistentAccounts(entries);
 
         String username = UUID.randomUUID().toString();
         accounts.register(username, "test@example.com", "pwd1");
@@ -123,7 +123,7 @@ class AccountsTest {
 
     @Test
     void change_password_catches_an_invalid_old_password() {
-        Accounts accounts = new AccountsImpl(entries);
+        Accounts accounts = new PersistentAccounts(entries);
 
         String username = UUID.randomUUID().toString();
         accounts.register(username, "test@example.com", "pwd1");
@@ -134,7 +134,7 @@ class AccountsTest {
 
     @Test
     void old_password_invalid_after_changed() {
-        Accounts accounts = new AccountsImpl(entries);
+        Accounts accounts = new PersistentAccounts(entries);
 
         String username = UUID.randomUUID().toString();
         accounts.register(username, "test@example.com", "pwd1");

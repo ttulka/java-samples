@@ -10,7 +10,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class AccountsImpl implements Accounts {
+public class PersistentAccounts implements Accounts {
 
     private final AccountEntries entries;
 
@@ -19,7 +19,7 @@ public class AccountsImpl implements Accounts {
         if (entries.byUsername(username).isPresent()) {
             throw new UsernameAlreadyExistsException(username);
         }
-        Account account = new AccountImpl(username, password, email, entries);
+        Account account = new PersistentAccount(username, password, email, entries);
         account.register();
         account.login();
         return account;
@@ -58,7 +58,7 @@ public class AccountsImpl implements Accounts {
 
     private Account registeredAccountByUsername(String username) {
         return entries.byUsername(username)
-                .map(entry ->new AccountImpl(
+                .map(entry ->new PersistentAccount(
                         entry.id, entry.username, entry.email, entry.encryptedPassword, entry.salt, entry.lastLoggedIn,
                         entries))
                 .orElseThrow(() -> new AccountNotFoundException(username));

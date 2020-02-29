@@ -7,13 +7,16 @@
 </head>
 <body>
     <header id="header" layout:fragment="header">
-        HEADER
+        <div th:if="${categories}" class="categories">
+            <a href="/" class="home">&#127968;</a>
+            <a th:each="category: ${categories}" th:href="'/category/' + ${category.id}" th:text="${category.title}"></a>
+        </div>
     </header>
     <section id="content" layout:fragment="content">
         <!-- page content goes here -->
     </section>
     <footer id="footer" layout:fragment="footer">
-        FOOTER
+        DDD Example e-commerce
     </footer>
 </body>
 </html>

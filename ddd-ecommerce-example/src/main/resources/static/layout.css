@@ -27,3 +27,23 @@ body {
     left: 0;
     width: 100%;
 }
+
+.categories a {
+    color: lightgrey;
+    display: inline-block;
+    padding-right: 2em;
+}
+.categories a.home {
+    text-decoration: none;
+}
+
+.products .product th, .products .product td {
+    border-bottom: 1px solid grey;
+}
+.products .product th {
+    text-align: left;
+}
+.products .product .price {
+    text-align: right;
+    font-style: italic;
+}

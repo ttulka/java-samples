@@ -3,7 +3,17 @@
       layout:decorate="~{layout/default}">
 <body>
     <section layout:fragment="content">
-        <p>Hello!</p>
+
+        <h1>Catalogue</h1>
+
+        <table th:if="${products}" class="products" cellpadding="10" cellspacing="0" border="0">
+            <tr th:each="product: ${products}" class="product">
+                <th th:text="${product.title}" />
+                <td th:text="${product.description}" />
+                <td th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 2)}" class="price" />
+            </tr>
+        </table>
+
     </section>
 </body>
 </html>

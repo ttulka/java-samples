@@ -1,12 +1,12 @@
 CREATE TABLE categories (
-    id CHAR(36) NOT NULL PRIMARY KEY,
-    title VARCHAR(100) NOT NULL
+    id VARCHAR(20) NOT NULL PRIMARY KEY,
+    title VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE products (
     id CHAR(36) NOT NULL PRIMARY KEY,
-    title VARCHAR(100) NOT NULL,
-    description TEXT,
+    title VARCHAR(20) NOT NULL,
+    description VARCHAR(50) NOT NULL DEFAULT(''),
     price DECIMAL(10,2)
 );
 

@@ -10,8 +10,8 @@ public final class Title {
         if (title.trim().isEmpty()) {
             throw new IllegalArgumentException("Title cannot be empty!");
         }
-        if (title.trim().length() > 100) {
-            throw new IllegalArgumentException("Title cannot be longer than 100 characters!");
+        if (title.trim().length() > 20) {
+            throw new IllegalArgumentException("Title cannot be longer than 20 characters!");
         }
         this.title = title.trim();
     }

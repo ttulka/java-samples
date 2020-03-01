@@ -12,7 +12,7 @@ import com.ttulka.samples.ddd.ecommerce.warehouse.Warehouse;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-class Catalogue {
+public final class Catalogue {
 
     private final Categories categories;
     private final FindProducts findProducts;

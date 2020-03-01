@@ -1,7 +1,15 @@
-package com.ttulka.samples.ddd.ecommerce.sales.product;
+package com.ttulka.samples.ddd.ecommerce.sales.product.jdbc;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.ttulka.samples.ddd.ecommerce.sales.product.Code;
+import com.ttulka.samples.ddd.ecommerce.sales.product.Description;
+import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
+import com.ttulka.samples.ddd.ecommerce.sales.product.Price;
+import com.ttulka.samples.ddd.ecommerce.sales.product.Product;
+import com.ttulka.samples.ddd.ecommerce.sales.product.ProductId;
+import com.ttulka.samples.ddd.ecommerce.sales.product.Title;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

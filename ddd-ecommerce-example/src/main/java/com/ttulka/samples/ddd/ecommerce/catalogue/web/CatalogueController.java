@@ -1,4 +1,6 @@
-package com.ttulka.samples.ddd.ecommerce.catalogue;
+package com.ttulka.samples.ddd.ecommerce.catalogue.web;
+
+import com.ttulka.samples.ddd.ecommerce.catalogue.Catalogue;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

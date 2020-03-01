@@ -1,4 +1,6 @@
-package com.ttulka.samples.ddd.ecommerce.warehouse;
+package com.ttulka.samples.ddd.ecommerce.warehouse.jdbc;
+
+import com.ttulka.samples.ddd.ecommerce.warehouse.Warehouse;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 

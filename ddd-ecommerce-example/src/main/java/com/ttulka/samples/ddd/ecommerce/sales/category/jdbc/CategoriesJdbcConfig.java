@@ -1,11 +1,13 @@
-package com.ttulka.samples.ddd.ecommerce.sales.category;
+package com.ttulka.samples.ddd.ecommerce.sales.category.jdbc;
+
+import com.ttulka.samples.ddd.ecommerce.sales.category.Categories;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @Configuration
-class CategoriesConfig {
+final class CategoriesJdbcConfig {
 
     @Bean
     Categories categories(JdbcTemplate jdbcTemplate) {

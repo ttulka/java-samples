@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-class CatalogueConfig {
+final class CatalogueConfig {
 
     @Bean
     Catalogue catalogue(Categories categories, FindProducts findProducts, Warehouse warehouse) {

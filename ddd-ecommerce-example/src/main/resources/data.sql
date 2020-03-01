@@ -5,7 +5,7 @@ INSERT INTO categories VALUES
     ('games-toys', 'games and toys'),
     ('others', 'others');
 
-INSERT INTO findProducts VALUES
+INSERT INTO products VALUES
     ('6ef8c68e-62cf-4697-a4f9-1950181097bb', 'Domain-Driven Design', 'by Eric Evans', 45.00),
     ('cc4608a7-a4cd-44bb-aae5-2fa63a047f67', 'Object Thinking', 'by David West', 35.00),
     ('179ee435-34c4-4d9d-842d-5f168fae363e', 'Release It!', 'by Michael Nygard', 32.50),

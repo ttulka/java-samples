@@ -5,7 +5,7 @@ CREATE TABLE categories (
     title VARCHAR(20) NOT NULL
 );
 
-CREATE TABLE findProducts (
+CREATE TABLE products (
     id CHAR(36) NOT NULL PRIMARY KEY,
     title VARCHAR(20) NOT NULL,
     description VARCHAR(50) NOT NULL DEFAULT(''),

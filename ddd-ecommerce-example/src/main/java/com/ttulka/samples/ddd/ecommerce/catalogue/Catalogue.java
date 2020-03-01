@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 
 import com.ttulka.samples.ddd.ecommerce.sales.category.Categories;
 import com.ttulka.samples.ddd.ecommerce.sales.category.Category;
-import com.ttulka.samples.ddd.ecommerce.sales.product.Product;
 import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
+import com.ttulka.samples.ddd.ecommerce.sales.product.Product;
 import com.ttulka.samples.ddd.ecommerce.warehouse.Warehouse;
 
 import lombok.RequiredArgsConstructor;

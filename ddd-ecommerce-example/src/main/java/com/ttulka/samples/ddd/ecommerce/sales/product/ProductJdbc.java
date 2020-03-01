@@ -44,6 +44,6 @@ public final class ProductJdbc implements Product {
     public void changePrice(Price price) {
         this.price = price;
         jdbcTemplate.update("UPDATE products SET price = ? WHERE id = ?",
-                            new Object[]{price.value(), id.value()});
+                            price.value(), id.value());
     }
 }

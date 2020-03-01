@@ -55,7 +55,7 @@ class Catalogue {
     }
 
     @RequiredArgsConstructor
-    class ProductData {
+    static class ProductData {
 
         public final String id;
         public final String title;
@@ -65,7 +65,7 @@ class Catalogue {
     }
 
     @RequiredArgsConstructor
-    class CategoryData {
+    static class CategoryData {
 
         public final String uri;
         public final String title;

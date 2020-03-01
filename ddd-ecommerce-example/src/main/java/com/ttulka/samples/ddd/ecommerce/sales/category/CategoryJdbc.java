@@ -34,6 +34,6 @@ final class CategoryJdbc implements Category {
     public void changeTitle(Title title) {
         this.title = title;
         jdbcTemplate.update("UPDATE categories SET title = ? WHERE id = ?",
-                            new Object[]{title.value(), id.value()});
+                            title.value(), id.value());
     }
 }

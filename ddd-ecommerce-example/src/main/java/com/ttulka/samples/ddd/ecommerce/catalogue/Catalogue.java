@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import com.ttulka.samples.ddd.ecommerce.sales.category.Categories;
 import com.ttulka.samples.ddd.ecommerce.sales.category.Category;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Product;
-import com.ttulka.samples.ddd.ecommerce.sales.product.Products;
+import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
 import com.ttulka.samples.ddd.ecommerce.warehouse.Warehouse;
 
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 class Catalogue {
 
     private final Categories categories;
-    private final Products products;
+    private final FindProducts findProducts;
     private final Warehouse warehouse;
 
     public List<CategoryData> categories() {
@@ -25,13 +25,13 @@ class Catalogue {
     }
 
     public List<ProductData> allProducts() {
-        return products.all().stream()
+        return findProducts.all().stream()
                 .map(this::toData)
                 .collect(Collectors.toList());
     }
 
     public List<ProductData> productsInCategory(String categoryId) {
-        return products.inCategory(categoryId).stream()
+        return findProducts.fromCategory(categoryId).stream()
                 .map(this::toData)
                 .collect(Collectors.toList());
     }
@@ -61,7 +61,7 @@ class Catalogue {
         public final String title;
         public final String description;
         public final float price;
-        public final int leftInStock;
+        public final int inStock;
     }
 
     @RequiredArgsConstructor

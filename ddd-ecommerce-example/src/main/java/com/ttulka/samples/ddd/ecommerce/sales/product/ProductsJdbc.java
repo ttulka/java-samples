@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @RequiredArgsConstructor
-final class ProductsJdbc implements Products {
+final class ProductsJdbc implements FindProducts {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -24,7 +24,7 @@ final class ProductsJdbc implements Products {
     }
 
     @Override
-    public List<Product> inCategory(String categoryId) {
+    public List<Product> fromCategory(String categoryId) {
         return jdbcTemplate.query("SELECT p.* FROM products AS p " +
                                   "JOIN products_in_categories AS pc ON pc.product_id = p.id " +
                                   "WHERE pc.category_id = ? ",

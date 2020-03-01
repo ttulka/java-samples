@@ -2,9 +2,9 @@ package com.ttulka.samples.ddd.ecommerce.sales.product;
 
 import java.util.List;
 
-public interface Products {
+public interface FindProducts {
 
     List<Product> all();
 
-    List<Product> inCategory(String categoryId);
+    List<Product> fromCategory(String categoryId);
 }

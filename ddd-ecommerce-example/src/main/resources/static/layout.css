@@ -43,7 +43,12 @@ body {
 .products .product th {
     text-align: left;
 }
+.products .product .stock {
+    font-style: italic;
+    color: grey;
+}
 .products .product .price {
     text-align: right;
     font-style: italic;
+    color: darkgreen;
 }

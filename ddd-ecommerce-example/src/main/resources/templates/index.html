@@ -6,10 +6,11 @@
 
         <h1>Catalogue</h1>
 
-        <table th:if="${products}" class="products" cellpadding="10" cellspacing="0" border="0">
-            <tr th:each="product: ${products}" class="product">
+        <table th:if="${findProducts}" class="findProducts" cellpadding="10" cellspacing="0" border="0">
+            <tr th:each="product: ${findProducts}" class="product">
                 <th th:text="${product.title}" />
                 <td th:text="${product.description}" />
+                <td th:text="${product.inStock} > 0 ? ${product.inStock} + ' left in stock' : 'sold out'" class="stock" />
                 <td th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 2)}" class="price" />
             </tr>
         </table>

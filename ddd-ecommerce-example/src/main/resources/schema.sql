@@ -1,9 +1,11 @@
+-- ------ SALES ------
+
 CREATE TABLE categories (
     id VARCHAR(20) NOT NULL PRIMARY KEY,
     title VARCHAR(20) NOT NULL
 );
 
-CREATE TABLE products (
+CREATE TABLE findProducts (
     id CHAR(36) NOT NULL PRIMARY KEY,
     title VARCHAR(20) NOT NULL,
     description VARCHAR(50) NOT NULL DEFAULT(''),
@@ -14,4 +16,11 @@ CREATE TABLE products_in_categories (
     product_id CHAR(36) NOT NULL,
     category_id CHAR(36) NOT NULL,
     PRIMARY KEY (product_id, category_id)
+);
+
+-- ------ WAREHOUSE ------
+
+CREATE TABLE products_in_stock (
+    product_id CHAR(36) NOT NULL PRIMARY KEY,
+    amount INT NOT NULL DEFAULT(0)
 );

@@ -1,9 +1,21 @@
 package com.ttulka.samples.ddd.ecommerce.warehouse;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 final class WarehouseJdbc implements Warehouse {
+
+    private final JdbcTemplate jdbcTemplate;
 
     @Override
     public int leftInStock(String productId) {
-        return 0;
+        Integer leftInStock = jdbcTemplate.queryForObject(
+                "SELECT amount FROM products_in_stock " +
+                "WHERE product_id = ?",
+                new Object[]{productId},
+                Integer.class);
+        return leftInStock != null ? leftInStock : 0;
     }
 }

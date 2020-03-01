@@ -1,18 +1,12 @@
 package com.ttulka.samples.ddd.ecommerce.sales.category;
 
-import lombok.RequiredArgsConstructor;
+public interface Category {
 
-@RequiredArgsConstructor
-public final class Category {
+    CategoryId id();
 
-    private final CategoryId id;
-    private final Title title;
+    Uri uri();
 
-    public CategoryId id() {
-        return id;
-    }
+    Title title();
 
-    public Title title() {
-        return title;
-    }
+    void changeTitle(Title title);
 }

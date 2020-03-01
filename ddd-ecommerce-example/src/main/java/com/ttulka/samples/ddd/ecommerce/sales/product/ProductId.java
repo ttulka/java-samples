@@ -1,18 +1,13 @@
 package com.ttulka.samples.ddd.ecommerce.sales.product;
 
-import java.util.UUID;
+import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
 
+@EqualsAndHashCode
+@RequiredArgsConstructor
 public final class ProductId {
 
-    private final UUID id;
-
-    public ProductId() {
-        this.id = UUID.randomUUID();
-    }
-
-    public ProductId(String id) {
-        this.id = UUID.fromString(id);
-    }
+    private final Long id;
 
     public String value() {
         return id.toString();

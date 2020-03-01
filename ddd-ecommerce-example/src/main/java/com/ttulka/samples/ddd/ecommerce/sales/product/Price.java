@@ -1,5 +1,8 @@
 package com.ttulka.samples.ddd.ecommerce.sales.product;
 
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode
 public final class Price {
 
     private final float price;

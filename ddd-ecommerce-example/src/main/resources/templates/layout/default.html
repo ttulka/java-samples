@@ -9,7 +9,7 @@
     <header id="header" layout:fragment="header">
         <div th:if="${categories}" class="categories">
             <a href="/" class="home">&#127968;</a>
-            <a th:each="category: ${categories}" th:href="'/category/' + ${category.id}" th:text="${category.title}"></a>
+            <a th:each="category: ${categories}" th:href="'/category/' + ${category.uri}" th:text="${category.title}"></a>
         </div>
     </header>
     <section id="content" layout:fragment="content">

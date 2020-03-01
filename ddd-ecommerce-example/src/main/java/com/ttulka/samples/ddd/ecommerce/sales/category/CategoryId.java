@@ -1,22 +1,15 @@
 package com.ttulka.samples.ddd.ecommerce.sales.category;
 
-import lombok.NonNull;
+import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
 
+@EqualsAndHashCode
+@RequiredArgsConstructor
 public final class CategoryId {
 
-    private final String id;
-
-    public CategoryId(@NonNull String id) {
-        if (id.trim().isEmpty()) {
-            throw new IllegalArgumentException("Category ID cannot be empty!");
-        }
-        if (id.trim().length() > 20) {
-            throw new IllegalArgumentException("Category ID cannot be longer than 20 characters!");
-        }
-        this.id = id;
-    }
+    private final Long id;
 
     public String value() {
-        return id;
+        return id.toString();
     }
 }

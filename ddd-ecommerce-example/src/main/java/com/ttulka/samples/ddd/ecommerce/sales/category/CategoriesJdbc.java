@@ -17,16 +17,18 @@ final class CategoriesJdbc implements Categories {
 
     @Override
     public List<Category> all() {
-        return jdbcTemplate.query("SELECT * FROM categories",
+        return jdbcTemplate.query("SELECT id, uri, title FROM categories",
                                   BeanPropertyRowMapper.newInstance(CategoryEntry.class)).stream()
                 .map(this::toCategory)
                 .collect(Collectors.toList());
     }
 
     private Category toCategory(CategoryEntry entry) {
-        return new Category(
+        return new CategoryJdbc(
                 new CategoryId(entry.id),
-                new Title(entry.title)
+                new Uri(entry.uri),
+                new Title(entry.title),
+                jdbcTemplate
         );
     }
 
@@ -34,7 +36,8 @@ final class CategoriesJdbc implements Categories {
     @Setter
     private static class CategoryEntry {
 
-        public String id;
+        public Long id;
+        public String uri;
         public String title;
     }
 }

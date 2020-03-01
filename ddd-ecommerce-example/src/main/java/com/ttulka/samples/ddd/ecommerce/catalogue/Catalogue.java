@@ -49,7 +49,7 @@ class Catalogue {
 
     private CategoryData toData(Category category) {
         return new CategoryData(
-                category.id().value(),
+                category.uri().value(),
                 category.title().value()
         );
     }
@@ -67,7 +67,7 @@ class Catalogue {
     @RequiredArgsConstructor
     class CategoryData {
 
-        public final String id;
+        public final String uri;
         public final String title;
     }
 }

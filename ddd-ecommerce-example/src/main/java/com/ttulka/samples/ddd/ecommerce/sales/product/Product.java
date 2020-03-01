@@ -1,28 +1,16 @@
 package com.ttulka.samples.ddd.ecommerce.sales.product;
 
-import lombok.RequiredArgsConstructor;
+public interface Product {
 
-@RequiredArgsConstructor
-public final class Product {
+    ProductId id();
 
-    private final ProductId id;
-    private final Title title;
-    private final Description description;
-    private final Price price;
+    Code code();
 
-    public ProductId id() {
-        return id;
-    }
+    Title title();
 
-    public Title title() {
-        return title;
-    }
+    Description description();
 
-    public Description description() {
-        return description;
-    }
+    Price price();
 
-    public Price price() {
-        return price;
-    }
+    void changePrice(Price price);
 }

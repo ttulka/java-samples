@@ -1,7 +1,9 @@
 package com.ttulka.samples.ddd.ecommerce.sales.product;
 
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
+@EqualsAndHashCode
 public final class Title {
 
     private final String title;

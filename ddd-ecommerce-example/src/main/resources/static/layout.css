@@ -36,6 +36,9 @@ body {
 .categories a.home {
     text-decoration: none;
 }
+.categories a.home {
+    float: right;
+}
 
 .products .product th, .products .product td {
     border-bottom: 1px solid grey;

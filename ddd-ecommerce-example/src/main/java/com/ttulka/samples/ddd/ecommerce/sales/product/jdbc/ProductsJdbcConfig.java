@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @Configuration
-final class ProductsJdbcConfig {
+class ProductsJdbcConfig {
 
     @Bean
     ProductsJdbc products(JdbcTemplate jdbcTemplate) {

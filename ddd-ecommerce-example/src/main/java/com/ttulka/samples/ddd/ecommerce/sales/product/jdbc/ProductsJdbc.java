@@ -11,6 +11,7 @@ import com.ttulka.samples.ddd.ecommerce.sales.product.Product;
 import com.ttulka.samples.ddd.ecommerce.sales.product.ProductId;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Title;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -41,6 +42,20 @@ final class ProductsJdbc implements FindProducts {
                                   BeanPropertyRowMapper.newInstance(ProductEntry.class)).stream()
                 .map(this::toProduct)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Product byId(String id) {
+        try {
+            return toProduct(
+                    jdbcTemplate.queryForObject("SELECT id, code, title, description, price FROM products " +
+                                                "WHERE id = ?",
+                                                new Object[]{id},
+                                                BeanPropertyRowMapper.newInstance(ProductEntry.class))
+            );
+        } catch (DataAccessException e) {
+            return new UnknownProduct();
+        }
     }
 
     private Product toProduct(ProductEntry entry) {

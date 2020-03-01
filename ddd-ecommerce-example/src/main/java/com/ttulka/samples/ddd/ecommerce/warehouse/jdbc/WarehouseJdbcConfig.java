@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @Configuration
-final class WarehouseJdbcConfig {
+class WarehouseJdbcConfig {
 
     @Bean
     Warehouse warehouse(JdbcTemplate jdbcTemplate) {

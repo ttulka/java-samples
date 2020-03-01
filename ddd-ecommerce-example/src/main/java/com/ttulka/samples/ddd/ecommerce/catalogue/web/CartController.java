@@ -1,34 +1,36 @@
 package com.ttulka.samples.ddd.ecommerce.catalogue.web;
 
-import com.ttulka.samples.ddd.ecommerce.catalogue.Catalogue;
+import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Cart;
 import com.ttulka.samples.ddd.ecommerce.catalogue.ListCategories;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Controller
+@RequestMapping("/cart")
 @RequiredArgsConstructor
-class CatalogueController {
+class CartController {
 
-    private final Catalogue catalogue;
+    private final Cart cart;
     private final ListCategories listCategories;
 
-    @GetMapping("/")
+    @GetMapping
     public String index(Model model) {
-        model.addAttribute("products", catalogue.allProducts());
+        model.addAttribute("items", cart.items());
 
         decorateLayout(model);
-        return "index";
+        return "cart";
     }
 
-    @GetMapping("/category/{categoryId}")
-    public String category(@PathVariable @NonNull String categoryId, Model model) {
-        model.addAttribute("products", catalogue.productsInCategory(categoryId));
+    @PostMapping
+    public String add(@NonNull String productId, @NonNull Integer amount, Model model) {
+        cart.add(productId, amount);
 
         decorateLayout(model);
         return "index";

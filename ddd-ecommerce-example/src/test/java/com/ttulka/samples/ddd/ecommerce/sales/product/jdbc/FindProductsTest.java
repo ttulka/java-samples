@@ -50,6 +50,7 @@ class FindProductsTest {
         Product product = findProducts.byId("1");
 
         assertThat(product.id().value()).isEqualTo("1");
+        assertThat(product.code().value()).isEqualTo("6ef8c68e-62cf-4697-a4f9-1950181097bb");
         assertThat(product.title().value()).isEqualTo("Prod 1");
         assertThat(product.description().value()).isEqualTo("Prod 1 Desc");
         assertThat(product.price().value()).isEqualTo(1.f);

@@ -1,5 +1,3 @@
--- ------ SALES ------
-
 INSERT INTO categories VALUES
     (1, 'cat1', 'Cat 1'),
     (2, 'cat2', 'Cat 2');

@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @JdbcTest
 @Import(ProductsJdbcConfig.class)
 @Transactional
-@Sql("/test-data-sales.sql")
+@Sql("/test-data-sales-find-products.sql")
 class FindProductsTest {
 
     @Autowired
@@ -48,6 +48,7 @@ class FindProductsTest {
     @Test
     void product_by_id_is_found() {
         Product product = findProducts.byId("1");
+
         assertThat(product.id().value()).isEqualTo("1");
         assertThat(product.title().value()).isEqualTo("Prod 1");
         assertThat(product.description().value()).isEqualTo("Prod 1 Desc");

@@ -10,8 +10,10 @@ import com.ttulka.samples.ddd.ecommerce.sales.product.Title;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 @AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 final class ProductJdbc implements Product {
 
     private final ProductId id;

@@ -26,19 +26,21 @@ final class ProductsJdbc implements FindProducts {
 
     @Override
     public List<Product> all() {
-        return jdbcTemplate.query("SELECT id, code, title, description, price FROM products",
+        return jdbcTemplate.query("SELECT id, code, title, description, price FROM products " +
+                                  "ORDER BY id ASC",
                                   BeanPropertyRowMapper.newInstance(ProductEntry.class)).stream()
                 .map(this::toProduct)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Product> fromCategory(String categoryId) {
+    public List<Product> fromCategory(String categoryUri) {
         return jdbcTemplate.query("SELECT p.id, p.code, p.title, p.description, p.price FROM products AS p " +
                                   "JOIN products_in_categories AS pc ON pc.product_id = p.id " +
                                   "JOIN categories AS c ON c.id = pc.category_id " +
-                                  "WHERE c.uri = ? ",
-                                  new Object[]{categoryId},
+                                  "WHERE c.uri = ? " +
+                                  "ORDER BY p.id ASC",
+                                  new Object[]{categoryUri},
                                   BeanPropertyRowMapper.newInstance(ProductEntry.class)).stream()
                 .map(this::toProduct)
                 .collect(Collectors.toList());

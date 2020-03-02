@@ -6,7 +6,7 @@ public interface FindProducts {
 
     List<Product> all();
 
-    List<Product> fromCategory(String categoryId);
+    List<Product> fromCategory(String categoryUri);
 
     Product byId(String id);
 }

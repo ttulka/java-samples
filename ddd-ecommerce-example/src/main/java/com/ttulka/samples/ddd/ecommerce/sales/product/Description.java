@@ -8,7 +8,7 @@ public final class Description {
         if (description != null && description.trim().length() > 50) {
             throw new IllegalArgumentException("Description cannot be longer than 50 characters!");
         }
-        this.description = description;
+        this.description = description.trim();
     }
 
     public String value() {

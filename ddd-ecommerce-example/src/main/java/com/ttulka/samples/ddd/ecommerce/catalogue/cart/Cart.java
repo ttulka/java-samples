@@ -7,9 +7,11 @@ import java.util.List;
 import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Product;
 
+import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@EqualsAndHashCode(of = "items")
 public final class Cart {
 
     private final FindProducts findProducts;

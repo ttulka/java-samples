@@ -1,8 +1,10 @@
 package com.ttulka.samples.ddd.ecommerce.catalogue.cart;
 
+import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@EqualsAndHashCode
 public final class Item {
 
     private final String productId;

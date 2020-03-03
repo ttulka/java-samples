@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class PriceTest {
 
     @Test
-    void price_created() {
+    void price_value() {
         Price price = new Price(12.34f);
         assertThat(price.value()).isEqualTo(12.34f);
     }

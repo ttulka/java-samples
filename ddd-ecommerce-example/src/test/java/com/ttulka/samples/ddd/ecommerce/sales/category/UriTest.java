@@ -8,13 +8,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class UriTest {
 
     @Test
-    void uri_created() {
+    void uri_value() {
         Uri uri = new Uri("test");
         assertThat(uri.value()).isEqualTo("test");
     }
 
     @Test
-    void uri_trimmed() {
+    void uri_value_is_trimmed() {
         Uri uri = new Uri("   01234567890123456789   ");
         assertThat(uri.value()).isEqualTo("01234567890123456789");
     }

@@ -10,14 +10,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class CodeTest {
 
     @Test
-    void code_created() {
+    void code_value() {
         String uuid = UUID.randomUUID().toString();
         Code code = new Code(uuid);
         assertThat(code.value()).isEqualTo(uuid);
     }
 
     @Test
-    void code_trimmed() {
+    void code_value_is_trimmed() {
         String uuid = UUID.randomUUID().toString();
         Code code = new Code("   " + uuid + "   ");
         assertThat(code.value()).isEqualTo(uuid);

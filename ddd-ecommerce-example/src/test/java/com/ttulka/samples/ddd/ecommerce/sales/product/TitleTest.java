@@ -8,13 +8,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class TitleTest {
 
     @Test
-    void title_created() {
+    void title_value() {
         Title title = new Title("test");
         assertThat(title.value()).isEqualTo("test");
     }
 
     @Test
-    void title_trimmed() {
+    void title_value_is_trimmed() {
         Title title = new Title("   01234567890123456789   ");
         assertThat(title.value()).isEqualTo("01234567890123456789");
     }

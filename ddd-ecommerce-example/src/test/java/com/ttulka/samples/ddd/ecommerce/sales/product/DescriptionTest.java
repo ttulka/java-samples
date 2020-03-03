@@ -10,13 +10,13 @@ class DescriptionTest {
     private static final String STRING_50_CHARS_LONG = "01234567890123456789012345678901234567890123456789";
 
     @Test
-    void description_created() {
+    void description_value() {
         Description description = new Description(STRING_50_CHARS_LONG);
         assertThat(description.value()).isEqualTo(STRING_50_CHARS_LONG);
     }
 
     @Test
-    void description_trimmed() {
+    void description_value_is_trimmed() {
         Description description = new Description("   " + STRING_50_CHARS_LONG + "   ");
         assertThat(description.value()).isEqualTo(STRING_50_CHARS_LONG);
     }

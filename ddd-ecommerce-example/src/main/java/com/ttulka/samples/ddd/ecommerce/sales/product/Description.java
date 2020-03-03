@@ -1,5 +1,8 @@
 package com.ttulka.samples.ddd.ecommerce.sales.product;
 
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode
 public final class Description {
 
     private final String description;

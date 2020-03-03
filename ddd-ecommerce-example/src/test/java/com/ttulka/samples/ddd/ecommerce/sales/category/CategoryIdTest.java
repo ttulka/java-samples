@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CategoryIdTest {
 
     @Test
-    void category_id_created() {
+    void category_id_value() {
         CategoryId categoryId = new CategoryId(123L);
         assertThat(categoryId.value()).isEqualTo("123");
     }

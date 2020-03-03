@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ProductIdTest {
 
     @Test
-    void product_id_created() {
+    void product_id_value() {
         ProductId productId = new ProductId(123L);
         assertThat(productId.value()).isEqualTo("123");
     }

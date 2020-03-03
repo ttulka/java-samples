@@ -17,4 +17,8 @@ public final class Amount {
     public int value() {
         return amount;
     }
+
+    public Amount add(Amount addend) {
+        return new Amount(amount + addend.value());
+    }
 }

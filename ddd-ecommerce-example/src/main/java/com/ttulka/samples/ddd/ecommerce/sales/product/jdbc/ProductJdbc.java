@@ -18,8 +18,9 @@ final class ProductJdbc implements Product {
 
     private final ProductId id;
     private final Code code;
-    private final Title title;
-    private final Description description;
+
+    private Title title;
+    private Description description;
     private Price price;
 
     private final JdbcTemplate jdbcTemplate;
@@ -50,9 +51,29 @@ final class ProductJdbc implements Product {
     }
 
     @Override
+    public void changeTitle(Title title) {
+        this.title = title;
+        jdbcTemplate.update("UPDATE products SET title = ? WHERE id = ?",
+                            title.value(), id.value());
+    }
+
+    @Override
+    public void changeDescription(Description description) {
+        this.description = description;
+        jdbcTemplate.update("UPDATE products SET description = ? WHERE id = ?",
+                            description.value(), id.value());
+    }
+
+    @Override
     public void changePrice(Price price) {
         this.price = price;
         jdbcTemplate.update("UPDATE products SET price = ? WHERE id = ?",
                             price.value(), id.value());
+    }
+
+    @Override
+    public void putForSale() {
+        jdbcTemplate.update("INSERT INTO products VALUES(?, ?, ?, ?, ?)",
+                             id.value(), code.value(), title.value(), description.value(), price.value());
     }
 }

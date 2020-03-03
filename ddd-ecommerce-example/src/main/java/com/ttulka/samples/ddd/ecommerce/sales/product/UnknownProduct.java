@@ -1,4 +1,4 @@
-package com.ttulka.samples.ddd.ecommerce.sales.product.jdbc;
+package com.ttulka.samples.ddd.ecommerce.sales.product;
 
 import java.util.UUID;
 
@@ -9,7 +9,7 @@ import com.ttulka.samples.ddd.ecommerce.sales.product.Product;
 import com.ttulka.samples.ddd.ecommerce.sales.product.ProductId;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Title;
 
-final class UnknownProduct implements Product {
+public final class UnknownProduct implements Product {
 
     @Override
     public ProductId id() {
@@ -18,12 +18,12 @@ final class UnknownProduct implements Product {
 
     @Override
     public Code code() {
-        return new Code(UUID.randomUUID().toString());
+        return new Code("00000000-0000-0000-0000-000000000000");
     }
 
     @Override
     public Title title() {
-        return new Title("unknown");
+        return new Title("unknown product");
     }
 
     @Override
@@ -37,7 +37,22 @@ final class UnknownProduct implements Product {
     }
 
     @Override
+    public void changeTitle(Title title) {
+        throw new UnsupportedOperationException("Cannot change the title: unknown product.");
+    }
+
+    @Override
+    public void changeDescription(Description description) {
+        throw new UnsupportedOperationException("Cannot change the description: unknown product.");
+    }
+
+    @Override
     public void changePrice(Price price) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Cannot change the price: unknown product.");
+    }
+
+    @Override
+    public void putForSale() {
+        throw new UnsupportedOperationException("Cannot put for sale: unknown product.");
     }
 }

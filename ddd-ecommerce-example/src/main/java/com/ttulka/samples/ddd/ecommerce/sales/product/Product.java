@@ -12,5 +12,11 @@ public interface Product {
 
     Price price();
 
+    void changeTitle(Title title);
+
+    void changeDescription(Description description);
+
     void changePrice(Price price);
+
+    void putForSale();
 }

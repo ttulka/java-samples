@@ -10,6 +10,7 @@ import com.ttulka.samples.ddd.ecommerce.sales.product.Price;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Product;
 import com.ttulka.samples.ddd.ecommerce.sales.product.ProductId;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Title;
+import com.ttulka.samples.ddd.ecommerce.sales.product.UnknownProduct;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

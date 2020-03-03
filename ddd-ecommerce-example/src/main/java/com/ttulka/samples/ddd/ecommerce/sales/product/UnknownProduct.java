@@ -1,14 +1,8 @@
 package com.ttulka.samples.ddd.ecommerce.sales.product;
 
-import java.util.UUID;
+import lombok.ToString;
 
-import com.ttulka.samples.ddd.ecommerce.sales.product.Code;
-import com.ttulka.samples.ddd.ecommerce.sales.product.Description;
-import com.ttulka.samples.ddd.ecommerce.sales.product.Price;
-import com.ttulka.samples.ddd.ecommerce.sales.product.Product;
-import com.ttulka.samples.ddd.ecommerce.sales.product.ProductId;
-import com.ttulka.samples.ddd.ecommerce.sales.product.Title;
-
+@ToString
 public final class UnknownProduct implements Product {
 
     @Override

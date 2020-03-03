@@ -3,6 +3,7 @@ package com.ttulka.samples.ddd.ecommerce.catalogue;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.ttulka.samples.ddd.ecommerce.sales.category.Uri;
 import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Product;
 import com.ttulka.samples.ddd.ecommerce.warehouse.Warehouse;
@@ -21,8 +22,8 @@ public final class Catalogue {
                 .collect(Collectors.toList());
     }
 
-    public List<ProductData> productsInCategory(String categoryId) {
-        return findProducts.fromCategory(categoryId).stream()
+    public List<ProductData> productsInCategory(String categoryUri) {
+        return findProducts.fromCategory(new Uri(categoryUri)).stream()
                 .map(this::toData)
                 .collect(Collectors.toList());
     }

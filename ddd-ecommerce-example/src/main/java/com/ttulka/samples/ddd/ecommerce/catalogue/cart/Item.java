@@ -2,9 +2,11 @@ package com.ttulka.samples.ddd.ecommerce.catalogue.cart;
 
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 @RequiredArgsConstructor
 @EqualsAndHashCode
+@ToString
 public final class Item {
 
     private final String productId;

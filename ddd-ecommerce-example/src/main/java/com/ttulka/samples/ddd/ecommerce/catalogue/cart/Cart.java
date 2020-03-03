@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Product;
+import com.ttulka.samples.ddd.ecommerce.sales.product.ProductId;
 
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,8 @@ public final class Cart {
         return Collections.unmodifiableList(items);
     }
 
-    public void add(String productId, int amount) {
-        Product product = findProducts.byId(productId);
+    public void add(Long productId, int amount) {
+        Product product = findProducts.byId(new ProductId(productId));
         items.add(new Item(
                 product.id().value(),
                 product.title().value(),

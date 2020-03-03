@@ -1,8 +1,10 @@
 package com.ttulka.samples.ddd.ecommerce.catalogue.cart;
 
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @EqualsAndHashCode
+@ToString
 public final class Amount {
 
     private final int amount;

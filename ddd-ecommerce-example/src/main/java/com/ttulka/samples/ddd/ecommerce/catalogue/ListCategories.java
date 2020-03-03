@@ -3,18 +3,18 @@ package com.ttulka.samples.ddd.ecommerce.catalogue;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.ttulka.samples.ddd.ecommerce.sales.category.Categories;
 import com.ttulka.samples.ddd.ecommerce.sales.category.Category;
+import com.ttulka.samples.ddd.ecommerce.sales.category.FindCategories;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public final class ListCategories {
 
-    private final Categories categories;
+    private final FindCategories findCategories;
 
     public List<CategoryData> categories() {
-        return categories.all().stream()
+        return findCategories.all().stream()
                 .map(this::toData)
                 .collect(Collectors.toList());
     }

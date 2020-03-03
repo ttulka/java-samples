@@ -2,8 +2,10 @@ package com.ttulka.samples.ddd.ecommerce.sales.category;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
+import lombok.ToString;
 
 @EqualsAndHashCode
+@ToString
 public final class Title {
 
     private final String title;

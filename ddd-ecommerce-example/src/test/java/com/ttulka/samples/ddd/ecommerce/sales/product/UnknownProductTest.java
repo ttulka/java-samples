@@ -11,7 +11,7 @@ class UnknownProductTest {
     void unknown_product_has_values() {
         Product unknownProduct = new UnknownProduct();
 
-        assertThat(unknownProduct.id()).isNotNull();
+        assertThat(unknownProduct.id()).isEqualTo(new ProductId(-1L));
         assertThat(unknownProduct.code()).isNotNull();
         assertThat(unknownProduct.title()).isNotNull();
         assertThat(unknownProduct.description()).isNotNull();

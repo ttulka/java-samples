@@ -3,6 +3,7 @@ package com.ttulka.samples.ddd.ecommerce.sales.product.jdbc;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.ttulka.samples.ddd.ecommerce.sales.category.Uri;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Code;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Description;
 import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
@@ -35,30 +36,32 @@ final class ProductsJdbc implements FindProducts {
     }
 
     @Override
-    public List<Product> fromCategory(String categoryUri) {
+    public List<Product> fromCategory(Uri categoryUri) {
         return jdbcTemplate.query("SELECT p.id, p.code, p.title, p.description, p.price FROM products AS p " +
                                   "JOIN products_in_categories AS pc ON pc.product_id = p.id " +
                                   "JOIN categories AS c ON c.id = pc.category_id " +
                                   "WHERE c.uri = ? " +
                                   "ORDER BY p.id ASC",
-                                  new Object[]{categoryUri},
+                                  new Object[]{categoryUri.value()},
                                   BeanPropertyRowMapper.newInstance(ProductEntry.class)).stream()
                 .map(this::toProduct)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Product byId(String id) {
+    public Product byId(ProductId id) {
         try {
-            return toProduct(
-                    jdbcTemplate.queryForObject("SELECT id, code, title, description, price FROM products " +
-                                                "WHERE id = ?",
-                                                new Object[]{id},
-                                                BeanPropertyRowMapper.newInstance(ProductEntry.class))
-            );
-        } catch (DataAccessException e) {
-            return new UnknownProduct();
+            ProductEntry entry = jdbcTemplate.queryForObject(
+                    "SELECT id, code, title, description, price FROM products " +
+                    "WHERE id = ?",
+                    new Object[]{id.value()},
+                    BeanPropertyRowMapper.newInstance(ProductEntry.class));
+            if (entry != null) {
+                return toProduct(entry);
+            }
+        } catch (DataAccessException ignore) {
         }
+        return new UnknownProduct();
     }
 
     private Product toProduct(ProductEntry entry) {

@@ -41,7 +41,7 @@ class PutProductForSaleTest {
         );
         product.putForSale();
 
-        Product productFound = findProducts.byId("123");
+        Product productFound = findProducts.byId(new ProductId(123L));
 
         assertThat(productFound.id()).isEqualTo(new ProductId(123L));
     }

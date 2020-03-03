@@ -3,6 +3,7 @@ package com.ttulka.samples.ddd.ecommerce.sales.product.jdbc;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.ttulka.samples.ddd.ecommerce.sales.category.Uri;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Code;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Description;
 import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
@@ -42,7 +43,7 @@ class FindProductsTest {
 
     @Test
     void products_from_a_category_are_found() {
-        List<ProductId> productIds = findProducts.fromCategory("cat1").stream()
+        List<ProductId> productIds = findProducts.fromCategory(new Uri("cat1")).stream()
                 .map(Product::id)
                 .collect(Collectors.toList());
 
@@ -52,7 +53,7 @@ class FindProductsTest {
 
     @Test
     void product_by_id_is_found() {
-        Product product = findProducts.byId("1");
+        Product product = findProducts.byId(new ProductId(1L));
         assertAll(
                 () -> assertThat(product.id()).isEqualTo(new ProductId(1L)),
                 () -> assertThat(product.code()).isEqualTo(new Code("11111111-1111-1111-1111-111111111111")),
@@ -60,5 +61,12 @@ class FindProductsTest {
                 () -> assertThat(product.description()).isEqualTo(new Description("Prod 1 Desc")),
                 () -> assertThat(product.price()).isEqualTo(new Price(1.f))
         );
+    }
+
+    @Test
+    void unknown_product_found_for_unknown_id() {
+        Product product = findProducts.byId(new ProductId(123456789L));
+
+        assertThat(product.id()).isEqualTo(new ProductId(-1L));
     }
 }

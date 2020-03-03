@@ -4,6 +4,7 @@ import com.ttulka.samples.ddd.ecommerce.sales.product.Description;
 import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Price;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Product;
+import com.ttulka.samples.ddd.ecommerce.sales.product.ProductId;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Title;
 
 import org.junit.jupiter.api.Test;
@@ -26,30 +27,30 @@ class ChangeProductTest {
 
     @Test
     void product_title_is_changed() {
-        Product product = findProducts.byId("1");
+        Product product = findProducts.byId(new ProductId(1L));
         product.changeTitle(new Title("Updated title"));
 
-        Product productUpdated = findProducts.byId("1");
+        Product productUpdated = findProducts.byId(new ProductId(1L));
 
         assertThat(productUpdated.title()).isEqualTo(new Title("Updated title"));
     }
 
     @Test
     void product_description_is_changed() {
-        Product product = findProducts.byId("1");
+        Product product = findProducts.byId(new ProductId(1L));
         product.changeDescription(new Description("Updated description"));
 
-        Product productUpdated = findProducts.byId("1");
+        Product productUpdated = findProducts.byId(new ProductId(1L));
 
         assertThat(productUpdated.description()).isEqualTo(new Description("Updated description"));
     }
 
     @Test
     void product_price_is_changed() {
-        Product product = findProducts.byId("1");
+        Product product = findProducts.byId(new ProductId(1L));
         product.changePrice(new Price(100.5f));
 
-        Product productUpdated = findProducts.byId("1");
+        Product productUpdated = findProducts.byId(new ProductId(1L));
 
         assertThat(productUpdated.price()).isEqualTo(new Price(100.5f));
     }

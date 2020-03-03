@@ -1,7 +1,7 @@
 package com.ttulka.samples.ddd.ecommerce.catalogue;
 
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Cart;
-import com.ttulka.samples.ddd.ecommerce.sales.category.Categories;
+import com.ttulka.samples.ddd.ecommerce.sales.category.FindCategories;
 import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
 import com.ttulka.samples.ddd.ecommerce.warehouse.Warehouse;
 
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 class CatalogueConfig {
 
     @Bean
-    Catalogue catalogue(Categories categories, FindProducts findProducts, Warehouse warehouse) {
+    Catalogue catalogue(FindCategories findCategories, FindProducts findProducts, Warehouse warehouse) {
         return new Catalogue(findProducts, warehouse);
     }
 
@@ -22,7 +22,7 @@ class CatalogueConfig {
     }
 
     @Bean
-    ListCategories listCategories(Categories categories) {
-        return new ListCategories(categories);
+    ListCategories listCategories(FindCategories findCategories) {
+        return new ListCategories(findCategories);
     }
 }

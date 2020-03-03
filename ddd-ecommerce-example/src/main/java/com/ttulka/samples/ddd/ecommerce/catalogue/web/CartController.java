@@ -1,7 +1,7 @@
 package com.ttulka.samples.ddd.ecommerce.catalogue.web;
 
-import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Cart;
 import com.ttulka.samples.ddd.ecommerce.catalogue.ListCategories;
+import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Cart;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +29,7 @@ class CartController {
     }
 
     @PostMapping
-    public String add(@NonNull String productId, @NonNull Integer amount, Model model) {
+    public String add(@NonNull Long productId, @NonNull Integer amount, Model model) {
         cart.add(productId, amount);
 
         decorateLayout(model);

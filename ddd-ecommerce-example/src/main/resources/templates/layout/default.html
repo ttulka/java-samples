@@ -7,11 +7,11 @@
 </head>
 <body>
     <header id="header" layout:fragment="header">
-        <div th:if="${categories}" class="categories">
+        <nav th:if="${categories}" class="categories">
             <a href="/" class="home">&#127968;</a>
             <a th:each="category: ${categories}" th:href="'/category/' + ${category.uri}" th:text="${category.title}"></a>
             <a href="/cart" class="cart">shopping cart</a>
-        </div>
+        </nav>
     </header>
     <section id="content" layout:fragment="content">
         <!-- page content goes here -->

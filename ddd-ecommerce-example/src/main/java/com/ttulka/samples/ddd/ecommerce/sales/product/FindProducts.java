@@ -10,5 +10,5 @@ public interface FindProducts {
 
     List<Product> fromCategory(Uri categoryUri);
 
-    Product byId(ProductId id);
+    Product byCode(Code code);
 }

@@ -1,10 +1,10 @@
 package com.ttulka.samples.ddd.ecommerce.sales.product.jdbc;
 
+import com.ttulka.samples.ddd.ecommerce.sales.product.Code;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Description;
 import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Price;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Product;
-import com.ttulka.samples.ddd.ecommerce.sales.product.ProductId;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Title;
 
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @JdbcTest
 @ContextConfiguration(classes = ProductsJdbcConfig.class)
-@Sql(statements = "INSERT INTO products VALUES (1, '11111111-1111-1111-1111-111111111111', 'Test', 'Test', 1.00);")
+@Sql(statements = "INSERT INTO products VALUES (1, 'test-1', 'Test', 'Test', 1.00);")
 @Transactional
 class ChangeProductTest {
 
@@ -27,30 +27,30 @@ class ChangeProductTest {
 
     @Test
     void product_title_is_changed() {
-        Product product = findProducts.byId(new ProductId(1L));
+        Product product = findProducts.byCode(new Code("test-1"));
         product.changeTitle(new Title("Updated title"));
 
-        Product productUpdated = findProducts.byId(new ProductId(1L));
+        Product productUpdated = findProducts.byCode(new Code("test-1"));
 
         assertThat(productUpdated.title()).isEqualTo(new Title("Updated title"));
     }
 
     @Test
     void product_description_is_changed() {
-        Product product = findProducts.byId(new ProductId(1L));
+        Product product = findProducts.byCode(new Code("test-1"));
         product.changeDescription(new Description("Updated description"));
 
-        Product productUpdated = findProducts.byId(new ProductId(1L));
+        Product productUpdated = findProducts.byCode(new Code("test-1"));
 
         assertThat(productUpdated.description()).isEqualTo(new Description("Updated description"));
     }
 
     @Test
     void product_price_is_changed() {
-        Product product = findProducts.byId(new ProductId(1L));
+        Product product = findProducts.byCode(new Code("test-1"));
         product.changePrice(new Price(100.5f));
 
-        Product productUpdated = findProducts.byId(new ProductId(1L));
+        Product productUpdated = findProducts.byCode(new Code("test-1"));
 
         assertThat(productUpdated.price()).isEqualTo(new Price(100.5f));
     }

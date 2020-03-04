@@ -23,6 +23,6 @@ class DescriptionTest {
 
     @Test
     void description_fails_for_more_than_50_characters() {
-        assertThatThrownBy(() -> new Description(STRING_50_CHARS_LONG + "X"));
+        assertThatThrownBy(() -> new Description(STRING_50_CHARS_LONG + "X")).isInstanceOf(IllegalArgumentException.class);
     }
 }

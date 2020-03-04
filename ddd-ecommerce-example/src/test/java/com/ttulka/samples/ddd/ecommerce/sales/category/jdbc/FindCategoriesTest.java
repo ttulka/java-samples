@@ -52,6 +52,6 @@ class FindCategoriesTest {
     void unknown_category_found_for_unknown_id() {
         Category category = findCategories.byId(new CategoryId(123456789L));
 
-        assertThat(category.id()).isEqualTo(new CategoryId(-1L));
+        assertThat(category.id()).isEqualTo(new CategoryId(0));
     }
 }

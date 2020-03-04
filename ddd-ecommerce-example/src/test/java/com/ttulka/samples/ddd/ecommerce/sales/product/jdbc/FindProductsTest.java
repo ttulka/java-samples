@@ -52,8 +52,8 @@ class FindProductsTest {
     }
 
     @Test
-    void product_by_id_is_found() {
-        Product product = findProducts.byId(new ProductId(1L));
+    void product_by_code_is_found() {
+        Product product = findProducts.byCode(new Code("11111111-1111-1111-1111-111111111111"));
         assertAll(
                 () -> assertThat(product.id()).isEqualTo(new ProductId(1L)),
                 () -> assertThat(product.code()).isEqualTo(new Code("11111111-1111-1111-1111-111111111111")),
@@ -64,9 +64,9 @@ class FindProductsTest {
     }
 
     @Test
-    void unknown_product_found_for_unknown_id() {
-        Product product = findProducts.byId(new ProductId(123456789L));
+    void unknown_product_found_for_an_unknown_code() {
+        Product product = findProducts.byCode(new Code("there's no such a code"));
 
-        assertThat(product.id()).isEqualTo(new ProductId(-1L));
+        assertThat(product.id()).isEqualTo(new ProductId(0));
     }
 }

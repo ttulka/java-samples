@@ -9,6 +9,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class CodeTest {
 
+    private static final String STRING_50_CHARS_LONG = "01234567890123456789012345678901234567890123456789";
+
     @Test
     void code_value() {
         String uuid = UUID.randomUUID().toString();
@@ -34,7 +36,7 @@ class CodeTest {
     }
 
     @Test
-    void code_fails_for_a_wrong_format() {
-        assertThatThrownBy(() -> new Code("wrong"));
+    void code_fails_for_more_than_50_characters() {
+        assertThatThrownBy(() -> new Code(STRING_50_CHARS_LONG + "X")).isInstanceOf(IllegalArgumentException.class);
     }
 }

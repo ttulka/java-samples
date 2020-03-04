@@ -1,27 +1,31 @@
 package com.ttulka.samples.ddd.ecommerce.catalogue.cart;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
-@RequiredArgsConstructor
-@EqualsAndHashCode
+@AllArgsConstructor
+@EqualsAndHashCode(of = "productCode")
 @ToString
 public final class Item {
 
-    private final String productId;
+    private final String productCode;
     private final String title;
-    private final Amount amount;
+    private Amount amount;
 
-    public String productId() {
-        return productId;
+    public String productCode() {
+        return productCode;
     }
 
     public String title() {
         return title;
     }
 
-    public int amount() {
-        return amount.value();
+    public Amount amount() {
+        return amount;
+    }
+
+    public void add(Amount addend) {
+        amount = amount.add(addend);
     }
 }

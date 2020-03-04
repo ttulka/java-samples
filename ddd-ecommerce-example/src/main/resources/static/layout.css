@@ -55,3 +55,7 @@ body {
     font-style: italic;
     color: darkgreen;
 }
+
+.cart .item td {
+    border-bottom: 1px solid grey;
+}

@@ -7,7 +7,7 @@ public final class UnknownCategory implements Category {
 
     @Override
     public CategoryId id() {
-        return new CategoryId(-1L);
+        return new CategoryId(0);
     }
 
     @Override

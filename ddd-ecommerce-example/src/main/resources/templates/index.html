@@ -7,15 +7,17 @@
         <h1>Catalogue</h1>
 
         <form th:action="@{/cart}" method="post">
-        <table th:if="${products}" class="products" cellpadding="10" cellspacing="0" border="0">
-            <tr th:each="product: ${products}" class="product">
-                <th th:text="${product.title}" />
-                <td th:text="${product.description}" />
-                <td th:text="${product.inStock} > 0 ? ${product.inStock} + ' left in stock' : 'sold out'" class="stock" />
-                <td th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 2)}" class="price" />
-                <td><button th:value="${product.id}" type="submit">buy</button></td>
-            </tr>
-        </table>
+            <input name="amount" value="1" type="hidden">
+
+            <table th:if="${products}" class="products" cellpadding="10" cellspacing="0" border="0">
+                <tr th:each="product: ${products}" class="product">
+                    <th th:text="${product.title}" />
+                    <td th:text="${product.description}" />
+                    <td th:text="${product.inStock} > 0 ? ${product.inStock} + ' left in stock' : 'sold out'" class="stock" />
+                    <td th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 2)}" class="price" />
+                    <td><button name="productId" th:value="${product.id}" type="submit">buy</button></td>
+                </tr>
+            </table>
         </form>
 
     </section>

@@ -7,12 +7,12 @@ public final class UnknownProduct implements Product {
 
     @Override
     public ProductId id() {
-        return new ProductId(-1L);
+        return new ProductId(0);
     }
 
     @Override
     public Code code() {
-        return new Code("00000000-0000-0000-0000-000000000000");
+        return new Code("000");
     }
 
     @Override

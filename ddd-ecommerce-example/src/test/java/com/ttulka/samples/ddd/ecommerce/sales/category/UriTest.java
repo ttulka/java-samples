@@ -31,6 +31,6 @@ class UriTest {
 
     @Test
     void uri_fails_for_more_than_20_characters() {
-        assertThatThrownBy(() -> new Uri("01234567890123456789X"));
+        assertThatThrownBy(() -> new Uri("01234567890123456789X")).isInstanceOf(IllegalArgumentException.class);
     }
 }

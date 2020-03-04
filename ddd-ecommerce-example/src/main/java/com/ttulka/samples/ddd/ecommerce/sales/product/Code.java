@@ -11,8 +11,11 @@ public final class Code {
     private final String code;
 
     public Code(@NonNull String code) {
-        if (code.trim().length() != 36) {
-            throw new IllegalArgumentException("Code must be exactly 36 characters long!");
+        if (code.trim().isEmpty()) {
+            throw new IllegalArgumentException("Code cannot be empty!");
+        }
+        if (code.trim().length() > 50) {
+            throw new IllegalArgumentException("Code cannot be longer than 50 characters!");
         }
         this.code = code.trim();
     }

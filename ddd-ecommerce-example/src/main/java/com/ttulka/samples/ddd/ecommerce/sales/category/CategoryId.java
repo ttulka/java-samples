@@ -1,6 +1,7 @@
 package com.ttulka.samples.ddd.ecommerce.sales.category;
 
 import lombok.EqualsAndHashCode;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
@@ -9,9 +10,9 @@ import lombok.ToString;
 @ToString
 public final class CategoryId {
 
-    private final Long id;
+    private final @NonNull Object id;
 
-    public String value() {
-        return id.toString();
+    public Object value() {
+        return id;
     }
 }

@@ -31,9 +31,10 @@ class PutProductForSaleTest {
 
     @Test
     void product_put_for_sale_is_found() {
+        String code = UUID.randomUUID().toString();
         Product product = new ProductJdbc(
                 new ProductId(123L),
-                new Code(UUID.randomUUID().toString()),
+                new Code(code),
                 new Title("test"),
                 new Description("test"),
                 new Price(1.f),
@@ -41,7 +42,7 @@ class PutProductForSaleTest {
         );
         product.putForSale();
 
-        Product productFound = findProducts.byId(new ProductId(123L));
+        Product productFound = findProducts.byCode(new Code(code));
 
         assertThat(productFound.id()).isEqualTo(new ProductId(123L));
     }

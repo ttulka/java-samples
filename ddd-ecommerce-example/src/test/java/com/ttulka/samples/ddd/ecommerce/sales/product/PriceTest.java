@@ -21,6 +21,6 @@ class PriceTest {
 
     @Test
     void price_fails_for_a_negative_value() {
-        assertThatThrownBy(() -> new Price(-12.34f));
+        assertThatThrownBy(() -> new Price(-12.34f)).isInstanceOf(IllegalArgumentException.class);
     }
 }

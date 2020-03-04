@@ -49,12 +49,12 @@ final class ProductsJdbc implements FindProducts {
     }
 
     @Override
-    public Product byId(ProductId id) {
+    public Product byCode(Code code) {
         try {
             ProductEntry entry = jdbcTemplate.queryForObject(
                     "SELECT id, code, title, description, price FROM products " +
-                    "WHERE id = ?",
-                    new Object[]{id.value()},
+                    "WHERE code = ?",
+                    new Object[]{code.value()},
                     BeanPropertyRowMapper.newInstance(ProductEntry.class));
             if (entry != null) {
                 return toProduct(entry);

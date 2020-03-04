@@ -29,7 +29,7 @@ public final class Catalogue {
     }
 
     private ProductData toData(Product product) {
-        String productId = product.id().value();
+        String productId = product.id().value().toString();
         return new ProductData(
                 productId,
                 product.title().value(),

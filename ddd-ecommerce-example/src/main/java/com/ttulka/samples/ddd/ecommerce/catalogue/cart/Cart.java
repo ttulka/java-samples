@@ -30,4 +30,8 @@ public final class Cart {
             items.add(item);
         }
     }
+
+    public void empty() {
+        items.clear();
+    }
 }

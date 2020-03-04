@@ -1,6 +1,9 @@
-package com.ttulka.samples.ddd.ecommerce.catalogue.cart;
+package com.ttulka.samples.ddd.ecommerce.catalogue;
 
 import java.util.List;
+
+import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Cart;
+import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Item;
 
 import lombok.RequiredArgsConstructor;
 

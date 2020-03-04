@@ -2,10 +2,10 @@ package com.ttulka.samples.ddd.ecommerce.catalogue.web;
 
 import java.util.Map;
 
-import com.ttulka.samples.ddd.ecommerce.catalogue.ListCategories;
-import com.ttulka.samples.ddd.ecommerce.catalogue.cart.AddIntoCart;
+import com.ttulka.samples.ddd.ecommerce.catalogue.AddIntoCart;
+import com.ttulka.samples.ddd.ecommerce.catalogue.Catalogue;
+import com.ttulka.samples.ddd.ecommerce.catalogue.ListCart;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Item;
-import com.ttulka.samples.ddd.ecommerce.catalogue.cart.ListCart;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -22,9 +22,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 class CartController {
 
+    private final Catalogue catalogue;
+
     private final AddIntoCart addIntoCart;
     private final ListCart listCart;
-    private final ListCategories listCategories;
 
     @GetMapping
     public String index(Model model) {
@@ -38,7 +39,7 @@ class CartController {
 
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String add(@NonNull String productCode, @NonNull Integer amount, Model model) {
-        addIntoCart.item(productCode, amount);
+        addIntoCart.product(productCode, amount);
         return index(model);
     }
 
@@ -49,6 +50,6 @@ class CartController {
     }
 
     private void decorateLayout(Model model) {
-        model.addAttribute("categories", listCategories.categories());
+        model.addAttribute("categories", catalogue.categories());
     }
 }

@@ -1,7 +1,6 @@
 package com.ttulka.samples.ddd.ecommerce.catalogue.web;
 
 import com.ttulka.samples.ddd.ecommerce.catalogue.Catalogue;
-import com.ttulka.samples.ddd.ecommerce.catalogue.ListCategories;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 class CatalogueController {
 
     private final Catalogue catalogue;
-    private final ListCategories listCategories;
 
     @GetMapping("/")
     public String index(Model model) {
@@ -35,6 +33,6 @@ class CatalogueController {
     }
 
     private void decorateLayout(Model model) {
-        model.addAttribute("categories", listCategories.categories());
+        model.addAttribute("categories", catalogue.categories());
     }
 }

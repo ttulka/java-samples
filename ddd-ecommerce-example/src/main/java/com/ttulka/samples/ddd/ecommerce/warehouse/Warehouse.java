@@ -1,6 +1,8 @@
 package com.ttulka.samples.ddd.ecommerce.warehouse;
 
+import com.ttulka.samples.ddd.ecommerce.sales.product.ProductId;
+
 public interface Warehouse {
 
-    int leftInStock(String productId);
+    InStock leftInStock(ProductId productId);
 }

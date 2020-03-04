@@ -1,7 +1,10 @@
 package com.ttulka.samples.ddd.ecommerce.warehouse.jdbc;
 
+import com.ttulka.samples.ddd.ecommerce.sales.product.ProductId;
+import com.ttulka.samples.ddd.ecommerce.warehouse.InStock;
 import com.ttulka.samples.ddd.ecommerce.warehouse.Warehouse;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import lombok.RequiredArgsConstructor;
@@ -12,12 +15,18 @@ final class WarehouseJdbc implements Warehouse {
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public int leftInStock(String productId) {
-        Integer leftInStock = jdbcTemplate.queryForObject(
-                "SELECT amount FROM products_in_stock " +
-                "WHERE product_id = ?",
-                new Object[]{productId},
-                Integer.class);
-        return leftInStock != null ? leftInStock : 0;
+    public InStock leftInStock(ProductId productId) {
+        try {
+            Integer leftInStock = jdbcTemplate.queryForObject(
+                    "SELECT amount FROM products_in_stock " +
+                    "WHERE product_id = ?",
+                    new Object[]{productId.value()},
+                    Integer.class);
+            if (leftInStock != null) {
+                return new InStock(leftInStock);
+            }
+        } catch (DataAccessException ignore) {
+        }
+        return new InStock(0);
     }
 }

@@ -53,4 +53,14 @@ class CartTest {
                 () -> assertThat(cart.items().get(1).amount()).isEqualTo(new Amount(321))
         );
     }
+
+    @Test
+    void cart_is_emptied() {
+        Cart cart = new Cart();
+        cart.add(new Item("test-1", "Test 1", new Amount(123)));
+        cart.add(new Item("test-2", "Test 2", new Amount(321)));
+        cart.empty();
+
+        assertThat(cart.items()).isEmpty();
+    }
 }

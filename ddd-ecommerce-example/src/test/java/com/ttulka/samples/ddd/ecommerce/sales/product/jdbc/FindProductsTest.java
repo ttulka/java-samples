@@ -53,10 +53,10 @@ class FindProductsTest {
 
     @Test
     void product_by_code_is_found() {
-        Product product = findProducts.byCode(new Code("11111111-1111-1111-1111-111111111111"));
+        Product product = findProducts.byCode(new Code("001"));
         assertAll(
                 () -> assertThat(product.id()).isEqualTo(new ProductId(1L)),
-                () -> assertThat(product.code()).isEqualTo(new Code("11111111-1111-1111-1111-111111111111")),
+                () -> assertThat(product.code()).isEqualTo(new Code("001")),
                 () -> assertThat(product.title()).isEqualTo(new Title("Prod 1")),
                 () -> assertThat(product.description()).isEqualTo(new Description("Prod 1 Desc")),
                 () -> assertThat(product.price()).isEqualTo(new Price(1.f))

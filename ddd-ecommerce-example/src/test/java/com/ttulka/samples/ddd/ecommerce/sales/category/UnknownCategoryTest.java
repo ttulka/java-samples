@@ -3,8 +3,8 @@ package com.ttulka.samples.ddd.ecommerce.sales.category;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class UnknownCategoryTest {
 
@@ -21,6 +21,6 @@ class UnknownCategoryTest {
     @Test
     void change_title_fails() {
         Category unknownCategory = new UnknownCategory();
-        assertThatThrownBy(() -> unknownCategory.changeTitle(new Title("test")));
+        assertThrows(UnsupportedOperationException.class, () -> unknownCategory.changeTitle(new Title("test")));
     }
 }

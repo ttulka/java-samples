@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class CodeTest {
 
@@ -27,16 +27,16 @@ class CodeTest {
 
     @Test
     void code_fails_for_a_null_value() {
-        assertThatThrownBy(() -> new Code(null)).isInstanceOf(IllegalArgumentException.class);
+        assertThrows(IllegalArgumentException.class, () -> new Code(null));
     }
 
     @Test
     void code_fails_for_an_empty_string() {
-        assertThatThrownBy(() -> new Code("")).isInstanceOf(IllegalArgumentException.class);
+        assertThrows(IllegalArgumentException.class, () -> new Code(""));
     }
 
     @Test
     void code_fails_for_more_than_50_characters() {
-        assertThatThrownBy(() -> new Code(STRING_50_CHARS_LONG + "X")).isInstanceOf(IllegalArgumentException.class);
+        assertThrows(IllegalArgumentException.class, () -> new Code(STRING_50_CHARS_LONG + "X"));
     }
 }

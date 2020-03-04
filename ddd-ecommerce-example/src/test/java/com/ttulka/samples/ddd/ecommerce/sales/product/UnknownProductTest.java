@@ -3,8 +3,8 @@ package com.ttulka.samples.ddd.ecommerce.sales.product;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class UnknownProductTest {
 
@@ -29,24 +29,24 @@ class UnknownProductTest {
     @Test
     void change_title_fails() {
         Product unknownProduct = new UnknownProduct();
-        assertThatThrownBy(() -> unknownProduct.changeTitle(new Title("test")));
+        assertThrows(UnsupportedOperationException.class, () -> unknownProduct.changeTitle(new Title("test")));
     }
 
     @Test
     void change_description_fails() {
         Product unknownProduct = new UnknownProduct();
-        assertThatThrownBy(() -> unknownProduct.changeDescription(new Description("test")));
+        assertThrows(UnsupportedOperationException.class, () -> unknownProduct.changeDescription(new Description("test")));
     }
 
     @Test
     void change_price_fails() {
         Product unknownProduct = new UnknownProduct();
-        assertThatThrownBy(() -> unknownProduct.changePrice(new Price(1.f)));
+        assertThrows(UnsupportedOperationException.class, () -> unknownProduct.changePrice(new Price(1.f)));
     }
 
     @Test
     void put_for_sale_fails() {
         Product unknownProduct = new UnknownProduct();
-        assertThatThrownBy(() -> unknownProduct.putForSale());
+        assertThrows(UnsupportedOperationException.class, () -> unknownProduct.putForSale());
     }
 }

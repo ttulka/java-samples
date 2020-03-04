@@ -1,7 +1,5 @@
 package com.ttulka.samples.ddd.ecommerce.catalogue.cart;
 
-import com.ttulka.samples.ddd.ecommerce.sales.product.ProductId;
-
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

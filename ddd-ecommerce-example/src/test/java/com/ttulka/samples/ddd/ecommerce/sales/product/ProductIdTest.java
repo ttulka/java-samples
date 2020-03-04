@@ -3,7 +3,7 @@ package com.ttulka.samples.ddd.ecommerce.sales.product;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ProductIdTest {
 
@@ -15,6 +15,6 @@ class ProductIdTest {
 
     @Test
     void fails_for_null() {
-        assertThatThrownBy(() -> new ProductId(null)).isInstanceOf(IllegalArgumentException.class);
+        assertThrows(IllegalArgumentException.class, () -> new ProductId(null));
     }
 }

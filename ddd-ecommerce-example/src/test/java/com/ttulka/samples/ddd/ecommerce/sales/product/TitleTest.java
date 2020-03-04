@@ -3,7 +3,7 @@ package com.ttulka.samples.ddd.ecommerce.sales.product;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class TitleTest {
 
@@ -21,16 +21,16 @@ class TitleTest {
 
     @Test
     void title_fails_for_a_null_value() {
-        assertThatThrownBy(() -> new Title(null)).isInstanceOf(IllegalArgumentException.class);
+        assertThrows(IllegalArgumentException.class, () -> new Title(null));
     }
 
     @Test
     void title_fails_for_an_empty_string() {
-        assertThatThrownBy(() -> new Title("")).isInstanceOf(IllegalArgumentException.class);
+        assertThrows(IllegalArgumentException.class, () -> new Title(""));
     }
 
     @Test
     void title_fails_for_more_than_20_characters() {
-        assertThatThrownBy(() -> new Title("01234567890123456789X")).isInstanceOf(IllegalArgumentException.class);
+        assertThrows(IllegalArgumentException.class, () -> new Title("01234567890123456789X"));
     }
 }

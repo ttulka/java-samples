@@ -3,7 +3,7 @@ package com.ttulka.samples.ddd.ecommerce.sales.product;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class DescriptionTest {
 
@@ -23,6 +23,6 @@ class DescriptionTest {
 
     @Test
     void description_fails_for_more_than_50_characters() {
-        assertThatThrownBy(() -> new Description(STRING_50_CHARS_LONG + "X")).isInstanceOf(IllegalArgumentException.class);
+        assertThrows(IllegalArgumentException.class, () -> new Description(STRING_50_CHARS_LONG + "X"));
     }
 }

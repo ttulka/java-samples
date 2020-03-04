@@ -3,7 +3,8 @@ package com.ttulka.samples.ddd.ecommerce.catalogue.cart;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class AmountTest {
 
@@ -15,8 +16,10 @@ class AmountTest {
 
     @Test
     void amount_fails_for_a_value_less_than_one() {
-        assertThatThrownBy(() -> new Amount(0)).isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> new Amount(-1)).isInstanceOf(IllegalArgumentException.class);
+        assertAll(
+                () -> assertThrows(IllegalArgumentException.class, () -> new Amount(0)),
+                () -> assertThrows(IllegalArgumentException.class, () -> new Amount(-1))
+        );
     }
 
     @Test

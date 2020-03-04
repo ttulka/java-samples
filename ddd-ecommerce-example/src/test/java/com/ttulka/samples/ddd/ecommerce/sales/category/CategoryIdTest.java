@@ -3,7 +3,7 @@ package com.ttulka.samples.ddd.ecommerce.sales.category;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class CategoryIdTest {
 
@@ -15,6 +15,6 @@ class CategoryIdTest {
 
     @Test
     void fails_for_null() {
-        assertThatThrownBy(() -> new CategoryId(null)).isInstanceOf(IllegalArgumentException.class);
+        assertThrows(IllegalArgumentException.class, () -> new CategoryId(null));
     }
 }

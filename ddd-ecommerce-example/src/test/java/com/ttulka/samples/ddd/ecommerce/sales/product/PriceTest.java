@@ -3,7 +3,7 @@ package com.ttulka.samples.ddd.ecommerce.sales.product;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PriceTest {
 
@@ -21,6 +21,6 @@ class PriceTest {
 
     @Test
     void price_fails_for_a_negative_value() {
-        assertThatThrownBy(() -> new Price(-12.34f)).isInstanceOf(IllegalArgumentException.class);
+        assertThrows(IllegalArgumentException.class, () -> new Price(-12.34f));
     }
 }

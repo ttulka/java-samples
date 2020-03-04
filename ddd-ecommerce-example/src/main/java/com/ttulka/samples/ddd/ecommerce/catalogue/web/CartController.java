@@ -1,12 +1,11 @@
 package com.ttulka.samples.ddd.ecommerce.catalogue.web;
 
+import java.util.Map;
+
 import com.ttulka.samples.ddd.ecommerce.catalogue.ListCategories;
-import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Amount;
-import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Cart;
+import com.ttulka.samples.ddd.ecommerce.catalogue.cart.AddIntoCart;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Item;
-import com.ttulka.samples.ddd.ecommerce.sales.product.Code;
-import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
-import com.ttulka.samples.ddd.ecommerce.sales.product.Product;
+import com.ttulka.samples.ddd.ecommerce.catalogue.cart.ListCart;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -23,24 +22,30 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 class CartController {
 
-    private final Cart cart = new Cart(); // TODO
+    private final AddIntoCart addIntoCart;
+    private final ListCart listCart;
     private final ListCategories listCategories;
-    private final FindProducts findProducts;
 
     @GetMapping
     public String index(Model model) {
-        model.addAttribute("items", cart.items());
-
+        model.addAttribute("items", listCart.items().stream()
+                .map(this::toData)
+                .toArray()
+        );
         decorateLayout(model);
         return "cart";
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String add(@NonNull String productCode, @NonNull Integer amount, Model model) {
-        Product product = findProducts.byCode(new Code(productCode));
-        cart.add(new Item(product.code().value(), product.title().value(), new Amount(amount)));
-
+        addIntoCart.item(productCode, amount);
         return index(model);
+    }
+
+    private Map<String, Object> toData(Item item) {
+        return Map.of("code", item.productCode(),
+                      "title", item.title(),
+                      "amount", item.amount().value());
     }
 
     private void decorateLayout(Model model) {

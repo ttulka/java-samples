@@ -31,7 +31,7 @@ public final class Catalogue {
     private ProductData toData(Product product) {
         String productId = product.id().value().toString();
         return new ProductData(
-                productId,
+                product.code().value(),
                 product.title().value(),
                 product.description().value(),
                 product.price().value(),
@@ -42,7 +42,7 @@ public final class Catalogue {
     @RequiredArgsConstructor
     static class ProductData {
 
-        public final String id;
+        public final String code;
         public final String title;
         public final String description;
         public final float price;

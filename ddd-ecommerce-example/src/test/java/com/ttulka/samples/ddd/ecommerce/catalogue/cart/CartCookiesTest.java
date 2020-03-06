@@ -20,7 +20,7 @@ class CartCookiesTest {
     @Test
     void item_is_added() {
         Cart cart = new CartCookies(new MockHttpServletRequest(), new MockHttpServletResponse());
-        cart.add(new Item("test-1", "Test 1", new Amount(123)));
+        cart.add(new CartItem("test-1", "Test 1", new Amount(123)));
         assertAll(
                 () -> assertThat(cart.items()).hasSize(1),
                 () -> assertThat(cart.items().get(0).productCode()).isEqualTo("test-1"),
@@ -32,8 +32,8 @@ class CartCookiesTest {
     @Test
     void amount_is_increased() {
         Cart cart = new CartCookies(new MockHttpServletRequest(), new MockHttpServletResponse());
-        cart.add(new Item("test-1", "Test 1", new Amount(123)));
-        cart.add(new Item("test-1", "Test 1", new Amount(321)));
+        cart.add(new CartItem("test-1", "Test 1", new Amount(123)));
+        cart.add(new CartItem("test-1", "Test 1", new Amount(321)));
         assertAll(
                 () -> assertThat(cart.items()).hasSize(1),
                 () -> assertThat(cart.items().get(0).productCode()).isEqualTo("test-1"),
@@ -45,8 +45,8 @@ class CartCookiesTest {
     @Test
     void multiple_items_are_added() {
         Cart cart = new CartCookies(new MockHttpServletRequest(), new MockHttpServletResponse());
-        cart.add(new Item("test-1", "Test 1", new Amount(123)));
-        cart.add(new Item("test-2", "Test 2", new Amount(321)));
+        cart.add(new CartItem("test-1", "Test 1", new Amount(123)));
+        cart.add(new CartItem("test-2", "Test 2", new Amount(321)));
         assertAll(
                 () -> assertThat(cart.items()).hasSize(2),
                 () -> assertThat(cart.items().get(0).productCode()).isEqualTo("test-1"),
@@ -61,8 +61,8 @@ class CartCookiesTest {
     @Test
     void item_is_removed() {
         Cart cart = new CartCookies(new MockHttpServletRequest(), new MockHttpServletResponse());
-        cart.add(new Item("test-1", "Test 1", new Amount(123)));
-        cart.add(new Item("test-2", "Test 2", new Amount(321)));
+        cart.add(new CartItem("test-1", "Test 1", new Amount(123)));
+        cart.add(new CartItem("test-2", "Test 2", new Amount(321)));
 
         cart.remove("test-1");
         assertAll(
@@ -76,8 +76,8 @@ class CartCookiesTest {
     @Test
     void cart_is_emptied() {
         Cart cart = new CartCookies(new MockHttpServletRequest(), new MockHttpServletResponse());
-        cart.add(new Item("test-1", "Test 1", new Amount(123)));
-        cart.add(new Item("test-2", "Test 2", new Amount(321)));
+        cart.add(new CartItem("test-1", "Test 1", new Amount(123)));
+        cart.add(new CartItem("test-2", "Test 2", new Amount(321)));
         cart.empty();
 
         assertThat(cart.items()).isEmpty();

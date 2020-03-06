@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Amount;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Cart;
-import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Item;
+import com.ttulka.samples.ddd.ecommerce.catalogue.cart.CartItem;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -38,20 +38,20 @@ public final class CartCookies implements Cart {
     }
 
     @Override
-    public List<Item> items() {
+    public List<CartItem> items() {
         return Collections.unmodifiableList(parsedItems(cookie));
     }
 
     @Override
-    public void add(@NonNull Item toAdd) {
-        List<Item> currentItems = parsedItems(cookie);
+    public void add(@NonNull CartItem toAdd) {
+        List<CartItem> currentItems = parsedItems(cookie);
 
         Amount alreadyInCart = currentItems.stream()
                 .filter(toAdd::equals)
-                .map(Item::amount)
+                .map(CartItem::amount)
                 .findAny().orElse(new Amount(0));
 
-        List<Item> items = new ArrayList<>(
+        List<CartItem> items = new ArrayList<>(
                 currentItems.stream()
                         .filter(Predicate.not(toAdd::equals))
                         .collect(Collectors.toList()));
@@ -85,16 +85,16 @@ public final class CartCookies implements Cart {
     }
 
     // TODO ItemCookie will implement this later:
-    private List<Item> parsedItems(String cookie) {
+    private List<CartItem> parsedItems(String cookie) {
         return Arrays.stream(cookie.split("#"))
                 .filter(Predicate.not(String::isBlank))
                 .map(this::parseItem)
                 .collect(Collectors.toList());
     }
 
-    private Item parseItem(String cookie) {
+    private CartItem parseItem(String cookie) {
         String[] item = cookie.split("\\|");
-        return new Item(item[0], item[1].replace("_", " "), new Amount(Integer.parseInt(item[2])));
+        return new CartItem(item[0], item[1].replace("_", " "), new Amount(Integer.parseInt(item[2])));
     }
 
     private Cookie cartCookie(String value) {

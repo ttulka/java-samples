@@ -10,7 +10,7 @@ import lombok.ToString;
 @EqualsAndHashCode(of = "productCode")
 @ToString
 @Builder(toBuilder = true, access = AccessLevel.PACKAGE)
-public final class Item {
+public final class CartItem {
 
     private final String productCode;
     private final String title;
@@ -28,7 +28,7 @@ public final class Item {
         return amount;
     }
 
-    public Item add(Amount addend) {
+    public CartItem add(Amount addend) {
         return toBuilder()
                 .amount(amount.add(addend))
                 .build();

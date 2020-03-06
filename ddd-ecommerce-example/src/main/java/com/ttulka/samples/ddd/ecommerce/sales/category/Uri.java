@@ -11,7 +11,7 @@ public final class Uri {
     private final String uri;
 
     public Uri(@NonNull String uri) {
-        if (uri.trim().isEmpty()) {
+        if (uri.isBlank()) {
             throw new IllegalArgumentException("URI cannot be empty!");
         }
         if (uri.trim().length() > 20) {

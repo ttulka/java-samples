@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class ItemTest {
+class CartItemTest {
 
     @Test
     void gets_attributes_as_primitives_for_the_UI() {
-        Item item = new Item(
+        CartItem item = new CartItem(
                 "test-1",
                 "Test",
                 new Amount(123)
@@ -23,12 +23,12 @@ class ItemTest {
 
     @Test
     void item_with_increased_amount_is_returned() {
-        Item item = new Item(
+        CartItem item = new CartItem(
                 "test-1",
                 "Test",
                 new Amount(123)
         );
-        Item increased = item.add(new Amount(321));
+        CartItem increased = item.add(new Amount(321));
 
         assertThat(increased.amount()).isEqualTo(new Amount(444));
     }

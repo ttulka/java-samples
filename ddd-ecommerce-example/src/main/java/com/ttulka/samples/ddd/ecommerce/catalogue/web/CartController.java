@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.ttulka.samples.ddd.ecommerce.catalogue.AddIntoCart;
 import com.ttulka.samples.ddd.ecommerce.catalogue.ListCart;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Cart;
-import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Item;
+import com.ttulka.samples.ddd.ecommerce.catalogue.cart.CartItem;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.cookies.CartCookies;
 import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
 
@@ -53,7 +53,7 @@ class CartController {
         return "redirect:/cart";
     }
 
-    private Map<String, Object> toData(Item item) {
+    private Map<String, Object> toData(CartItem item) {
         return Map.of("code", item.productCode(),
                       "title", item.title(),
                       "amount", item.amount().value());

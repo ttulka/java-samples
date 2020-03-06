@@ -11,7 +11,7 @@ public final class Code {
     private final String code;
 
     public Code(@NonNull String code) {
-        if (code.trim().isEmpty()) {
+        if (code.isBlank()) {
             throw new IllegalArgumentException("Code cannot be empty!");
         }
         if (code.trim().length() > 50) {

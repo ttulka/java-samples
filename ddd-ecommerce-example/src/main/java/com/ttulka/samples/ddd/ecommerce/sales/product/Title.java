@@ -11,7 +11,7 @@ public final class Title {
     private final String title;
 
     public Title(@NonNull String title) {
-        if (title.trim().isEmpty()) {
+        if (title.isBlank()) {
             throw new IllegalArgumentException("Title cannot be empty!");
         }
         if (title.trim().length() > 20) {

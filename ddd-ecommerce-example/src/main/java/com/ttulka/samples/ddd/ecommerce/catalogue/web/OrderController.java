@@ -3,8 +3,12 @@ package com.ttulka.samples.ddd.ecommerce.catalogue.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ttulka.samples.ddd.ecommerce.catalogue.CreateNewOrder;
+import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Cart;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.cookies.CartCookies;
+import com.ttulka.samples.ddd.ecommerce.catalogue.order.Address;
+import com.ttulka.samples.ddd.ecommerce.catalogue.order.Customer;
+import com.ttulka.samples.ddd.ecommerce.catalogue.order.Name;
+import com.ttulka.samples.ddd.ecommerce.catalogue.order.Order;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -27,8 +31,10 @@ class OrderController {
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String newOrder(String name, String address,
                            HttpServletRequest request, HttpServletResponse response) {
-        new CreateNewOrder(new CartCookies(request, response))
-                .forCustomer(name, address);
+        Cart cart = new CartCookies(request, response);
+        new Order(/* TODO */,
+                new Customer(new Name(name), new Address(address)))
+                .sumbit();
 
         return "redirect:/order/success";
     }

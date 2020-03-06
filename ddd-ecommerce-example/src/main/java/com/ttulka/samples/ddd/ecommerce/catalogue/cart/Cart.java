@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface Cart {
 
-    List<Item> items();
+    List<CartItem> items();
 
-    void add(Item toAdd);
+    void add(CartItem toAdd);
 
     void remove(String productCode);
 

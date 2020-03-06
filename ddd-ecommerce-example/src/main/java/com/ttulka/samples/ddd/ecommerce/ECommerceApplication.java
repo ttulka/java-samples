@@ -2,9 +2,12 @@ package com.ttulka.samples.ddd.ecommerce;
 
 import javax.sql.DataSource;
 
+import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
@@ -17,6 +20,11 @@ public class ECommerceApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ECommerceApplication.class, args);
+    }
+
+    @Bean
+    EventPublisher eventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+        return applicationEventPublisher::publishEvent;
     }
 
     @Bean

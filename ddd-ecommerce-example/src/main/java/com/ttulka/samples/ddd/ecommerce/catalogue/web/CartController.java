@@ -36,7 +36,7 @@ class CartController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String add(@NonNull String productCode, @NonNull Integer amount, Model model,
+    public String add(@NonNull String productCode, @NonNull Integer amount,
                       HttpServletRequest request, HttpServletResponse response) {
         Cart cart = new CartCookies(request, response);
         new AddIntoCart(cart, findProducts).product(productCode, amount);
@@ -45,7 +45,7 @@ class CartController {
     }
 
     @GetMapping("/remove")
-    public String remove(@NonNull String productCode, Model model,
+    public String remove(@NonNull String productCode,
                          HttpServletRequest request, HttpServletResponse response) {
         Cart cart = new CartCookies(request, response);
         cart.remove(productCode);

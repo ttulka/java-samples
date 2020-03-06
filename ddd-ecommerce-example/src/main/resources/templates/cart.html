@@ -6,15 +6,22 @@
 
         <h1>Shopping Cart</h1>
 
-        <table th:if="${items}" class="cart" cellpadding="10" cellspacing="0" border="0">
-            <tr th:each="item: ${items}" class="item">
-                <td th:text="${item.title}" />
-                <td th:text="${item.amount}" />
-                <td class="remove">
-                    <a th:href="'/cart/remove?productCode=' + ${item.code}">&#x2718;</a>
-                </td>
-            </tr>
-        </table>
+        <div th:unless="${#lists.isEmpty(items)}" class="cart">
+
+            <table cellpadding="10" cellspacing="0" border="0">
+                <tr th:each="item: ${items}" class="item">
+                    <td th:text="${item.title}" />
+                    <td th:text="${item.amount}" />
+                    <td class="remove">
+                        <a th:href="@{/cart/remove?productCode=__${item.code}__}">&#x2718;</a>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="order">
+                <a th:href="@{/order}">Order</a>
+            </div>
+        </div>
 
     </section>
 </body>

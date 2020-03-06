@@ -22,14 +22,14 @@ class ItemTest {
     }
 
     @Test
-    void amount_is_increased() {
+    void item_with_increased_amount_is_returned() {
         Item item = new Item(
                 "test-1",
                 "Test",
                 new Amount(123)
         );
-        item.add(new Amount(321));
+        Item increased = item.add(new Amount(321));
 
-        assertThat(item.amount()).isEqualTo(new Amount(444));
+        assertThat(increased.amount()).isEqualTo(new Amount(444));
     }
 }

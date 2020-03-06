@@ -10,8 +10,8 @@ public final class Amount {
     private final int amount;
 
     public Amount(int amount) {
-        if (amount < 1) {
-            throw new IllegalArgumentException("Amount must be at least one!");
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount cannot be less than zero!");
         }
         this.amount = amount;
     }

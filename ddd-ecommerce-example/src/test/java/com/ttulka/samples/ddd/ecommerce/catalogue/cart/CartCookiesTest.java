@@ -1,21 +1,25 @@
 package com.ttulka.samples.ddd.ecommerce.catalogue.cart;
 
+import com.ttulka.samples.ddd.ecommerce.catalogue.cart.cookies.CartCookies;
+
 import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class CartTest {
+class CartCookiesTest {
 
     @Test
     void cart_is_empty() {
-        Cart cart = new Cart();
+        Cart cart = new CartCookies(new MockHttpServletRequest(), new MockHttpServletResponse());
         assertThat(cart.items()).isEmpty();
     }
 
     @Test
     void item_is_added() {
-        Cart cart = new Cart();
+        Cart cart = new CartCookies(new MockHttpServletRequest(), new MockHttpServletResponse());
         cart.add(new Item("test-1", "Test 1", new Amount(123)));
         assertAll(
                 () -> assertThat(cart.items()).hasSize(1),
@@ -27,7 +31,7 @@ class CartTest {
 
     @Test
     void amount_is_increased() {
-        Cart cart = new Cart();
+        Cart cart = new CartCookies(new MockHttpServletRequest(), new MockHttpServletResponse());
         cart.add(new Item("test-1", "Test 1", new Amount(123)));
         cart.add(new Item("test-1", "Test 1", new Amount(321)));
         assertAll(
@@ -40,7 +44,7 @@ class CartTest {
 
     @Test
     void multiple_items_are_added() {
-        Cart cart = new Cart();
+        Cart cart = new CartCookies(new MockHttpServletRequest(), new MockHttpServletResponse());
         cart.add(new Item("test-1", "Test 1", new Amount(123)));
         cart.add(new Item("test-2", "Test 2", new Amount(321)));
         assertAll(
@@ -56,7 +60,7 @@ class CartTest {
 
     @Test
     void cart_is_emptied() {
-        Cart cart = new Cart();
+        Cart cart = new CartCookies(new MockHttpServletRequest(), new MockHttpServletResponse());
         cart.add(new Item("test-1", "Test 1", new Amount(123)));
         cart.add(new Item("test-2", "Test 2", new Amount(321)));
         cart.empty();

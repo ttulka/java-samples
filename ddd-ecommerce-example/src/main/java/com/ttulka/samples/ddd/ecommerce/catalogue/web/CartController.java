@@ -2,10 +2,15 @@ package com.ttulka.samples.ddd.ecommerce.catalogue.web;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.ttulka.samples.ddd.ecommerce.catalogue.AddIntoCart;
 import com.ttulka.samples.ddd.ecommerce.catalogue.Catalogue;
 import com.ttulka.samples.ddd.ecommerce.catalogue.ListCart;
+import com.ttulka.samples.ddd.ecommerce.catalogue.cart.cookies.CartCookies;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Item;
+import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -23,24 +28,24 @@ import lombok.RequiredArgsConstructor;
 class CartController {
 
     private final Catalogue catalogue;
-
-    private final AddIntoCart addIntoCart;
-    private final ListCart listCart;
+    private final FindProducts findProducts;
 
     @GetMapping
-    public String index(Model model) {
-        model.addAttribute("items", listCart.items().stream()
-                .map(this::toData)
-                .toArray()
-        );
+    public String index(Model model, HttpServletRequest request, HttpServletResponse response) {
+        model.addAttribute("items",
+                           new ListCart(new CartCookies(request, response)).items().stream()
+                                   .map(this::toData)
+                                   .toArray());
         decorateLayout(model);
         return "cart";
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String add(@NonNull String productCode, @NonNull Integer amount, Model model) {
-        addIntoCart.product(productCode, amount);
-        return index(model);
+    public String add(@NonNull String productCode, @NonNull Integer amount, Model model,
+                      HttpServletRequest request, HttpServletResponse response) {
+        new AddIntoCart(new CartCookies(request, response), findProducts)
+                .product(productCode, amount);
+        return index(model, request, response);
     }
 
     private Map<String, Object> toData(Item item) {

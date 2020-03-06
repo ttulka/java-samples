@@ -2,20 +2,23 @@ package com.ttulka.samples.ddd.ecommerce.catalogue;
 
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Amount;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Cart;
+import com.ttulka.samples.ddd.ecommerce.catalogue.cart.cookies.CartCookies;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Item;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ListCartTest {
 
-    private final Cart cart = new Cart();
-    private final ListCart listCart = new ListCart(cart);
-
     @Test
     void item_is_listed() {
+        Cart cart = new CartCookies(new MockHttpServletRequest(), new MockHttpServletResponse());
+        ListCart listCart = new ListCart(cart);
+
         cart.add(new Item("test-1", "Test 1", new Amount(123)));
         assertAll(
                 () -> assertThat(listCart.items()).hasSize(1),
@@ -27,6 +30,9 @@ class ListCartTest {
 
     @Test
     void multiple_items_are_listed() {
+        Cart cart = new CartCookies(new MockHttpServletRequest(), new MockHttpServletResponse());
+        ListCart listCart = new ListCart(cart);
+
         cart.add(new Item("test-1", "Test 1", new Amount(123)));
         cart.add(new Item("test-2", "Test 2", new Amount(321)));
         assertAll(

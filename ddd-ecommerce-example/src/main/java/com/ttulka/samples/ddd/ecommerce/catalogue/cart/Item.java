@@ -1,17 +1,20 @@
 package com.ttulka.samples.ddd.ecommerce.catalogue.cart;
 
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @EqualsAndHashCode(of = "productCode")
 @ToString
+@Builder(toBuilder = true, access = AccessLevel.PACKAGE)
 public final class Item {
 
     private final String productCode;
     private final String title;
-    private Amount amount;
+    private final Amount amount;
 
     public String productCode() {
         return productCode;
@@ -25,7 +28,9 @@ public final class Item {
         return amount;
     }
 
-    public void add(Amount addend) {
-        amount = amount.add(addend);
+    public Item add(Amount addend) {
+        return toBuilder()
+                .amount(amount.add(addend))
+                .build();
     }
 }

@@ -2,15 +2,18 @@ package com.ttulka.samples.ddd.ecommerce.catalogue;
 
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Amount;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Cart;
+import com.ttulka.samples.ddd.ecommerce.catalogue.cart.cookies.CartCookies;
+import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
 import com.ttulka.samples.ddd.ecommerce.warehouse.Warehouse;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,17 +28,13 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class AddIntoCartTest {
 
     @Autowired
-    private Cart cart;
-    @Autowired
-    private AddIntoCart addIntoCart;
-
-    @BeforeEach
-    void emptyCart() {
-        cart.empty();
-    }
+    FindProducts findProducts;
 
     @Test
     void item_is_added() {
+        Cart cart = new CartCookies(new MockHttpServletRequest(), new MockHttpServletResponse());
+        AddIntoCart addIntoCart = new AddIntoCart(cart, findProducts);
+
         addIntoCart.product("test-1", 123);
         assertAll(
                 () -> assertThat(cart.items()).hasSize(1),
@@ -47,6 +46,9 @@ class AddIntoCartTest {
 
     @Test
     void multiple_items_are_added() {
+        Cart cart = new CartCookies(new MockHttpServletRequest(), new MockHttpServletResponse());
+        AddIntoCart addIntoCart = new AddIntoCart(cart, findProducts);
+
         addIntoCart.product("test-1", 123);
         addIntoCart.product("test-2", 321);
         assertAll(

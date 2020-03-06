@@ -37,6 +37,7 @@ body {
     text-decoration: none;
 }
 .categories a.cart {
+    text-decoration: none;
     float: right;
 }
 
@@ -58,4 +59,8 @@ body {
 
 .cart .item td {
     border-bottom: 1px solid grey;
+}
+.cart .item .remove a {
+    text-decoration: none;
+    color: red;
 }

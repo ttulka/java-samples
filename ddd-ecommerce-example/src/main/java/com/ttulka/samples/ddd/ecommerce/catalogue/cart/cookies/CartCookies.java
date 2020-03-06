@@ -59,7 +59,19 @@ public final class CartCookies implements Cart {
         items.add(toAdd.add(alreadyInCart));
 
         // TODO ItemCookie will implement this later:
-        response.addCookie(new Cookie("cart", cookie = items.stream()
+        response.addCookie(cartCookie(cookie = items.stream()
+                .map(item -> String.format("%s|%s|%d",
+                                           item.productCode(),
+                                           item.title().replace(" ", "_"),
+                                           item.amount().value()))
+                .collect(Collectors.joining("#"))));
+    }
+
+    @Override
+    public void remove(String productCode) {
+        // TODO ItemCookie will implement this later:
+        response.addCookie(cartCookie(cookie = parsedItems(cookie).stream()
+                .filter(item -> !item.productCode().equals(productCode))
                 .map(item -> String.format("%s|%s|%d",
                                            item.productCode(),
                                            item.title().replace(" ", "_"),
@@ -69,7 +81,7 @@ public final class CartCookies implements Cart {
 
     @Override
     public void empty() {
-        response.addCookie(new Cookie("cart", cookie = ""));
+        response.addCookie(cartCookie(cookie = ""));
     }
 
     // TODO ItemCookie will implement this later:
@@ -83,5 +95,11 @@ public final class CartCookies implements Cart {
     private Item parseItem(String cookie) {
         String[] item = cookie.split("\\|");
         return new Item(item[0], item[1].replace("_", " "), new Amount(Integer.parseInt(item[2])));
+    }
+
+    private Cookie cartCookie(String value) {
+        Cookie cookie = new Cookie("cart", value);
+        cookie.setPath("/");
+        return cookie;
     }
 }

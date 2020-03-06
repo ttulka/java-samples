@@ -42,8 +42,18 @@ class CartController {
     public String add(@NonNull String productCode, @NonNull Integer amount, Model model,
                       HttpServletRequest request, HttpServletResponse response) {
         Cart cart = new CartCookies(request, response);
-        new AddIntoCart(cart, findProducts)
-                .product(productCode, amount);
+        new AddIntoCart(cart, findProducts).product(productCode, amount);
+
+        cartIntoModel(cart, model);
+        decorateLayout(model);
+        return "cart";
+    }
+
+    @GetMapping("/remove")
+    public String remove(@NonNull String productCode, Model model,
+                         HttpServletRequest request, HttpServletResponse response) {
+        Cart cart = new CartCookies(request, response);
+        cart.remove(productCode);
 
         cartIntoModel(cart, model);
         decorateLayout(model);

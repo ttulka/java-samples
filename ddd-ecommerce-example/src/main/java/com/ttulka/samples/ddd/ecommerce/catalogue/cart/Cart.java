@@ -8,5 +8,7 @@ public interface Cart {
 
     void add(Item toAdd);
 
+    void remove(String productCode);
+
     void empty();
 }

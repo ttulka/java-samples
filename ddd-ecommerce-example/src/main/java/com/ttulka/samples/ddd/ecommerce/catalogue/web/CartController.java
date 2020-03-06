@@ -44,9 +44,7 @@ class CartController {
         Cart cart = new CartCookies(request, response);
         new AddIntoCart(cart, findProducts).product(productCode, amount);
 
-        cartIntoModel(cart, model);
-        decorateLayout(model);
-        return "cart";
+        return "redirect:/cart";
     }
 
     @GetMapping("/remove")
@@ -55,9 +53,7 @@ class CartController {
         Cart cart = new CartCookies(request, response);
         cart.remove(productCode);
 
-        cartIntoModel(cart, model);
-        decorateLayout(model);
-        return "cart";
+        return "redirect:/cart";
     }
 
     private Map<String, Object> toData(Item item) {

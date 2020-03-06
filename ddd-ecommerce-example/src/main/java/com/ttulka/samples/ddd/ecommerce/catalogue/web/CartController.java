@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ttulka.samples.ddd.ecommerce.catalogue.AddIntoCart;
-import com.ttulka.samples.ddd.ecommerce.catalogue.Catalogue;
 import com.ttulka.samples.ddd.ecommerce.catalogue.ListCart;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Cart;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Item;
@@ -28,13 +27,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 class CartController {
 
-    private final Catalogue catalogue;
     private final FindProducts findProducts;
 
     @GetMapping
     public String index(Model model, HttpServletRequest request, HttpServletResponse response) {
         cartIntoModel(new CartCookies(request, response), model);
-        decorateLayout(model);
         return "cart";
     }
 
@@ -67,9 +64,5 @@ class CartController {
                            new ListCart(cart).items().stream()
                                    .map(this::toData)
                                    .toArray());
-    }
-
-    private void decorateLayout(Model model) {
-        model.addAttribute("categories", catalogue.categories());
     }
 }

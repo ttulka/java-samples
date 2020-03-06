@@ -19,20 +19,12 @@ class CatalogueController {
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("products", catalogue.allProducts());
-
-        decorateLayout(model);
         return "index";
     }
 
     @GetMapping("/category/{categoryId}")
     public String category(@PathVariable @NonNull String categoryId, Model model) {
         model.addAttribute("products", catalogue.productsInCategory(categoryId));
-
-        decorateLayout(model);
         return "index";
-    }
-
-    private void decorateLayout(Model model) {
-        model.addAttribute("categories", catalogue.categories());
     }
 }

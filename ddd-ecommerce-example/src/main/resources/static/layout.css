@@ -7,8 +7,8 @@ body {
 }
 
 #header {
-    background-color: darkgreen;
-    color: lightgrey;
+    background-color: olivedrab;
+    color: white;
     font-weight: bold;
     padding: 1em 2em;
 }
@@ -29,7 +29,7 @@ body {
 }
 
 .categories a {
-    color: lightgrey;
+    color: inherit;
     display: inline-block;
     padding-right: 2em;
 }

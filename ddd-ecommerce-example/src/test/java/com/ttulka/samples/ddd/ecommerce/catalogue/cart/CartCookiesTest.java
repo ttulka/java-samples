@@ -30,6 +30,19 @@ class CartCookiesTest {
     }
 
     @Test
+    void empty_cart_has_no_items() {
+        Cart cart = new CartCookies(new MockHttpServletRequest(), new MockHttpServletResponse());
+        assertThat(cart.hasItems()).isFalse();
+    }
+
+    @Test
+    void cart_has_items() {
+        Cart cart = new CartCookies(new MockHttpServletRequest(), new MockHttpServletResponse());
+        cart.add(new CartItem("test-1", "Test 1", new Amount(123)));
+        assertThat(cart.hasItems()).isTrue();
+    }
+
+    @Test
     void amount_is_increased() {
         Cart cart = new CartCookies(new MockHttpServletRequest(), new MockHttpServletResponse());
         cart.add(new CartItem("test-1", "Test 1", new Amount(123)));

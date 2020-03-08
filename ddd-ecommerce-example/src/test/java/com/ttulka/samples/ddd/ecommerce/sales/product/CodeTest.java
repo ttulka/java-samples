@@ -1,7 +1,5 @@
 package com.ttulka.samples.ddd.ecommerce.sales.product;
 
-import java.util.UUID;
-
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,16 +11,14 @@ class CodeTest {
 
     @Test
     void code_value() {
-        String uuid = UUID.randomUUID().toString();
-        Code code = new Code(uuid);
-        assertThat(code.value()).isEqualTo(uuid);
+        Code code = new Code("test");
+        assertThat(code.value()).isEqualTo("test");
     }
 
     @Test
     void code_value_is_trimmed() {
-        String uuid = UUID.randomUUID().toString();
-        Code code = new Code("   " + uuid + "   ");
-        assertThat(code.value()).isEqualTo(uuid);
+        Code code = new Code("   test   ");
+        assertThat(code.value()).isEqualTo("test");
     }
 
     @Test
@@ -33,6 +29,12 @@ class CodeTest {
     @Test
     void code_fails_for_an_empty_string() {
         assertThrows(IllegalArgumentException.class, () -> new Code(""));
+    }
+
+    @Test
+    void code_has_50_characters() {
+        Code code = new Code(STRING_50_CHARS_LONG);
+        assertThat(code.value()).isEqualTo(STRING_50_CHARS_LONG);
     }
 
     @Test

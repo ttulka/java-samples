@@ -1,6 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <title>DDD e-commerce</title>
+    <title th:text="#{layout.title}">DDD Example E-Commerce</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta charset="utf-8">
     <link rel="stylesheet" th:href="@{/layout.css}"/>
@@ -16,8 +16,8 @@
     <section id="content" layout:fragment="content">
         <!-- page content goes here -->
     </section>
-    <footer id="footer" layout:fragment="footer">
-        DDD Example e-commerce
+    <footer id="footer" layout:fragment="footer" th:text="#{layout.footer}">
+        DDD Example E-Commerce &copy; 2020
     </footer>
 </body>
 </html>

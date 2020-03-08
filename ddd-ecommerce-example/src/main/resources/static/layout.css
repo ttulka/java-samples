@@ -35,6 +35,9 @@ a {
 .success {
     color: green;
 }
+.error {
+    color: red;
+}
 
 .categories a {
     color: inherit;

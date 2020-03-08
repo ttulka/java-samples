@@ -43,6 +43,11 @@ public final class CartCookies implements Cart {
     }
 
     @Override
+    public boolean hasItems() {
+        return cookie != null && !cookie.isBlank();
+    }
+
+    @Override
     public void add(@NonNull CartItem toAdd) {
         List<CartItem> currentItems = parsedItems(cookie);
 

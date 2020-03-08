@@ -4,7 +4,7 @@
 <body>
     <section layout:fragment="content">
 
-        <h1>Shopping Cart</h1>
+        <h1 th:text="#{cart.title}">Shopping Cart</h1>
 
         <div th:unless="${#lists.isEmpty(items)}" class="cart">
 
@@ -19,7 +19,7 @@
             </table>
 
             <div class="order">
-                <a th:href="@{/order}">Order</a>
+                <a th:href="@{/order}" th:text="#{cart.place}">Place Order</a>
             </div>
         </div>
 

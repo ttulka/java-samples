@@ -4,23 +4,23 @@
 <body>
     <section layout:fragment="content">
 
-        <h1>New Order</h1>
+        <h1 th:text="#{order.title}">Place Order</h1>
 
         <div class="order">
 
             <form th:action="@{/order}" method="post" class="form">
                 <table>
                     <tr>
-                        <td>Name</td>
+                        <td th:text="#{order.customer.name}">Name</td>
                         <td><input name="name" size="30"></td>
                     </tr>
                     <tr>
-                        <td>Address</td>
+                        <td th:text="#{order.customer.address}">Address</td>
                         <td><input name="address" size="50"></td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td><button type="submit">Submit</button></td>
+                        <td><button th:text="#{order.submit}" type="submit">Submit</button></td>
                     </tr>
                 </table>
             </form>

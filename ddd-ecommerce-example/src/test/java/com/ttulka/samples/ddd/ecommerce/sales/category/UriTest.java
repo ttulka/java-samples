@@ -30,6 +30,12 @@ class UriTest {
     }
 
     @Test
+    void uri_has_20_characters() {
+        Uri uri = new Uri("01234567890123456789");
+        assertThat(uri.value()).isEqualTo("01234567890123456789");
+    }
+
+    @Test
     void uri_fails_for_more_than_20_characters() {
         assertThrows(IllegalArgumentException.class, () -> new Uri("01234567890123456789X"));
     }

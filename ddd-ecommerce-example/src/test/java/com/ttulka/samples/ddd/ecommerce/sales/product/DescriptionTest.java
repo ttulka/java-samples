@@ -11,13 +11,19 @@ class DescriptionTest {
 
     @Test
     void description_value() {
-        Description description = new Description(STRING_50_CHARS_LONG);
-        assertThat(description.value()).isEqualTo(STRING_50_CHARS_LONG);
+        Description description = new Description("test");
+        assertThat(description.value()).isEqualTo("test");
     }
 
     @Test
     void description_value_is_trimmed() {
-        Description description = new Description("   " + STRING_50_CHARS_LONG + "   ");
+        Description description = new Description("   test   ");
+        assertThat(description.value()).isEqualTo("test");
+    }
+
+    @Test
+    void description_has_50_characters() {
+        Description description = new Description(STRING_50_CHARS_LONG);
         assertThat(description.value()).isEqualTo(STRING_50_CHARS_LONG);
     }
 

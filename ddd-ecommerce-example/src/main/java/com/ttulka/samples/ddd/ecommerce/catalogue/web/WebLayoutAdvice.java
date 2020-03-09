@@ -6,13 +6,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @ControllerAdvice
 @RequiredArgsConstructor
 class WebLayoutAdvice {
 
-    private final Catalogue catalogue;
+    private final @NonNull Catalogue catalogue;
 
     @ModelAttribute
     public void decorateWithCategories(Model model) {

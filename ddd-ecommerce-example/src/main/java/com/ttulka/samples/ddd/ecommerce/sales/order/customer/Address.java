@@ -8,7 +8,7 @@ import lombok.ToString;
 @ToString
 public final class Address {
 
-    private final String address;
+    private final @NonNull String address;
 
     public Address(@NonNull String address) {
         if (address.isBlank()) {

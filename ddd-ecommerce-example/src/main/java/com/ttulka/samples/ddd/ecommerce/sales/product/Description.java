@@ -8,7 +8,7 @@ import lombok.ToString;
 @ToString
 public final class Description {
 
-    private final String description;
+    private final @NonNull String description;
 
     public Description(@NonNull String description) {
         if (description != null && description.trim().length() > 50) {

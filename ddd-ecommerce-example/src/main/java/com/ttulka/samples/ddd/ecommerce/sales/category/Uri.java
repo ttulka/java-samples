@@ -8,7 +8,7 @@ import lombok.ToString;
 @ToString
 public final class Uri {
 
-    private final String uri;
+    private final @NonNull String uri;
 
     public Uri(@NonNull String uri) {
         if (uri.isBlank()) {

@@ -25,7 +25,7 @@ public final class CartCookies implements Cart {
 
     private String cookie;
 
-    public CartCookies(HttpServletRequest request, HttpServletResponse response) {
+    public CartCookies(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response) {
         this.response = response;
         Cookie[] cookies = request.getCookies();
         this.cookie = cookies != null
@@ -73,7 +73,7 @@ public final class CartCookies implements Cart {
     }
 
     @Override
-    public void remove(String productCode) {
+    public void remove(@NonNull String productCode) {
         // TODO ItemCookie will implement this later:
         response.addCookie(cartCookie(cookie = parsedItems(cookie).stream()
                 .filter(item -> !item.productCode().equals(productCode))

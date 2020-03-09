@@ -17,9 +17,9 @@ import lombok.Value;
 @RequiredArgsConstructor
 public final class Catalogue {
 
-    private final FindCategories findCategories;
-    private final FindProducts findProducts;
-    private final Warehouse warehouse;
+    private final @NonNull FindCategories findCategories;
+    private final @NonNull FindProducts findProducts;
+    private final @NonNull Warehouse warehouse;
 
     public List<CatalogueProductData> allProducts() {
         return findProducts.all().stream()

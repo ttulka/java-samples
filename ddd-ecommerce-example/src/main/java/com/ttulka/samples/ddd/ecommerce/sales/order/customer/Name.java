@@ -8,7 +8,7 @@ import lombok.ToString;
 @ToString
 public final class Name {
 
-    private final String name;
+    private final @NonNull String name;
 
     public Name(@NonNull String name) {
         if (name.isBlank()) {

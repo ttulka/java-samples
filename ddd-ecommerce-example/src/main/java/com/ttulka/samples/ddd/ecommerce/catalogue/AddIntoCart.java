@@ -13,8 +13,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public final class AddIntoCart {
 
-    private final Cart cart;
-    private final FindProducts findProducts;
+    private final @NonNull Cart cart;
+    private final @NonNull FindProducts findProducts;
 
     public void product(@NonNull String productCode, int amount) {
         Product product = findProducts.byCode(new Code(productCode));

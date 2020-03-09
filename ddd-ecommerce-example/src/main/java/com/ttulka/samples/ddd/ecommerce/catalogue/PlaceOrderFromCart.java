@@ -18,8 +18,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public final class PlaceOrderFromCart {
 
-    private final PlaceOrder placeOrder;
-    private final FindProducts findProducts;
+    private final @NonNull PlaceOrder placeOrder;
+    private final @NonNull FindProducts findProducts;
 
     public void placeOrder(@NonNull Cart cart, @NonNull Customer customer) {
         if (!cart.hasItems()) {

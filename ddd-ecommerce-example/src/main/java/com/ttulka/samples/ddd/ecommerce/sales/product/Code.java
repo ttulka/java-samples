@@ -8,7 +8,7 @@ import lombok.ToString;
 @ToString
 public final class Code {
 
-    private final String code;
+    private final @NonNull String code;
 
     public Code(@NonNull String code) {
         if (code.isBlank()) {

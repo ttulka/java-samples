@@ -37,7 +37,7 @@ final class ProductsJdbc implements FindProducts {
     }
 
     @Override
-    public List<Product> fromCategory(Uri categoryUri) {
+    public List<Product> fromCategory(@NonNull Uri categoryUri) {
         return jdbcTemplate.query("SELECT p.id, p.code, p.title, p.description, p.price FROM products AS p " +
                                   "JOIN products_in_categories AS pc ON pc.product_id = p.id " +
                                   "JOIN categories AS c ON c.id = pc.category_id " +
@@ -50,7 +50,7 @@ final class ProductsJdbc implements FindProducts {
     }
 
     @Override
-    public Product byCode(Code code) {
+    public Product byCode(@NonNull Code code) {
         try {
             ProductEntry entry = jdbcTemplate.queryForObject(
                     "SELECT id, code, title, description, price FROM products " +

@@ -8,7 +8,7 @@ import lombok.ToString;
 @ToString
 public final class Title {
 
-    private final String title;
+    private final @NonNull String title;
 
     public Title(@NonNull String title) {
         if (title.isBlank()) {

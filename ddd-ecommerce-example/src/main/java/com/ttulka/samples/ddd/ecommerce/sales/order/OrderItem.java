@@ -8,10 +8,10 @@ import lombok.ToString;
 @ToString
 public final class OrderItem {
 
-    private final String code;
-    private final String title;
-    private final Float price;
-    private final Integer amount;
+    private final @NonNull String code;
+    private final @NonNull String title;
+    private final @NonNull Float price;
+    private final @NonNull Integer amount;
 
     public OrderItem(@NonNull String code, @NonNull String title, @NonNull Float price, @NonNull Integer amount) {
         if (code.isBlank()) {

@@ -2,9 +2,12 @@ package com.ttulka.samples.ddd.ecommerce.catalogue;
 
 import java.util.List;
 
+import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
@@ -68,5 +71,7 @@ class CatalogueTest {
             "com.ttulka.samples.ddd.ecommerce.sales",
             "com.ttulka.samples.ddd.ecommerce.warehouse"})
     static class ServicesTestConfig {
+        @MockBean
+        private EventPublisher eventPublisher;
     }
 }

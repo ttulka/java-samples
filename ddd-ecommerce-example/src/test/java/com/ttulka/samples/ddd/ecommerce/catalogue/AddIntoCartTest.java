@@ -3,6 +3,7 @@ package com.ttulka.samples.ddd.ecommerce.catalogue;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Amount;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Cart;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.cookies.CartCookies;
+import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
 import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
 import com.ttulka.samples.ddd.ecommerce.warehouse.Warehouse;
 
@@ -67,5 +68,7 @@ class AddIntoCartTest {
     static class ServicesTestConfig {
         @MockBean
         private Warehouse warehouse;
+        @MockBean
+        private EventPublisher eventPublisher;
     }
 }

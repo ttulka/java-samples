@@ -31,4 +31,20 @@ public final class OrderItem {
         this.price = price;
         this.amount = amount;
     }
+
+    public String code() {
+        return code;
+    }
+
+    public String title() {
+        return title;
+    }
+
+    public Float price() {
+        return price;
+    }
+
+    public Integer amount() {
+        return amount;
+    }
 }

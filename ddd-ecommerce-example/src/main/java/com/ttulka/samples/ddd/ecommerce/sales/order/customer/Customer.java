@@ -12,4 +12,12 @@ public final class Customer {
 
     private final @NonNull Name name;
     private final @NonNull Address address;
+
+    public Name name() {
+        return name;
+    }
+
+    public Address address() {
+        return address;
+    }
 }

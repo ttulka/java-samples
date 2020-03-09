@@ -15,7 +15,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
-@RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString(exclude = "eventPublisher")
 final class OrderJdbc implements PlaceableOrder {
@@ -26,6 +25,15 @@ final class OrderJdbc implements PlaceableOrder {
     private final @NonNull EventPublisher eventPublisher;
 
     private volatile boolean placed = false;
+
+    public OrderJdbc(@NonNull List<OrderItem> items, @NonNull Customer customer, @NonNull EventPublisher eventPublisher) {
+        if (items.isEmpty()) {
+            throw new OrderHasNoItemsException();
+        }
+        this.items = items;
+        this.customer = customer;
+        this.eventPublisher = eventPublisher;
+    }
 
     @Override
     public List<OrderItem> items() {

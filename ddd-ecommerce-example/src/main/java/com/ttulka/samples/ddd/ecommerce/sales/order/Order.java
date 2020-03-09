@@ -9,4 +9,7 @@ public interface Order {
     List<OrderItem> items();
 
     Customer customer();
+
+    final class OrderHasNoItemsException extends IllegalArgumentException {
+    }
 }

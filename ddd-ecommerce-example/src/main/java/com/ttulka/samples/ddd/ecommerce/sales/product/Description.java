@@ -1,6 +1,7 @@
 package com.ttulka.samples.ddd.ecommerce.sales.product;
 
 import lombok.EqualsAndHashCode;
+import lombok.NonNull;
 import lombok.ToString;
 
 @EqualsAndHashCode
@@ -9,7 +10,7 @@ public final class Description {
 
     private final String description;
 
-    public Description(String description) {
+    public Description(@NonNull String description) {
         if (description != null && description.trim().length() > 50) {
             throw new IllegalArgumentException("Description cannot be longer than 50 characters!");
         }

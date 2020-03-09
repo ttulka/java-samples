@@ -12,6 +12,7 @@ import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -20,7 +21,7 @@ public final class PlaceOrderFromCart {
     private final PlaceOrder placeOrder;
     private final FindProducts findProducts;
 
-    public void placeOrder(Cart cart, Customer customer) {
+    public void placeOrder(@NonNull Cart cart, @NonNull Customer customer) {
         if (!cart.hasItems()) {
             throw new PlaceOrderFromCart.NoItemsToOrderException();
         }

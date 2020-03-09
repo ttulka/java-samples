@@ -11,17 +11,18 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.NonNull;
 
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 final class ProductJdbc implements Product {
 
-    private final ProductId id;
-    private final Code code;
+    private final @NonNull ProductId id;
+    private final @NonNull Code code;
 
-    private Title title;
-    private Description description;
-    private Price price;
+    private @NonNull Title title;
+    private @NonNull Description description;
+    private @NonNull Price price;
 
     private final JdbcTemplate jdbcTemplate;
 

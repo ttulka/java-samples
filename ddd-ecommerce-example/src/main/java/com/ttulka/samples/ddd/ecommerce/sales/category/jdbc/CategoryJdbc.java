@@ -9,16 +9,17 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.NonNull;
 
 @EqualsAndHashCode(of = "id")
 @AllArgsConstructor
 final class CategoryJdbc implements Category {
 
-    private final CategoryId id;
-    private final Uri uri;
-    private Title title;
+    private final @NonNull CategoryId id;
+    private final @NonNull Uri uri;
+    private @NonNull Title title;
 
-    private final JdbcTemplate jdbcTemplate;
+    private final @NonNull JdbcTemplate jdbcTemplate;
 
     @Override
     public CategoryId id() {

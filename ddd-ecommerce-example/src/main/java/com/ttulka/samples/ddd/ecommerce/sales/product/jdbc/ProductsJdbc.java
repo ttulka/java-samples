@@ -18,13 +18,14 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @RequiredArgsConstructor
 final class ProductsJdbc implements FindProducts {
 
-    private final JdbcTemplate jdbcTemplate;
+    private final @NonNull JdbcTemplate jdbcTemplate;
 
     @Override
     public List<Product> all() {

@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 class CartController {
 
-    private final FindProducts findProducts;
+    private final @NonNull FindProducts findProducts;
 
     @GetMapping
     public String index(Model model, HttpServletRequest request, HttpServletResponse response) {

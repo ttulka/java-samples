@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -24,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 class OrderController {
 
-    private final PlaceOrderFromCart placeOrderFromCart;
+    private final @NonNull PlaceOrderFromCart placeOrderFromCart;
 
     @GetMapping
     public String index() {
@@ -32,7 +33,7 @@ class OrderController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String place(String name, String address,
+    public String place(@NonNull String name, @NonNull String address,
                         HttpServletRequest request, HttpServletResponse response) {
         placeOrderFromCart.placeOrder(
                 new CartCookies(request, response),

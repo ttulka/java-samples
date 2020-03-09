@@ -3,6 +3,7 @@ package com.ttulka.samples.ddd.ecommerce.catalogue.cart;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
@@ -12,9 +13,9 @@ import lombok.ToString;
 @Builder(toBuilder = true, access = AccessLevel.PACKAGE)
 public final class CartItem {
 
-    private final String productCode;
-    private final String title;
-    private final Amount amount;
+    private final @NonNull String productCode;
+    private final @NonNull String title;
+    private final @NonNull Amount amount;
 
     public String productCode() {
         return productCode;

@@ -21,7 +21,7 @@ import lombok.NonNull;
 @EqualsAndHashCode(of = "cookie")
 public final class CartCookies implements Cart {
 
-    private final HttpServletResponse response;
+    private final @NonNull HttpServletResponse response;
 
     private String cookie;
 

@@ -2,8 +2,8 @@ package com.ttulka.samples.ddd.ecommerce.catalogue;
 
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Amount;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Cart;
-import com.ttulka.samples.ddd.ecommerce.catalogue.cart.cookies.CartCookies;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.CartItem;
+import com.ttulka.samples.ddd.ecommerce.catalogue.cart.cookies.CartCookies;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;

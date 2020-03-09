@@ -7,6 +7,7 @@ import com.ttulka.samples.ddd.ecommerce.sales.product.Code;
 import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Product;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -15,7 +16,7 @@ public final class AddIntoCart {
     private final Cart cart;
     private final FindProducts findProducts;
 
-    public void product(String productCode, int amount) {
+    public void product(@NonNull String productCode, int amount) {
         Product product = findProducts.byCode(new Code(productCode));
         cart.add(new CartItem(product.code().value(), product.title().value(), new Amount(amount)));
     }

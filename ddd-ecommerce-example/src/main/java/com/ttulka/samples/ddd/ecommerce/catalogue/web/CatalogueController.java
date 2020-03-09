@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 class CatalogueController {
 
-    private final Catalogue catalogue;
+    private final @NonNull Catalogue catalogue;
 
     @GetMapping("/")
     public String index(Model model) {

@@ -7,12 +7,13 @@ import com.ttulka.samples.ddd.ecommerce.warehouse.Warehouse;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 final class WarehouseJdbc implements Warehouse {
 
-    private final JdbcTemplate jdbcTemplate;
+    private final @NonNull JdbcTemplate jdbcTemplate;
 
     @Override
     public InStock leftInStock(ProductId productId) {

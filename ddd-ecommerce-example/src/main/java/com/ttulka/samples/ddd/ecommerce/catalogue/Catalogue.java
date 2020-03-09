@@ -10,7 +10,9 @@ import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Product;
 import com.ttulka.samples.ddd.ecommerce.warehouse.Warehouse;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 
 @RequiredArgsConstructor
 public final class Catalogue {
@@ -25,7 +27,7 @@ public final class Catalogue {
                 .collect(Collectors.toList());
     }
 
-    public List<CatalogueProductData> productsInCategory(String categoryUri) {
+    public List<CatalogueProductData> productsInCategory(@NonNull String categoryUri) {
         return findProducts.fromCategory(new Uri(categoryUri)).stream()
                 .map(this::toData)
                 .collect(Collectors.toList());
@@ -52,7 +54,7 @@ public final class Catalogue {
                 category.title().value());
     }
 
-    @RequiredArgsConstructor
+    @Value
     public static class CatalogueProductData {
 
         public final String code;
@@ -62,7 +64,7 @@ public final class Catalogue {
         public final int inStock;
     }
 
-    @RequiredArgsConstructor
+    @Value
     public static class CatalogueCategoryData {
 
         public final String uri;

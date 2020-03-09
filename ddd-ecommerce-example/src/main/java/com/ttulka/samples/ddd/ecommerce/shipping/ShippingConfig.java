@@ -20,6 +20,6 @@ class ShippingConfig {
                      new Delivery.Address(
                              event.customer.name,
                              event.customer.address)
-        ).ship();
+        ).prepare();
     }
 }

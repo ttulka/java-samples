@@ -14,6 +14,10 @@ public final class Delivery {
     private final @NonNull List<Item> items;
     private final @NonNull Address address;
 
+    public void prepare() {
+        // TODO save the delivery to a dabatase
+    }
+
     public void ship() {
         log.info("Shipping...");
         log.info("Items: {}", items);

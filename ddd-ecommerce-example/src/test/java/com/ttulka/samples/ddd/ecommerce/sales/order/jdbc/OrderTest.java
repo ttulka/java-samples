@@ -1,5 +1,6 @@
 package com.ttulka.samples.ddd.ecommerce.sales.order.jdbc;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.ttulka.samples.ddd.ecommerce.MockEventPublisher;
@@ -52,6 +53,15 @@ class OrderTest {
                 () -> assertThat(order.customer().name()).isEqualTo(new Name("test name")),
                 () -> assertThat(order.customer().address()).isEqualTo(new Address("test address"))
         );
+    }
+
+    @Test
+    void order_contains_at_least_one_item() {
+        assertThrows(Order.OrderHasNoItemsException.class,
+                     () -> new OrderJdbc(
+                             Collections.emptyList(),
+                             new Customer(new Name("test"), new Address("test")),
+                             new MockEventPublisher()));
     }
 
     @Test

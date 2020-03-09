@@ -8,4 +8,8 @@ class OrderTest {
     @Test
     void order_is_placed() {
     }
+
+    @Test
+    void order_can_be_placed_only_once() {
+    }
 }

@@ -10,12 +10,13 @@ import org.springframework.context.event.EventListener;
 class ShippingConfig {
 
     @Bean
-    ShipOrder shipOrder() {
-        return new ShipOrder();
+    ShipPackage shipOrder() {
+        return new ShipPackage();
     }
 
     @EventListener
     public void on(OrderPlaced event) {
-        shipOrder().order(event.getOrderInfo());
+        // TODO
+        shipOrder().ship(event.getOrder().toString());
     }
 }

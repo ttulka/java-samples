@@ -32,21 +32,21 @@ public final class UnknownProduct implements Product {
 
     @Override
     public void changeTitle(Title title) {
-        throw new UnsupportedOperationException("Cannot change the title: unknown product.");
+        // do nothing
     }
 
     @Override
     public void changeDescription(Description description) {
-        throw new UnsupportedOperationException("Cannot change the description: unknown product.");
+        // do nothing
     }
 
     @Override
     public void changePrice(Price price) {
-        throw new UnsupportedOperationException("Cannot change the price: unknown product.");
+        // do nothing
     }
 
     @Override
     public void putForSale() {
-        throw new UnsupportedOperationException("Cannot put for sale: unknown product.");
+        // do nothing
     }
 }

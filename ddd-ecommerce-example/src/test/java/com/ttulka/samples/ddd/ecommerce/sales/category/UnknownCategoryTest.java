@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class UnknownCategoryTest {
 
@@ -19,8 +18,11 @@ class UnknownCategoryTest {
     }
 
     @Test
-    void change_title_fails() {
+    void change_title_noop() {
         Category unknownCategory = new UnknownCategory();
-        assertThrows(UnsupportedOperationException.class, () -> unknownCategory.changeTitle(new Title("test")));
+        Title unknownTitle = unknownCategory.title();
+        unknownCategory.changeTitle(new Title("test"));
+
+        assertThat(unknownCategory.title()).isEqualTo(unknownTitle);
     }
 }

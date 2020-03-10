@@ -75,6 +75,9 @@ a {
     text-decoration: none;
     color: red;
 }
+.cart .item .amount {
+    font-weight: bold;
+}
 .cart .order {
     padding: 2em 0;
     font-weight: bold;

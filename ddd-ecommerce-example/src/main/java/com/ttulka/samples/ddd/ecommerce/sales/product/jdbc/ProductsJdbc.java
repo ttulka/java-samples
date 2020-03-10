@@ -21,8 +21,10 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
+@Slf4j
 final class ProductsJdbc implements FindProducts {
 
     private final @NonNull JdbcTemplate jdbcTemplate;
@@ -61,6 +63,7 @@ final class ProductsJdbc implements FindProducts {
                 return toProduct(entry);
             }
         } catch (DataAccessException ignore) {
+            log.warn("Product by code {} was not found: {}", code, ignore.getMessage());
         }
         return new UnknownProduct();
     }

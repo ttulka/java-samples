@@ -18,8 +18,10 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
+@Slf4j
 final class CategoriesJdbc implements FindCategories {
 
     private final @NonNull JdbcTemplate jdbcTemplate;
@@ -44,6 +46,7 @@ final class CategoriesJdbc implements FindCategories {
                 return toCategory(entry);
             }
         } catch (DataAccessException ignore) {
+            log.warn("Category by id {} was not found: {}", id, ignore.getMessage());
         }
         return new UnknownCategory();
     }

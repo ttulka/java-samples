@@ -6,6 +6,8 @@ import com.ttulka.samples.ddd.ecommerce.sales.order.customer.Customer;
 
 public interface Order {
 
+    OrderId id();
+
     List<OrderItem> items();
 
     Customer customer();

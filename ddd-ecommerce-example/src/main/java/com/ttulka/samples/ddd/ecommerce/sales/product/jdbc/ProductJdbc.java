@@ -24,7 +24,7 @@ final class ProductJdbc implements Product {
     private @NonNull Description description;
     private @NonNull Price price;
 
-    private final JdbcTemplate jdbcTemplate;
+    private final @NonNull JdbcTemplate jdbcTemplate;
 
     @Override
     public ProductId id() {

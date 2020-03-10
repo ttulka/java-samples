@@ -8,32 +8,52 @@ import com.ttulka.samples.ddd.ecommerce.sales.order.OrderPlaced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.annotation.Order;
+
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 class ShippingConfig {
 
-    // TODO
-    @Bean
-    Deliveries deliveries() {
-        return new Deliveries();
+    @Bean("shipping-orderPlacedListener")
+    OrderPlacedListener orderPlacedListener(PrepareDelivery prepareDelivery) {
+        return new OrderPlacedListener(prepareDelivery);
     }
 
-    @EventListener
-    public void on(OrderPlaced event) {
-        new Delivery(event.orderItems.stream()
-                             .map(item -> new Delivery.Item(
-                                     item.code,
-                                     item.amount))
-                             .collect(Collectors.toList()),
-                     new Delivery.Address(
-                             event.customer.name,
-                             event.customer.address))
-                .prepare();
+    @Bean("shipping-orderPaidListener")
+    OrderPaidListener orderPaidListener(ShipDelivery shipDelivery) {
+        return new OrderPaidListener(shipDelivery);
     }
 
-    @EventListener
-    public void on(OrderPaid event) {
-        deliveries().byOrderId(event.orderId)
-                .ship();
+    @RequiredArgsConstructor
+    private static final class OrderPlacedListener {
+
+        private final PrepareDelivery prepareDelivery;
+
+        @EventListener
+        @Order(10)
+        public void on(OrderPlaced event) {
+            prepareDelivery.forOrder(
+                    new OrderId(event.orderId),
+                    event.orderItems.stream()
+                            .map(item -> new DeliveryItem(
+                                    new ProductCode(item.code),
+                                    new Amount(item.amount)))
+                            .collect(Collectors.toList()),
+                    new Address(
+                            new Person(event.customer.name),
+                            new Place(event.customer.address)));
+        }
+    }
+
+    @RequiredArgsConstructor
+    private static final class OrderPaidListener {
+
+        private final ShipDelivery shipDelivery;
+
+        @EventListener
+        public void on(OrderPaid event) {
+            shipDelivery.byOrderId(new OrderId(event.orderId));
+        }
     }
 }

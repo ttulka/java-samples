@@ -2,41 +2,25 @@ package com.ttulka.samples.ddd.ecommerce.shipping;
 
 import java.util.List;
 
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Value;
-import lombok.extern.slf4j.Slf4j;
+public interface Delivery {
 
-@RequiredArgsConstructor
-@Slf4j
-public final class Delivery {
+    DeliveryId id();
 
-    private final @NonNull List<Item> items;
-    private final @NonNull Address address;
+    OrderId orderId();
 
-    public void prepare() {
-        // TODO save the delivery to a dabatase
+    List<DeliveryItem> items();
+
+    Address address();
+
+    void prepare();
+
+    void ship();
+
+    boolean isShipped();
+
+    final class DeliveryAlreadyPreparedException extends IllegalStateException {
     }
 
-    public void ship() {
-        log.info("Shipping...");
-        log.info("Items: {}", items);
-        log.info("To address: {}", address);
-
-        // Some other delivery stuff
-    }
-
-    @Value
-    public static final class Item {
-
-        private final @NonNull String productCode;
-        private final @NonNull int amount;
-    }
-
-    @Value
-    public static final class Address {
-
-        private final @NonNull String person;
-        private final @NonNull String address;
+    final class DeliveryAlreadyShippedException extends IllegalStateException {
     }
 }

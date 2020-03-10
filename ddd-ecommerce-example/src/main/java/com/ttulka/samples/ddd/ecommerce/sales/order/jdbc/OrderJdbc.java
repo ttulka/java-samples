@@ -3,8 +3,10 @@ package com.ttulka.samples.ddd.ecommerce.sales.order.jdbc;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
+import com.ttulka.samples.ddd.ecommerce.sales.order.OrderId;
 import com.ttulka.samples.ddd.ecommerce.sales.order.OrderItem;
 import com.ttulka.samples.ddd.ecommerce.sales.order.OrderPlaced;
 import com.ttulka.samples.ddd.ecommerce.sales.order.PlaceableOrder;
@@ -12,13 +14,15 @@ import com.ttulka.samples.ddd.ecommerce.sales.order.customer.Customer;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
-@EqualsAndHashCode
-@ToString(exclude = "eventPublisher")
+@EqualsAndHashCode(of = "id")
+@ToString(of = {"id", "items", "customer"})
 final class OrderJdbc implements PlaceableOrder {
 
+    private static final AtomicLong idSequence = new AtomicLong(1); // TODO
+
+    private final @NonNull OrderId id;
     private final @NonNull List<OrderItem> items;
     private final @NonNull Customer customer;
 
@@ -30,9 +34,15 @@ final class OrderJdbc implements PlaceableOrder {
         if (items.isEmpty()) {
             throw new OrderHasNoItemsException();
         }
+        this.id = new OrderId(idSequence.getAndIncrement());
         this.items = items;
         this.customer = customer;
         this.eventPublisher = eventPublisher;
+    }
+
+    @Override
+    public OrderId id() {
+        return id;
     }
 
     @Override
@@ -45,7 +55,6 @@ final class OrderJdbc implements PlaceableOrder {
         return customer;
     }
 
-    // TODO do in a transaction
     @Override
     public void place() {
         if (placed) {

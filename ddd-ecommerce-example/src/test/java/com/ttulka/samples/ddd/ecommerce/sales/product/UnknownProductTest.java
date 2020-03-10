@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class UnknownProductTest {
 
@@ -27,26 +26,35 @@ class UnknownProductTest {
     }
 
     @Test
-    void change_title_fails() {
+    void change_title_noop() {
         Product unknownProduct = new UnknownProduct();
-        assertThrows(UnsupportedOperationException.class, () -> unknownProduct.changeTitle(new Title("test")));
+        Title unknownTitle = unknownProduct.title();
+        unknownProduct.changeTitle(new Title("test"));
+
+        assertThat(unknownProduct.title()).isEqualTo(unknownTitle);
     }
 
     @Test
-    void change_description_fails() {
+    void change_description_noop() {
         Product unknownProduct = new UnknownProduct();
-        assertThrows(UnsupportedOperationException.class, () -> unknownProduct.changeDescription(new Description("test")));
+        Description unknownDescription = unknownProduct.description();
+        unknownProduct.changeDescription(new Description("test"));
+
+        assertThat(unknownProduct.description()).isEqualTo(unknownDescription);
     }
 
     @Test
-    void change_price_fails() {
+    void change_price_noop() {
         Product unknownProduct = new UnknownProduct();
-        assertThrows(UnsupportedOperationException.class, () -> unknownProduct.changePrice(new Price(1.f)));
+        Price unknownPrice = unknownProduct.price();
+        unknownProduct.changePrice(new Price(1.f));
+
+        assertThat(unknownProduct.price()).isEqualTo(unknownPrice);
     }
 
     @Test
-    void put_for_sale_fails() {
+    void put_for_sale_noop() {
         Product unknownProduct = new UnknownProduct();
-        assertThrows(UnsupportedOperationException.class, () -> unknownProduct.putForSale());
+        unknownProduct.putForSale();
     }
 }

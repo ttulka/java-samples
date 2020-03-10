@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public final class Payment {
 
-    private final @NonNull String orderId;
+    private final @NonNull Object orderId;
     private final @NonNull EventPublisher eventPublisher;
 
     public void confirm() {

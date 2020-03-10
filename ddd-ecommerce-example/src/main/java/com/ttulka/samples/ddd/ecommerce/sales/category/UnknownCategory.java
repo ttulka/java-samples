@@ -22,6 +22,6 @@ public final class UnknownCategory implements Category {
 
     @Override
     public void changeTitle(Title title) {
-        throw new UnsupportedOperationException("Cannot change the title: unknown category.");
+        // do nothing
     }
 }

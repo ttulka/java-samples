@@ -12,24 +12,24 @@ class CartItemTest {
         CartItem item = new CartItem(
                 "test-1",
                 "Test",
-                new Amount(123)
+                new Quantity(123)
         );
         assertAll(
                 () -> assertThat(item.productCode()).isEqualTo("test-1"),
                 () -> assertThat(item.title()).isEqualTo("Test"),
-                () -> assertThat(item.amount()).isEqualTo(new Amount(123))
+                () -> assertThat(item.quantity()).isEqualTo(new Quantity(123))
         );
     }
 
     @Test
-    void item_with_increased_amount_is_returned() {
+    void item_with_increased_quantity_is_returned() {
         CartItem item = new CartItem(
                 "test-1",
                 "Test",
-                new Amount(123)
+                new Quantity(123)
         );
-        CartItem increased = item.add(new Amount(321));
+        CartItem increased = item.add(new Quantity(321));
 
-        assertThat(increased.amount()).isEqualTo(new Amount(444));
+        assertThat(increased.quantity()).isEqualTo(new Quantity(444));
     }
 }

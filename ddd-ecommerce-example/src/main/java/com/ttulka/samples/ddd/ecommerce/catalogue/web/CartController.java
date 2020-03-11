@@ -36,10 +36,10 @@ class CartController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String add(@NonNull String productCode, @NonNull Integer amount,
+    public String add(@NonNull String productCode, @NonNull Integer quantity,
                       HttpServletRequest request, HttpServletResponse response) {
         Cart cart = new CartCookies(request, response);
-        new AddIntoCart(cart, findProducts).product(productCode, amount);
+        new AddIntoCart(cart, findProducts).product(productCode, quantity);
 
         return "redirect:/cart";
     }
@@ -56,7 +56,7 @@ class CartController {
     private Map<String, Object> toData(CartItem item) {
         return Map.of("code", item.productCode(),
                       "title", item.title(),
-                      "amount", item.amount().value());
+                      "quantity", item.quantity().value());
     }
 
     private void cartIntoModel(Cart cart, Model model) {

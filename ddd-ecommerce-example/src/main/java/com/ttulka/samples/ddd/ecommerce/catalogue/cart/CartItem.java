@@ -15,7 +15,7 @@ public final class CartItem {
 
     private final @NonNull String productCode;
     private final @NonNull String title;
-    private final @NonNull Amount amount;
+    private final @NonNull Quantity quantity;
 
     public String productCode() {
         return productCode;
@@ -25,13 +25,13 @@ public final class CartItem {
         return title;
     }
 
-    public Amount amount() {
-        return amount;
+    public Quantity quantity() {
+        return quantity;
     }
 
-    public CartItem add(Amount addend) {
+    public CartItem add(Quantity addend) {
         return toBuilder()
-                .amount(amount.add(addend))
+                .quantity(quantity.add(addend))
                 .build();
     }
 }

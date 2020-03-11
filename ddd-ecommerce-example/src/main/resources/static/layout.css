@@ -75,7 +75,7 @@ a {
     text-decoration: none;
     color: red;
 }
-.cart .item .amount {
+.cart .item .quantity {
     font-weight: bold;
 }
 .cart .order {

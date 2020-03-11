@@ -7,7 +7,7 @@
         <h1 th:text="#{catalogue.title}">Product Catalogue</h1>
 
         <form th:action="@{/cart}" method="post">
-            <input name="amount" value="1" type="hidden">
+            <input name="quantity" value="1" type="hidden">
 
             <table th:if="${products}" class="products" cellpadding="10" cellspacing="0" border="0">
                 <tr th:each="product: ${products}" class="product">

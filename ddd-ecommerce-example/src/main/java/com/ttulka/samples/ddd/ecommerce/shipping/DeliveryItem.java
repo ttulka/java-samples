@@ -11,13 +11,13 @@ import lombok.ToString;
 public final class DeliveryItem {
 
     private final @NonNull ProductCode productCode;
-    private final @NonNull Amount amount;
+    private final @NonNull Quantity quantity;
 
     public ProductCode productCode() {
         return productCode;
     }
 
-    public Amount amount() {
-        return amount;
+    public Quantity quantity() {
+        return quantity;
     }
 }

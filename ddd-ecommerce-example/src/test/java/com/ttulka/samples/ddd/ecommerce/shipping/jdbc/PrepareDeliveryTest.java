@@ -3,7 +3,7 @@ package com.ttulka.samples.ddd.ecommerce.shipping.jdbc;
 import java.util.List;
 
 import com.ttulka.samples.ddd.ecommerce.shipping.Address;
-import com.ttulka.samples.ddd.ecommerce.shipping.Amount;
+import com.ttulka.samples.ddd.ecommerce.shipping.Quantity;
 import com.ttulka.samples.ddd.ecommerce.shipping.Deliveries;
 import com.ttulka.samples.ddd.ecommerce.shipping.Delivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.DeliveryItem;
@@ -36,14 +36,14 @@ class PrepareDeliveryTest {
     void delivery_for_order_is_prepared() {
         prepareDelivery.forOrder(
                 new OrderId(123),
-                List.of(new DeliveryItem(new ProductCode("test"), new Amount(1))),
+                List.of(new DeliveryItem(new ProductCode("test"), new Quantity(1))),
                 new Address(new Person("test"), new Place("test")));
 
         Delivery delivery = deliveries.byOrderId(new OrderId(123));
 
         assertAll(
                 () -> assertThat(delivery.orderId()).isEqualTo(new OrderId(123)),
-                () -> assertThat(delivery.items()).containsExactly(new DeliveryItem(new ProductCode("test"), new Amount(1))),
+                () -> assertThat(delivery.items()).containsExactly(new DeliveryItem(new ProductCode("test"), new Quantity(1))),
                 () -> assertThat(delivery.address()).isEqualTo(new Address(new Person("test"), new Place("test")))
         );
     }

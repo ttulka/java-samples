@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.ttulka.samples.ddd.ecommerce.shipping.Address;
-import com.ttulka.samples.ddd.ecommerce.shipping.Amount;
+import com.ttulka.samples.ddd.ecommerce.shipping.Quantity;
 import com.ttulka.samples.ddd.ecommerce.shipping.Deliveries;
 import com.ttulka.samples.ddd.ecommerce.shipping.Delivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.DeliveryId;
@@ -37,7 +37,7 @@ final class DeliveriesJdbc implements Deliveries {
                     "WHERE order_id = ?", orderId.value());
 
             List<Map<String, Object>> items = jdbcTemplate.queryForList(
-                    "SELECT product_code productCode, amount FROM delivery_items " +
+                    "SELECT product_code productCode, quantity FROM delivery_items " +
                     "WHERE delivery_id = ?", delivery.get("id"));
 
             if (delivery != null && items != null) {
@@ -56,7 +56,7 @@ final class DeliveriesJdbc implements Deliveries {
                 items.stream()
                         .map(item -> new DeliveryItem(
                                 new ProductCode((String) item.get("productCode")),
-                                new Amount((Integer) item.get("amount"))))
+                                new Quantity((Integer) item.get("quantity"))))
                         .collect(Collectors.toList()),
                 new Address(
                         new Person((String) delivery.get("person")),

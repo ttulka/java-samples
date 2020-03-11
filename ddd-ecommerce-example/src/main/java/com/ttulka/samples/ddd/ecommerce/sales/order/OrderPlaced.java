@@ -28,7 +28,7 @@ public final class OrderPlaced {
     }
 
     private OrderItemData toData(OrderItem item) {
-        return new OrderItemData(item.code(), item.title(), item.price(), item.amount());
+        return new OrderItemData(item.code(), item.title(), item.price(), item.quantity());
     }
 
     private CustomerData toData(Customer customer) {
@@ -41,7 +41,7 @@ public final class OrderPlaced {
         public final String code;
         public final String title;
         public final Float price;
-        public final Integer amount;
+        public final Integer quantity;
     }
 
     @Value

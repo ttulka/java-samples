@@ -10,11 +10,11 @@ class DeliveryItemTest {
     @Test
     void delivery_item_values() {
         DeliveryItem deliveryItem = new DeliveryItem(
-                new ProductCode("test"), new Amount(123));
+                new ProductCode("test"), new Quantity(123));
 
         assertAll(
                 () -> assertThat(deliveryItem.productCode()).isEqualTo(new ProductCode("test")),
-                () -> assertThat(deliveryItem.amount()).isEqualTo(new Amount(123))
+                () -> assertThat(deliveryItem.quantity()).isEqualTo(new Quantity(123))
         );
     }
 }

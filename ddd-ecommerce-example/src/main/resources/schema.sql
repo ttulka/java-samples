@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS deliveries (
 
 CREATE TABLE IF NOT EXISTS delivery_items (
     product_code VARCHAR(50) NOT NULL,
-    amount INT NOT NULL DEFAULT(0),
+    quantity INT NOT NULL DEFAULT(0),
     delivery_id INT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS delivery_id_idx ON delivery_items(delivery_id);
@@ -41,5 +41,5 @@ CREATE INDEX IF NOT EXISTS delivery_id_idx ON delivery_items(delivery_id);
 
 CREATE TABLE IF NOT EXISTS products_in_stock (
     product_id INT NOT NULL PRIMARY KEY,
-    amount INT NOT NULL DEFAULT(0)
+    quantity INT NOT NULL DEFAULT(0)
 );

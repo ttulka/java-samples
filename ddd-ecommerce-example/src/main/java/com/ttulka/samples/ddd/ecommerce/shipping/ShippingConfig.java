@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
+import org.springframework.scheduling.annotation.Async;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,6 +32,7 @@ class ShippingConfig {
         private final PrepareDelivery prepareDelivery;
 
         @EventListener
+        @Async
         @Order(10)
         public void on(OrderPlaced event) {
             prepareDelivery.forOrder(
@@ -38,7 +40,7 @@ class ShippingConfig {
                     event.orderItems.stream()
                             .map(item -> new DeliveryItem(
                                     new ProductCode(item.code),
-                                    new Amount(item.amount)))
+                                    new Quantity(item.quantity)))
                             .collect(Collectors.toList()),
                     new Address(
                             new Person(event.customer.name),

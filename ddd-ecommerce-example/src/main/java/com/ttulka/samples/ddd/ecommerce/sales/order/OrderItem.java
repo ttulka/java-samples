@@ -11,9 +11,9 @@ public final class OrderItem {
     private final @NonNull String code;
     private final @NonNull String title;
     private final @NonNull Float price;
-    private final @NonNull Integer amount;
+    private final @NonNull Integer quantity;
 
-    public OrderItem(@NonNull String code, @NonNull String title, @NonNull Float price, @NonNull Integer amount) {
+    public OrderItem(@NonNull String code, @NonNull String title, @NonNull Float price, @NonNull Integer quantity) {
         if (code.isBlank()) {
             throw new IllegalArgumentException("Code cannot be empty!");
         }
@@ -23,13 +23,13 @@ public final class OrderItem {
         if (price < 0) {
             throw new IllegalArgumentException("Price cannot be less than zero!");
         }
-        if (amount < 1) {
-            throw new IllegalArgumentException("Amount cannot be less than one!");
+        if (quantity < 1) {
+            throw new IllegalArgumentException("Quantity cannot be less than one!");
         }
         this.code = code;
         this.title = title;
         this.price = price;
-        this.amount = amount;
+        this.quantity = quantity;
     }
 
     public String code() {
@@ -44,7 +44,7 @@ public final class OrderItem {
         return price;
     }
 
-    public Integer amount() {
-        return amount;
+    public Integer quantity() {
+        return quantity;
     }
 }

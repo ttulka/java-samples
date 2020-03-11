@@ -11,7 +11,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Amount;
+import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Quantity;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Cart;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.CartItem;
 
@@ -51,10 +51,10 @@ public final class CartCookies implements Cart {
     public void add(@NonNull CartItem toAdd) {
         List<CartItem> currentItems = parsedItems(cookie);
 
-        Amount alreadyInCart = currentItems.stream()
+        Quantity alreadyInCart = currentItems.stream()
                 .filter(toAdd::equals)
-                .map(CartItem::amount)
-                .findAny().orElse(new Amount(0));
+                .map(CartItem::quantity)
+                .findAny().orElse(new Quantity(0));
 
         List<CartItem> items = new ArrayList<>(
                 currentItems.stream()
@@ -68,7 +68,7 @@ public final class CartCookies implements Cart {
                 .map(item -> String.format("%s|%s|%d",
                                            item.productCode(),
                                            item.title().replace(" ", "_"),
-                                           item.amount().value()))
+                                           item.quantity().value()))
                 .collect(Collectors.joining("#"))));
     }
 
@@ -80,7 +80,7 @@ public final class CartCookies implements Cart {
                 .map(item -> String.format("%s|%s|%d",
                                            item.productCode(),
                                            item.title().replace(" ", "_"),
-                                           item.amount().value()))
+                                           item.quantity().value()))
                 .collect(Collectors.joining("#"))));
     }
 
@@ -99,7 +99,7 @@ public final class CartCookies implements Cart {
 
     private CartItem parseItem(String cookie) {
         String[] item = cookie.split("\\|");
-        return new CartItem(item[0], item[1].replace("_", " "), new Amount(Integer.parseInt(item[2])));
+        return new CartItem(item[0], item[1].replace("_", " "), new Quantity(Integer.parseInt(item[2])));
     }
 
     private Cookie cartCookie(String value) {

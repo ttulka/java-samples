@@ -36,7 +36,7 @@ public final class PlaceOrderFromCart {
                 cartItem.productCode(),
                 cartItem.title(),
                 productPrice(cartItem.productCode()),
-                cartItem.amount().value());
+                cartItem.quantity().value());
     }
 
     private float productPrice(String productCode) {

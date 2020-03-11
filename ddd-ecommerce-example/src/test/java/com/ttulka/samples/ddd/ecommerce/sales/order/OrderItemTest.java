@@ -38,7 +38,7 @@ class OrderItemTest {
     }
 
     @Test
-    void amount_cannot_be_less_than_one() {
+    void quantity_cannot_be_less_than_one() {
         assertAll(
                 () -> assertThrows(IllegalArgumentException.class, () -> new OrderItem("test-1", "Test 1", 1.f, 0)),
                 () -> assertThrows(IllegalArgumentException.class, () -> new OrderItem("test-1", "Test 1", 1.f, -1))

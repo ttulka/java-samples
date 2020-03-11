@@ -64,7 +64,7 @@ public final class DeliveryJdbc implements Delivery {
 
         items.forEach(item -> jdbcTemplate.update(
                 "INSERT INTO delivery_items VALUES (?, ?, ?)",
-                item.productCode().value(), item.amount().value(), id.value())
+                item.productCode().value(), item.quantity().value(), id.value())
         );
 
         prepared = true;

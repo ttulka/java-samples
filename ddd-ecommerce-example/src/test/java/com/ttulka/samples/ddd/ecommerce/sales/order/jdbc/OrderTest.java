@@ -34,11 +34,11 @@ class OrderTest {
                 () -> assertThat(order.items().get(0).code()).isEqualTo("test-1"),
                 () -> assertThat(order.items().get(0).title()).isEqualTo("Test 1"),
                 () -> assertThat(order.items().get(0).price()).isEqualTo(1.f),
-                () -> assertThat(order.items().get(0).amount()).isEqualTo(1),
+                () -> assertThat(order.items().get(0).quantity()).isEqualTo(1),
                 () -> assertThat(order.items().get(1).code()).isEqualTo("test-2"),
                 () -> assertThat(order.items().get(1).title()).isEqualTo("Test 2"),
                 () -> assertThat(order.items().get(1).price()).isEqualTo(2.f),
-                () -> assertThat(order.items().get(1).amount()).isEqualTo(2)
+                () -> assertThat(order.items().get(1).quantity()).isEqualTo(2)
         );
     }
 

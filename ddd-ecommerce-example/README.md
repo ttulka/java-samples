@@ -4,7 +4,7 @@ The purpose of this project is to provide a sample implementation of an e-commer
 
 Programming language is Java 11 with heavy use of Spring framework.
 
-## The Domain
+## Domain Services
 
 Several primary [business capabilities][1] have been identified:
 
@@ -17,13 +17,13 @@ Several primary [business capabilities][1] have been identified:
   
 - **Warehouse**
   - store goods
-  - receive items for shipping
+  - fetch goods for shipping
   
 - **Billing**
-  - charge a customer
+  - collect a payment
 
 - **Shipping**
-  - ship an order
+  - dispatch a delivery
 
 There are also possible secondary (supporting) business capabilities:
 
@@ -32,14 +32,35 @@ There are also possible secondary (supporting) business capabilities:
   - promote a product
   
 - **User Reviews**
-  - add a review
+  - add a product review
   
 - **Customer Support**
-  - solve an issue
+  - resolve a complain
+  - answer a question
+  - provide help
   
 The e-commerce system is a web application using a **Catalogue** service implementing the [Backends For Frontends (BFF)][2] pattern.
 
-![Service overview](https://raw.githubusercontent.com/ttulka/java-samples/master/ddd-ecommerce-example/services-overview.png)
+### Services Dependencies
+
+Services cooperate together to work out a bussiness capability: sell and deliver products.
+
+![Service Dependencies](services-dependencies.png)
+
+### Services Event Workflow
+
+The communication among services is implemented via events:
+
+![Service Dependencies](services-dependencies.png)
+
+When the customer places an order the following process starts up (happy path):
+
+1. Sales service creates a new order and publishes the OrderPlaced event.
+2. Billing service collects payment for the order and publishes the PaymentReceived event.
+2. Shipping service prepares a delivery.
+2. Warehouse service fetches goods from the stock and publishes the GoodsFetched event.
+3. Shipping service dispatches the delivery and publishes the DeliveryDispatched event.
+4. Warehouse service updates the stock.
 
 [1]: http://bill-poole.blogspot.com/2008/07/value-chain-analysis.html
 [2]: https://samnewman.io/patterns/architectural/bff/

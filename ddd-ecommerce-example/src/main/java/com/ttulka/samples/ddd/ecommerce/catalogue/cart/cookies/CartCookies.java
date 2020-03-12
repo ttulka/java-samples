@@ -11,9 +11,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Quantity;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Cart;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.CartItem;
+import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Quantity;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -63,7 +63,6 @@ public final class CartCookies implements Cart {
 
         items.add(toAdd.add(alreadyInCart));
 
-        // TODO ItemCookie will implement this later:
         response.addCookie(cartCookie(cookie = items.stream()
                 .map(item -> String.format("%s|%s|%d",
                                            item.productCode(),
@@ -74,7 +73,6 @@ public final class CartCookies implements Cart {
 
     @Override
     public void remove(@NonNull String productCode) {
-        // TODO ItemCookie will implement this later:
         response.addCookie(cartCookie(cookie = parsedItems(cookie).stream()
                 .filter(item -> !item.productCode().equals(productCode))
                 .map(item -> String.format("%s|%s|%d",
@@ -89,15 +87,14 @@ public final class CartCookies implements Cart {
         response.addCookie(cartCookie(cookie = ""));
     }
 
-    // TODO ItemCookie will implement this later:
     private List<CartItem> parsedItems(String cookie) {
         return Arrays.stream(cookie.split("#"))
                 .filter(Predicate.not(String::isBlank))
-                .map(this::parseItem)
+                .map(this::parsedItem)
                 .collect(Collectors.toList());
     }
 
-    private CartItem parseItem(String cookie) {
+    private CartItem parsedItem(String cookie) {
         String[] item = cookie.split("\\|");
         return new CartItem(item[0], item[1].replace("_", " "), new Quantity(Integer.parseInt(item[2])));
     }

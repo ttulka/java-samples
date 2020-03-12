@@ -1,5 +1,7 @@
 package com.ttulka.samples.ddd.ecommerce.catalogue.cart;
 
+import javax.servlet.http.Cookie;
+
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.cookies.CartCookies;
 
 import org.junit.jupiter.api.Test;
@@ -15,6 +17,37 @@ class CartCookiesTest {
     void cart_is_empty() {
         Cart cart = new CartCookies(new MockHttpServletRequest(), new MockHttpServletResponse());
         assertThat(cart.items()).isEmpty();
+    }
+
+    @Test
+    void cart_item_is_created_from_cookies() {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setCookies(new Cookie("cart", "test-1|Test 1|123"));
+
+        Cart cart = new CartCookies(request, new MockHttpServletResponse());
+        assertAll(
+                () -> assertThat(cart.items()).hasSize(1),
+                () -> assertThat(cart.items().get(0).productCode()).isEqualTo("test-1"),
+                () -> assertThat(cart.items().get(0).title()).isEqualTo("Test 1"),
+                () -> assertThat(cart.items().get(0).quantity()).isEqualTo(new Quantity(123))
+        );
+    }
+
+    @Test
+    void two_cart_items_are_created_from_cookies() {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setCookies(new Cookie("cart", "test-1|Test 1|123#test-2|Test 2|321"));
+
+        Cart cart = new CartCookies(request, new MockHttpServletResponse());
+        assertAll(
+                () -> assertThat(cart.items()).hasSize(2),
+                () -> assertThat(cart.items().get(0).productCode()).isEqualTo("test-1"),
+                () -> assertThat(cart.items().get(0).title()).isEqualTo("Test 1"),
+                () -> assertThat(cart.items().get(0).quantity()).isEqualTo(new Quantity(123)),
+                () -> assertThat(cart.items().get(1).productCode()).isEqualTo("test-2"),
+                () -> assertThat(cart.items().get(1).title()).isEqualTo("Test 2"),
+                () -> assertThat(cart.items().get(1).quantity()).isEqualTo(new Quantity(321))
+        );
     }
 
     @Test

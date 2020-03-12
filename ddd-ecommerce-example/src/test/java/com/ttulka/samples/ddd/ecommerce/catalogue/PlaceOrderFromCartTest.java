@@ -1,5 +1,7 @@
 package com.ttulka.samples.ddd.ecommerce.catalogue;
 
+import javax.servlet.http.Cookie;
+
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.cookies.CartCookies;
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
 import com.ttulka.samples.ddd.ecommerce.sales.order.customer.Address;
@@ -31,13 +33,22 @@ class PlaceOrderFromCartTest {
     private PlaceOrderFromCart placeOrderFromCart;
 
     @Test
+    void order_is_placed() {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setCookies(new Cookie("cart", "test-1|Test 1|123"));
+
+        placeOrderFromCart.placeOrder(
+                new CartCookies(request, new MockHttpServletResponse()),
+                new Customer(new Name("test"), new Address("test")));
+    }
+
+    @Test
     void empty_cart_throws_an_exception() {
         assertThrows(PlaceOrderFromCart.NoItemsToOrderException.class,
                      () -> placeOrderFromCart.placeOrder(
                              new CartCookies(new MockHttpServletRequest(), new MockHttpServletResponse()),
                              new Customer(new Name("test"), new Address("test"))));
     }
-
 
     @Configuration
     @ComponentScan("com.ttulka.samples.ddd.ecommerce.sales")

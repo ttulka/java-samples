@@ -12,7 +12,9 @@ import com.ttulka.samples.ddd.ecommerce.sales.order.customer.Customer;
 import com.ttulka.samples.ddd.ecommerce.sales.order.customer.Name;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,11 +25,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @Transactional
 class OrderTest {
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     @Test
     void items_are_returned() {
         Order order = new OrderJdbc(
                 List.of(new OrderItem("test-1", "Test 1", 1.f, 1), new OrderItem("test-2", "Test 2", 2.f, 2)),
                 new Customer(new Name("test"), new Address("test")),
+                jdbcTemplate,
                 new MockEventPublisher());
         assertAll(
                 () -> assertThat(order.items()).hasSize(2),
@@ -47,6 +53,7 @@ class OrderTest {
         Order order = new OrderJdbc(
                 List.of(new OrderItem("test", "Test", 1.f, 1)),
                 new Customer(new Name("test name"), new Address("test address")),
+                jdbcTemplate,
                 new MockEventPublisher());
         assertAll(
                 () -> assertThat(order.customer()).isNotNull(),
@@ -61,6 +68,7 @@ class OrderTest {
                      () -> new OrderJdbc(
                              Collections.emptyList(),
                              new Customer(new Name("test"), new Address("test")),
+                             jdbcTemplate,
                              new MockEventPublisher()));
     }
 
@@ -70,6 +78,7 @@ class OrderTest {
         PlaceableOrder order = new OrderJdbc(
                 List.of(new OrderItem("test", "Test", 1.f, 1)),
                 new Customer(new Name("test"), new Address("test")),
+                jdbcTemplate,
                 mockEventPublisher);
         order.place();
 
@@ -82,6 +91,7 @@ class OrderTest {
         PlaceableOrder order = new OrderJdbc(
                 List.of(new OrderItem("test", "Test", 1.f, 1)),
                 new Customer(new Name("test"), new Address("test")),
+                jdbcTemplate,
                 mockEventPublisher);
         order.place();
 

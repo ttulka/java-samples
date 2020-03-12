@@ -12,6 +12,8 @@ import com.ttulka.samples.ddd.ecommerce.sales.order.OrderPlaced;
 import com.ttulka.samples.ddd.ecommerce.sales.order.PlaceableOrder;
 import com.ttulka.samples.ddd.ecommerce.sales.order.customer.Customer;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
@@ -26,17 +28,20 @@ final class OrderJdbc implements PlaceableOrder {
     private final @NonNull List<OrderItem> items;
     private final @NonNull Customer customer;
 
+    private final @NonNull JdbcTemplate jdbcTemplate;
     private final @NonNull EventPublisher eventPublisher;
 
     private volatile boolean placed = false;
 
-    public OrderJdbc(@NonNull List<OrderItem> items, @NonNull Customer customer, @NonNull EventPublisher eventPublisher) {
+    public OrderJdbc(@NonNull List<OrderItem> items, @NonNull Customer customer,
+                     @NonNull JdbcTemplate jdbcTemplate, @NonNull EventPublisher eventPublisher) {
         if (items.isEmpty()) {
             throw new OrderHasNoItemsException();
         }
         this.id = new OrderId(idSequence.getAndIncrement());
         this.items = items;
         this.customer = customer;
+        this.jdbcTemplate = jdbcTemplate;
         this.eventPublisher = eventPublisher;
     }
 
@@ -60,8 +65,12 @@ final class OrderJdbc implements PlaceableOrder {
         if (placed) {
             throw new OrderAlreadyPlacedException();
         }
-        // TODO save the order into the database
-        // ...
+        jdbcTemplate.update("INSERT INTO orders VALUES (?, ?, ?)",
+                            id.value(), customer.name().value(), customer.address().value());
+
+        items.forEach(item -> jdbcTemplate.update("INSERT INTO order_items VALUES (?, ?, ?, ?, ?)",
+                                                  item.code(), item.title(), item.price(), item.quantity(), id.value()));
+
         eventPublisher.raise(new OrderPlaced(Instant.now(), this));
         placed = true;
     }

@@ -20,6 +20,21 @@ CREATE TABLE IF NOT EXISTS products_in_categories (
     PRIMARY KEY (product_id, category_id)
 );
 
+CREATE TABLE IF NOT EXISTS orders (
+    id BIGINT NOT NULL PRIMARY KEY,
+    customer VARCHAR(50) NOT NULL,
+    address VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS order_items (
+    product_code VARCHAR(50) NOT NULL,
+    title VARCHAR(20) NOT NULL,
+    price DECIMAL(10,2),
+    quantity INT NOT NULL DEFAULT(0),
+    order_id BIGINT NOT NULL,
+    PRIMARY KEY (order_id, product_code)
+);
+
 -- ------ SHIPPING ------
 
 CREATE TABLE IF NOT EXISTS deliveries (
@@ -33,9 +48,9 @@ CREATE TABLE IF NOT EXISTS deliveries (
 CREATE TABLE IF NOT EXISTS delivery_items (
     product_code VARCHAR(50) NOT NULL,
     quantity INT NOT NULL DEFAULT(0),
-    delivery_id BIGINT NOT NULL
+    delivery_id BIGINT NOT NULL,
+    PRIMARY KEY (delivery_id, product_code)
 );
-CREATE INDEX IF NOT EXISTS delivery_id_idx ON delivery_items(delivery_id);
 
 -- ------ WAREHOUSE ------
 

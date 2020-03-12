@@ -5,12 +5,13 @@ import com.ttulka.samples.ddd.ecommerce.sales.order.PlaceOrder;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 @Configuration
 class OrderJdbcConfig {
 
     @Bean
-    PlaceOrder placeOrder(EventPublisher eventPublisher) {
-        return new PlaceOrderJdbc(eventPublisher);
+    PlaceOrder placeOrder(JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {
+        return new PlaceOrderJdbc(jdbcTemplate, eventPublisher);
     }
 }

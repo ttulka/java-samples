@@ -30,10 +30,10 @@ class DeliveryTest {
 
     @Test
     void delivery_has_values() {
-        Delivery delivery = deliveries.byOrderId(new OrderId(123));
+        Delivery delivery = deliveries.byOrderId(new OrderId(123L));
         assertAll(
-                () -> assertThat(delivery.id()).isEqualTo(new DeliveryId(1)),
-                () -> assertThat(delivery.orderId()).isEqualTo(new OrderId(123)),
+                () -> assertThat(delivery.id()).isEqualTo(new DeliveryId(1L)),
+                () -> assertThat(delivery.orderId()).isEqualTo(new OrderId(123L)),
                 () -> assertThat(delivery.address()).isEqualTo(new Address(new Person("Test Person"), new Place("Test Place"))),
                 () -> assertThat(delivery.isShipped()).isFalse()
         );
@@ -41,21 +41,21 @@ class DeliveryTest {
 
     @Test
     void delivery_is_found_by_order_id() {
-        Delivery delivery = deliveries.byOrderId(new OrderId(123));
+        Delivery delivery = deliveries.byOrderId(new OrderId(123L));
 
-        assertThat(delivery.id()).isEqualTo(new DeliveryId(1));
+        assertThat(delivery.id()).isEqualTo(new DeliveryId(1L));
     }
 
     @Test
     void delivery_is_already_prepared() {
-        Delivery delivery = deliveries.byOrderId(new OrderId(123));
+        Delivery delivery = deliveries.byOrderId(new OrderId(123L));
 
         assertThrows(Delivery.DeliveryAlreadyPreparedException.class, () -> delivery.prepare());
     }
 
     @Test
     void delivery_is_shipped() {
-        Delivery delivery = deliveries.byOrderId(new OrderId(123));
+        Delivery delivery = deliveries.byOrderId(new OrderId(123L));
         delivery.ship();
 
         assertThat(delivery.isShipped()).isTrue();
@@ -63,7 +63,7 @@ class DeliveryTest {
 
     @Test
     void delivery_can_be_shipped_only_once() {
-        Delivery delivery = deliveries.byOrderId(new OrderId(123));
+        Delivery delivery = deliveries.byOrderId(new OrderId(123L));
         delivery.ship();
 
         assertThrows(Delivery.DeliveryAlreadyShippedException.class, () -> delivery.ship());

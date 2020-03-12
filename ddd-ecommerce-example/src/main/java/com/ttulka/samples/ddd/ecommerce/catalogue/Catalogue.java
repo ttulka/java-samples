@@ -8,6 +8,7 @@ import com.ttulka.samples.ddd.ecommerce.sales.category.FindCategories;
 import com.ttulka.samples.ddd.ecommerce.sales.category.Uri;
 import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Product;
+import com.ttulka.samples.ddd.ecommerce.warehouse.ProductCode;
 import com.ttulka.samples.ddd.ecommerce.warehouse.Warehouse;
 
 import lombok.NonNull;
@@ -45,7 +46,7 @@ public final class Catalogue {
                 product.title().value(),
                 product.description().value(),
                 product.price().value(),
-                warehouse.leftInStock(product.id()).amount());
+                warehouse.leftInStock(new ProductCode(product.code().value())).amount());
     }
 
     private CatalogueCategoryData toData(Category category) {

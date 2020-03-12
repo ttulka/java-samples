@@ -1,6 +1,8 @@
 package com.ttulka.samples.ddd.ecommerce.sales.product.jdbc;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.ttulka.samples.ddd.ecommerce.sales.category.Uri;
@@ -14,13 +16,10 @@ import com.ttulka.samples.ddd.ecommerce.sales.product.Title;
 import com.ttulka.samples.ddd.ecommerce.sales.product.UnknownProduct;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
@@ -31,22 +30,22 @@ final class ProductsJdbc implements FindProducts {
 
     @Override
     public List<Product> all() {
-        return jdbcTemplate.query("SELECT id, code, title, description, price FROM products " +
-                                  "ORDER BY id ASC",
-                                  BeanPropertyRowMapper.newInstance(ProductEntry.class)).stream()
+        return jdbcTemplate.queryForList(
+                "SELECT id, code, title, description, price FROM products " +
+                "ORDER BY id ASC").stream()
                 .map(this::toProduct)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Product> fromCategory(@NonNull Uri categoryUri) {
-        return jdbcTemplate.query("SELECT p.id, p.code, p.title, p.description, p.price FROM products AS p " +
-                                  "JOIN products_in_categories AS pc ON pc.product_id = p.id " +
-                                  "JOIN categories AS c ON c.id = pc.category_id " +
-                                  "WHERE c.uri = ? " +
-                                  "ORDER BY p.id ASC",
-                                  new Object[]{categoryUri.value()},
-                                  BeanPropertyRowMapper.newInstance(ProductEntry.class)).stream()
+        return jdbcTemplate.queryForList(
+                "SELECT p.id, p.code, p.title, p.description, p.price FROM products AS p " +
+                "JOIN products_in_categories AS pc ON pc.product_id = p.id " +
+                "JOIN categories AS c ON c.id = pc.category_id " +
+                "WHERE c.uri = ? " +
+                "ORDER BY p.id ASC",
+                categoryUri.value()).stream()
                 .map(this::toProduct)
                 .collect(Collectors.toList());
     }
@@ -54,11 +53,9 @@ final class ProductsJdbc implements FindProducts {
     @Override
     public Product byCode(@NonNull Code code) {
         try {
-            ProductEntry entry = jdbcTemplate.queryForObject(
-                    "SELECT id, code, title, description, price FROM products " +
-                    "WHERE code = ?",
-                    new Object[]{code.value()},
-                    BeanPropertyRowMapper.newInstance(ProductEntry.class));
+            Map<String, Object> entry = jdbcTemplate.queryForMap(
+                    "SELECT id, code, title, description, price FROM products WHERE code = ?",
+                    code.value());
             if (entry != null) {
                 return toProduct(entry);
             }
@@ -68,25 +65,14 @@ final class ProductsJdbc implements FindProducts {
         return new UnknownProduct();
     }
 
-    private Product toProduct(ProductEntry entry) {
+    private Product toProduct(Map<String, Object> entry) {
         return new ProductJdbc(
-                new ProductId(entry.id),
-                new Code(entry.code),
-                new Title(entry.title),
-                new Description(entry.description),
-                new Price(entry.price),
+                new ProductId(entry.get("id")),
+                new Code((String) entry.get("code")),
+                new Title((String) entry.get("title")),
+                new Description((String) entry.get("description")),
+                new Price(((BigDecimal) entry.get("price")).floatValue()),
                 jdbcTemplate
         );
-    }
-
-    @NoArgsConstructor
-    @Setter
-    private static class ProductEntry {
-
-        public Long id;
-        public String code;
-        public String title;
-        public String description;
-        public float price;
     }
 }

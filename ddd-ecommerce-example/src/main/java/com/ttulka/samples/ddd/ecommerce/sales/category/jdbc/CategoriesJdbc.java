@@ -1,6 +1,7 @@
 package com.ttulka.samples.ddd.ecommerce.sales.category.jdbc;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.ttulka.samples.ddd.ecommerce.sales.category.Category;
@@ -11,13 +12,10 @@ import com.ttulka.samples.ddd.ecommerce.sales.category.UnknownCategory;
 import com.ttulka.samples.ddd.ecommerce.sales.category.Uri;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
@@ -28,8 +26,8 @@ final class CategoriesJdbc implements FindCategories {
 
     @Override
     public List<Category> all() {
-        return jdbcTemplate.query("SELECT id, uri, title FROM categories",
-                                  BeanPropertyRowMapper.newInstance(CategoryEntry.class)).stream()
+        return jdbcTemplate.queryForList(
+                "SELECT id, uri, title FROM categories").stream()
                 .map(this::toCategory)
                 .collect(Collectors.toList());
     }
@@ -37,11 +35,10 @@ final class CategoriesJdbc implements FindCategories {
     @Override
     public Category byId(CategoryId id) {
         try {
-            CategoryEntry entry = jdbcTemplate.queryForObject(
+            Map<String, Object> entry = jdbcTemplate.queryForMap(
                     "SELECT id, uri, title FROM categories " +
                     "WHERE id = ?",
-                    new Object[]{id.value()},
-                    BeanPropertyRowMapper.newInstance(CategoryEntry.class));
+                    new Object[]{id.value()});
             if (entry != null) {
                 return toCategory(entry);
             }
@@ -51,21 +48,12 @@ final class CategoriesJdbc implements FindCategories {
         return new UnknownCategory();
     }
 
-    private Category toCategory(CategoryEntry entry) {
+    private Category toCategory(Map<String, Object> entry) {
         return new CategoryJdbc(
-                new CategoryId(entry.id),
-                new Uri(entry.uri),
-                new Title(entry.title),
+                new CategoryId(entry.get("id")),
+                new Uri((String) entry.get("uri")),
+                new Title((String) entry.get("title")),
                 jdbcTemplate
         );
-    }
-
-    @NoArgsConstructor
-    @Setter
-    private static class CategoryEntry {
-
-        public Long id;
-        public String uri;
-        public String title;
     }
 }

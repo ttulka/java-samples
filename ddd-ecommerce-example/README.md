@@ -51,7 +51,7 @@ Services cooperate together to work out a bussiness capability: sell and deliver
 
 The communication among services is implemented via events:
 
-![Service Dependencies](services-dependencies.png)
+![Service Dependencies](services-event-workflow.png.png)
 
 When the customer places an order the following process starts up (happy path):
 

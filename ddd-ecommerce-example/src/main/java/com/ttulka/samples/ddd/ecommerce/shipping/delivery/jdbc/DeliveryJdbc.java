@@ -1,7 +1,10 @@
 package com.ttulka.samples.ddd.ecommerce.shipping.delivery.jdbc;
 
+import java.time.Instant;
 import java.util.List;
 
+import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
+import com.ttulka.samples.ddd.ecommerce.shipping.DeliveryDispatched;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Address;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Delivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryId;
@@ -30,6 +33,7 @@ public final class DeliveryJdbc implements Delivery {
     private final @NonNull Address address;
 
     private final @NonNull JdbcTemplate jdbcTemplate;
+    private final @NonNull EventPublisher eventPublisher;
 
     private boolean prepared = false;
     private boolean dispatched = false;
@@ -80,9 +84,10 @@ public final class DeliveryJdbc implements Delivery {
         // do the delivery...
         log.info("Delivery dispatching...");
         log.info("Items: {}", items);
-        log.info("To address: {}", address);
+        log.info("To: {}", address);
 
         dispatched = true;
+        eventPublisher.raise(new DeliveryDispatched(Instant.now(), orderId.value()));
     }
 
     @Override

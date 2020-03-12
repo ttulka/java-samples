@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Address;
 import com.ttulka.samples.ddd.ecommerce.shipping.FindDeliveries;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Quantity;
@@ -28,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 final class DeliveriesJdbc implements FindDeliveries {
 
     private final @NonNull JdbcTemplate jdbcTemplate;
+    private final @NonNull EventPublisher eventPublisher;
 
     @Override
     public Delivery byOrderId(OrderId orderId) {
@@ -61,7 +63,7 @@ final class DeliveriesJdbc implements FindDeliveries {
                 new Address(
                         new Person((String) delivery.get("person")),
                         new Place((String) delivery.get("place"))),
-                jdbcTemplate,
+                jdbcTemplate, eventPublisher,
                 true,
                 (Boolean) delivery.get("dispatched"));
     }

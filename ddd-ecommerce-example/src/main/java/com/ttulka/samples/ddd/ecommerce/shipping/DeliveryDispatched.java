@@ -1,4 +1,4 @@
-package com.ttulka.samples.ddd.ecommerce.billing;
+package com.ttulka.samples.ddd.ecommerce.shipping;
 
 import java.time.Instant;
 
@@ -8,10 +8,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 @RequiredArgsConstructor
-@EqualsAndHashCode(of = "referenceId")
+@EqualsAndHashCode(of = "orderId")
 @ToString
-public final class PaymentReceived {
+public final class DeliveryDispatched {
 
     public final @NonNull Instant when;
-    public final @NonNull Object referenceId;
+    public final @NonNull Object orderId;
 }

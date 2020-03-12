@@ -8,10 +8,12 @@ import com.ttulka.samples.ddd.ecommerce.sales.order.Order;
 import com.ttulka.samples.ddd.ecommerce.sales.order.OrderItem;
 import com.ttulka.samples.ddd.ecommerce.sales.order.customer.Customer;
 
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
 import lombok.Value;
 
+@EqualsAndHashCode(of = "orderId")
 @ToString
 public final class OrderPlaced {
 

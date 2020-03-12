@@ -14,4 +14,9 @@ class OrderJdbcConfig {
     PlaceOrder placeOrder(JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {
         return new PlaceOrderJdbc(jdbcTemplate, eventPublisher);
     }
+
+    @Bean
+    OrdersJdbc ordersJdbc(JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {
+        return new OrdersJdbc(jdbcTemplate, eventPublisher);
+    }
 }

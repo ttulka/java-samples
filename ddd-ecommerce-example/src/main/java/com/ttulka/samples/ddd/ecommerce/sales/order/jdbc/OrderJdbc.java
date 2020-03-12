@@ -33,16 +33,21 @@ final class OrderJdbc implements PlaceableOrder {
 
     private volatile boolean placed = false;
 
-    public OrderJdbc(@NonNull List<OrderItem> items, @NonNull Customer customer,
+    public OrderJdbc(@NonNull OrderId id, @NonNull List<OrderItem> items, @NonNull Customer customer,
                      @NonNull JdbcTemplate jdbcTemplate, @NonNull EventPublisher eventPublisher) {
         if (items.isEmpty()) {
             throw new OrderHasNoItemsException();
         }
-        this.id = new OrderId(idSequence.getAndIncrement());
+        this.id = id;
         this.items = items;
         this.customer = customer;
         this.jdbcTemplate = jdbcTemplate;
         this.eventPublisher = eventPublisher;
+    }
+
+    public OrderJdbc(@NonNull List<OrderItem> items, @NonNull Customer customer,
+                     @NonNull JdbcTemplate jdbcTemplate, @NonNull EventPublisher eventPublisher) {
+        this(new OrderId(idSequence.getAndIncrement()), items, customer, jdbcTemplate, eventPublisher);
     }
 
     @Override

@@ -3,14 +3,14 @@ package com.ttulka.samples.ddd.ecommerce.shipping.delivery.jdbc;
 import java.util.List;
 
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Address;
+import com.ttulka.samples.ddd.ecommerce.shipping.FindDeliveries;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Quantity;
-import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Deliveries;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Delivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryItem;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.OrderId;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Person;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Place;
-import com.ttulka.samples.ddd.ecommerce.shipping.delivery.PrepareDelivery;
+import com.ttulka.samples.ddd.ecommerce.shipping.PrepareDelivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.ProductCode;
 
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class PrepareDeliveryTest {
 
     @Autowired
-    private Deliveries deliveries;
+    private FindDeliveries findDeliveries;
     @Autowired
     private PrepareDelivery prepareDelivery;
 
@@ -39,7 +39,7 @@ class PrepareDeliveryTest {
                 List.of(new DeliveryItem(new ProductCode("test"), new Quantity(1))),
                 new Address(new Person("test"), new Place("test")));
 
-        Delivery delivery = deliveries.byOrderId(new OrderId(123L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(123L));
 
         assertAll(
                 () -> assertThat(delivery.orderId()).isEqualTo(new OrderId(123L)),

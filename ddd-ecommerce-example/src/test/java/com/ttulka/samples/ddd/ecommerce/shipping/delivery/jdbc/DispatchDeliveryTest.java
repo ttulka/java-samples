@@ -1,9 +1,9 @@
 package com.ttulka.samples.ddd.ecommerce.shipping.delivery.jdbc;
 
-import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Deliveries;
+import com.ttulka.samples.ddd.ecommerce.shipping.FindDeliveries;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Delivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.OrderId;
-import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DispatchDelivery;
+import com.ttulka.samples.ddd.ecommerce.shipping.DispatchDelivery;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class DispatchDeliveryTest {
 
     @Autowired
-    private Deliveries deliveries;
+    private FindDeliveries findDeliveries;
     @Autowired
     private DispatchDelivery dispatchDelivery;
 
@@ -29,7 +29,7 @@ class DispatchDeliveryTest {
     void delivery_is_dispatched() {
         dispatchDelivery.byOrderId(new OrderId(123));
 
-        Delivery delivery = deliveries.byOrderId(new OrderId(123));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(123));
 
         assertThat(delivery.isDispatched()).isTrue();
     }

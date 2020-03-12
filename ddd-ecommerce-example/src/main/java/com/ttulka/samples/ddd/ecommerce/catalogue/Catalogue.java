@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.ttulka.samples.ddd.ecommerce.sales.category.Category;
-import com.ttulka.samples.ddd.ecommerce.sales.category.FindCategories;
+import com.ttulka.samples.ddd.ecommerce.sales.FindCategories;
 import com.ttulka.samples.ddd.ecommerce.sales.category.Uri;
-import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
+import com.ttulka.samples.ddd.ecommerce.sales.FindProducts;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Product;
 import com.ttulka.samples.ddd.ecommerce.warehouse.ProductCode;
 import com.ttulka.samples.ddd.ecommerce.warehouse.Warehouse;

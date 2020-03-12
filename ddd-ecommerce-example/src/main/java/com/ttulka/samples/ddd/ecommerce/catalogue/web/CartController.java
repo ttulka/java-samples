@@ -10,7 +10,7 @@ import com.ttulka.samples.ddd.ecommerce.catalogue.ListCart;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Cart;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.CartItem;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.cookies.CartCookies;
-import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
+import com.ttulka.samples.ddd.ecommerce.sales.FindProducts;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;

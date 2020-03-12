@@ -5,8 +5,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Address;
+import com.ttulka.samples.ddd.ecommerce.shipping.FindDeliveries;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Quantity;
-import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Deliveries;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Delivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryId;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryItem;
@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @Slf4j
-final class DeliveriesJdbc implements Deliveries {
+final class DeliveriesJdbc implements FindDeliveries {
 
     private final @NonNull JdbcTemplate jdbcTemplate;
 
@@ -44,7 +44,7 @@ final class DeliveriesJdbc implements Deliveries {
                 return toDelivery(delivery, items);
             }
         } catch (DataAccessException ignore) {
-            log.warn("Delivery by order id {} was not found: {}", orderId, ignore.getMessage());
+            log.warn("Delivery by order ID {} was not found: {}", orderId, ignore.getMessage());
         }
         return new UnknownDelivery();
     }

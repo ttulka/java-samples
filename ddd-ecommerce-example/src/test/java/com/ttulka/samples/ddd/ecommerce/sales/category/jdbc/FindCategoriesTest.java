@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import com.ttulka.samples.ddd.ecommerce.sales.category.Category;
 import com.ttulka.samples.ddd.ecommerce.sales.category.CategoryId;
-import com.ttulka.samples.ddd.ecommerce.sales.category.FindCategories;
+import com.ttulka.samples.ddd.ecommerce.sales.FindCategories;
 import com.ttulka.samples.ddd.ecommerce.sales.category.Title;
 import com.ttulka.samples.ddd.ecommerce.sales.category.Uri;
 

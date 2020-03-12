@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import com.ttulka.samples.ddd.ecommerce.sales.category.Uri;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Code;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Description;
-import com.ttulka.samples.ddd.ecommerce.sales.product.FindProducts;
+import com.ttulka.samples.ddd.ecommerce.sales.FindProducts;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Price;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Product;
 import com.ttulka.samples.ddd.ecommerce.sales.product.ProductId;

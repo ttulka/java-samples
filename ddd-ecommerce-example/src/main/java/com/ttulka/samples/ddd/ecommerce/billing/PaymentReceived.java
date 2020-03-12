@@ -8,8 +8,8 @@ import lombok.ToString;
 
 @RequiredArgsConstructor
 @ToString
-public final class OrderPaid {
+public final class PaymentReceived {
 
     public final @NonNull Instant when;
-    public final @NonNull Object orderId;
+    public final @NonNull Object referenceId;
 }

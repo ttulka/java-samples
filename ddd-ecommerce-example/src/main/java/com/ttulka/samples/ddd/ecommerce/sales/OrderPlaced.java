@@ -1,9 +1,11 @@
-package com.ttulka.samples.ddd.ecommerce.sales.order;
+package com.ttulka.samples.ddd.ecommerce.sales;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.ttulka.samples.ddd.ecommerce.sales.order.Order;
+import com.ttulka.samples.ddd.ecommerce.sales.order.OrderItem;
 import com.ttulka.samples.ddd.ecommerce.sales.order.customer.Customer;
 
 import lombok.NonNull;

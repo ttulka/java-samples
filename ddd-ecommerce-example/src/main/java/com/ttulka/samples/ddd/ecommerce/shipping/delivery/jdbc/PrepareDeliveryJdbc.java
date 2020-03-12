@@ -6,7 +6,7 @@ import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Address;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryId;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryItem;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.OrderId;
-import com.ttulka.samples.ddd.ecommerce.shipping.delivery.PrepareDelivery;
+import com.ttulka.samples.ddd.ecommerce.shipping.PrepareDelivery;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 

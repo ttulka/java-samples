@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
-import com.ttulka.samples.ddd.ecommerce.sales.order.FindOrders;
+import com.ttulka.samples.ddd.ecommerce.sales.FindOrders;
 import com.ttulka.samples.ddd.ecommerce.sales.order.Order;
 import com.ttulka.samples.ddd.ecommerce.sales.order.OrderId;
 import com.ttulka.samples.ddd.ecommerce.sales.order.OrderItem;

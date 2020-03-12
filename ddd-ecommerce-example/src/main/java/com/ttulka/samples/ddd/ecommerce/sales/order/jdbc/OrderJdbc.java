@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
 import com.ttulka.samples.ddd.ecommerce.sales.order.OrderId;
 import com.ttulka.samples.ddd.ecommerce.sales.order.OrderItem;
-import com.ttulka.samples.ddd.ecommerce.sales.order.OrderPlaced;
+import com.ttulka.samples.ddd.ecommerce.sales.OrderPlaced;
 import com.ttulka.samples.ddd.ecommerce.sales.order.PlaceableOrder;
 import com.ttulka.samples.ddd.ecommerce.sales.order.customer.Customer;
 

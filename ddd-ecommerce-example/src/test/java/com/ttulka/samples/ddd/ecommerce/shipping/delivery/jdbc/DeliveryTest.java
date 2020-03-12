@@ -1,7 +1,7 @@
 package com.ttulka.samples.ddd.ecommerce.shipping.delivery.jdbc;
 
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Address;
-import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Deliveries;
+import com.ttulka.samples.ddd.ecommerce.shipping.FindDeliveries;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Delivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryId;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.OrderId;
@@ -26,11 +26,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class DeliveryTest {
 
     @Autowired
-    private Deliveries deliveries;
+    private FindDeliveries findDeliveries;
 
     @Test
     void delivery_has_values() {
-        Delivery delivery = deliveries.byOrderId(new OrderId(123L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(123L));
         assertAll(
                 () -> assertThat(delivery.id()).isEqualTo(new DeliveryId(1L)),
                 () -> assertThat(delivery.orderId()).isEqualTo(new OrderId(123L)),
@@ -41,21 +41,21 @@ class DeliveryTest {
 
     @Test
     void delivery_is_found_by_order_id() {
-        Delivery delivery = deliveries.byOrderId(new OrderId(123L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(123L));
 
         assertThat(delivery.id()).isEqualTo(new DeliveryId(1L));
     }
 
     @Test
     void delivery_is_already_prepared() {
-        Delivery delivery = deliveries.byOrderId(new OrderId(123L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(123L));
 
         assertThrows(Delivery.DeliveryAlreadyPreparedException.class, () -> delivery.prepare());
     }
 
     @Test
     void delivery_is_dispatched() {
-        Delivery delivery = deliveries.byOrderId(new OrderId(123L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(123L));
         delivery.dispatch();
 
         assertThat(delivery.isDispatched()).isTrue();
@@ -63,7 +63,7 @@ class DeliveryTest {
 
     @Test
     void delivery_can_be_dispatched_only_once() {
-        Delivery delivery = deliveries.byOrderId(new OrderId(123L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(123L));
         delivery.dispatch();
 
         assertThrows(Delivery.DeliveryAlreadyDispatchedException.class, () -> delivery.dispatch());

@@ -77,7 +77,7 @@ public final class DeliveryJdbc implements Delivery {
         }
         jdbcTemplate.update("UPDATE deliveries SET dispatched = TRUE WHERE id = ?", id.value());
 
-        // Some other delivery stuff
+        // do the delivery...
         log.info("Shipping...");
         log.info("Items: {}", items);
         log.info("To address: {}", address);

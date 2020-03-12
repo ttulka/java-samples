@@ -1,4 +1,4 @@
-package com.ttulka.samples.ddd.ecommerce.shipping;
+package com.ttulka.samples.ddd.ecommerce.shipping.delivery;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -8,7 +8,7 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
-public final class DeliveryId {
+public final class OrderId {
 
     private final @NonNull Object id;
 

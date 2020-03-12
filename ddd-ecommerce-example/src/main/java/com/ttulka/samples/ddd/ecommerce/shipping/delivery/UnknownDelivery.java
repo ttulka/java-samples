@@ -1,4 +1,4 @@
-package com.ttulka.samples.ddd.ecommerce.shipping;
+package com.ttulka.samples.ddd.ecommerce.shipping.delivery;
 
 import java.util.Collections;
 import java.util.List;

@@ -4,6 +4,15 @@ import java.util.stream.Collectors;
 
 import com.ttulka.samples.ddd.ecommerce.billing.OrderPaid;
 import com.ttulka.samples.ddd.ecommerce.sales.order.OrderPlaced;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Address;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryItem;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DispatchDelivery;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.OrderId;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Person;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Place;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.PrepareDelivery;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.ProductCode;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Quantity;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

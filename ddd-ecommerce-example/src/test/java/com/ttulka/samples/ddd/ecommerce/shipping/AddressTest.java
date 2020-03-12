@@ -1,5 +1,9 @@
 package com.ttulka.samples.ddd.ecommerce.shipping;
 
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Address;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Person;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Place;
+
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

@@ -1,12 +1,12 @@
-package com.ttulka.samples.ddd.ecommerce.shipping.jdbc;
+package com.ttulka.samples.ddd.ecommerce.shipping.delivery.jdbc;
 
-import com.ttulka.samples.ddd.ecommerce.shipping.Address;
-import com.ttulka.samples.ddd.ecommerce.shipping.Deliveries;
-import com.ttulka.samples.ddd.ecommerce.shipping.Delivery;
-import com.ttulka.samples.ddd.ecommerce.shipping.DeliveryId;
-import com.ttulka.samples.ddd.ecommerce.shipping.OrderId;
-import com.ttulka.samples.ddd.ecommerce.shipping.Person;
-import com.ttulka.samples.ddd.ecommerce.shipping.Place;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Address;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Deliveries;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Delivery;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryId;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.OrderId;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Person;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Place;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

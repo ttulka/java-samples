@@ -1,5 +1,10 @@
 package com.ttulka.samples.ddd.ecommerce.shipping;
 
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Delivery;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryId;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.OrderId;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.UnknownDelivery;
+
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

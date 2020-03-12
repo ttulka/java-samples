@@ -1,4 +1,4 @@
-package com.ttulka.samples.ddd.ecommerce.shipping;
+package com.ttulka.samples.ddd.ecommerce.shipping.delivery;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;

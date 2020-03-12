@@ -1,5 +1,7 @@
 package com.ttulka.samples.ddd.ecommerce.shipping;
 
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.ProductCode;
+
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

@@ -28,7 +28,7 @@ class BillingConfig {
         @Async
         @Order(20)
         public void on(OrderPlaced event) {
-            // TODO do the payment...
+            // do the payment...
             new Payment(event.orderId, eventPublisher).confirm();
         }
     }

@@ -1,4 +1,4 @@
-# DDD Example Project: e-commerce
+# DDD Example Project in Java: E-Commerce
 
 The purpose of this project is to provide a sample implementation of an e-commerce product following Domain-Driven Design (DDD) and Service-Oriented Architecture (SAO) principles.
 

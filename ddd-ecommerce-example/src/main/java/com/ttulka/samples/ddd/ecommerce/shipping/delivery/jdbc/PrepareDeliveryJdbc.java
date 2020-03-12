@@ -1,12 +1,12 @@
-package com.ttulka.samples.ddd.ecommerce.shipping.jdbc;
+package com.ttulka.samples.ddd.ecommerce.shipping.delivery.jdbc;
 
 import java.util.List;
 
-import com.ttulka.samples.ddd.ecommerce.shipping.Address;
-import com.ttulka.samples.ddd.ecommerce.shipping.DeliveryId;
-import com.ttulka.samples.ddd.ecommerce.shipping.DeliveryItem;
-import com.ttulka.samples.ddd.ecommerce.shipping.OrderId;
-import com.ttulka.samples.ddd.ecommerce.shipping.PrepareDelivery;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Address;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryId;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryItem;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.OrderId;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.PrepareDelivery;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 

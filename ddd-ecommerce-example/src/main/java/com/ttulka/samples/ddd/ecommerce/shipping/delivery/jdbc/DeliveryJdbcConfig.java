@@ -1,8 +1,8 @@
-package com.ttulka.samples.ddd.ecommerce.shipping.jdbc;
+package com.ttulka.samples.ddd.ecommerce.shipping.delivery.jdbc;
 
-import com.ttulka.samples.ddd.ecommerce.shipping.Deliveries;
-import com.ttulka.samples.ddd.ecommerce.shipping.PrepareDelivery;
-import com.ttulka.samples.ddd.ecommerce.shipping.DispatchDelivery;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Deliveries;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.PrepareDelivery;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DispatchDelivery;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

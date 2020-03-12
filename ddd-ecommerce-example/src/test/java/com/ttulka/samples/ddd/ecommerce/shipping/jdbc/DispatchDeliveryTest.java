@@ -3,7 +3,7 @@ package com.ttulka.samples.ddd.ecommerce.shipping.jdbc;
 import com.ttulka.samples.ddd.ecommerce.shipping.Deliveries;
 import com.ttulka.samples.ddd.ecommerce.shipping.Delivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.OrderId;
-import com.ttulka.samples.ddd.ecommerce.shipping.ShipDelivery;
+import com.ttulka.samples.ddd.ecommerce.shipping.DispatchDelivery;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +18,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ContextConfiguration(classes = DeliveryJdbcConfig.class)
 @Sql(statements = "INSERT INTO deliveries VALUES (1, 123, 'Test Person', 'Test Place', FALSE);")
 @Transactional
-class ShipDeliveryTest {
+class DispatchDeliveryTest {
 
     @Autowired
     private Deliveries deliveries;
     @Autowired
-    private ShipDelivery shipDelivery;
+    private DispatchDelivery dispatchDelivery;
 
     @Test
-    void delivery_is_shipped() {
-        shipDelivery.byOrderId(new OrderId(123));
+    void delivery_is_dispatched() {
+        dispatchDelivery.byOrderId(new OrderId(123));
 
         Delivery delivery = deliveries.byOrderId(new OrderId(123));
 
-        assertThat(delivery.isShipped()).isTrue();
+        assertThat(delivery.isDispatched()).isTrue();
     }
 }

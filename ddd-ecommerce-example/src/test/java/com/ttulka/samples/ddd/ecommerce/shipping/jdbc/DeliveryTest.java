@@ -35,7 +35,7 @@ class DeliveryTest {
                 () -> assertThat(delivery.id()).isEqualTo(new DeliveryId(1L)),
                 () -> assertThat(delivery.orderId()).isEqualTo(new OrderId(123L)),
                 () -> assertThat(delivery.address()).isEqualTo(new Address(new Person("Test Person"), new Place("Test Place"))),
-                () -> assertThat(delivery.isShipped()).isFalse()
+                () -> assertThat(delivery.isDispatched()).isFalse()
         );
     }
 
@@ -54,18 +54,18 @@ class DeliveryTest {
     }
 
     @Test
-    void delivery_is_shipped() {
+    void delivery_is_dispatched() {
         Delivery delivery = deliveries.byOrderId(new OrderId(123L));
-        delivery.ship();
+        delivery.dispatch();
 
-        assertThat(delivery.isShipped()).isTrue();
+        assertThat(delivery.isDispatched()).isTrue();
     }
 
     @Test
-    void delivery_can_be_shipped_only_once() {
+    void delivery_can_be_dispatched_only_once() {
         Delivery delivery = deliveries.byOrderId(new OrderId(123L));
-        delivery.ship();
+        delivery.dispatch();
 
-        assertThrows(Delivery.DeliveryAlreadyShippedException.class, () -> delivery.ship());
+        assertThrows(Delivery.DeliveryAlreadyDispatchedException.class, () -> delivery.dispatch());
     }
 }

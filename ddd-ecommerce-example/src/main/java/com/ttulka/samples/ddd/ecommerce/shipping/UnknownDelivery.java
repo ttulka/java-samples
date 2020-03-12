@@ -33,12 +33,12 @@ public final class UnknownDelivery implements Delivery {
     }
 
     @Override
-    public void ship() {
+    public void dispatch() {
         // do nothing
     }
 
     @Override
-    public boolean isShipped() {
+    public boolean isDispatched() {
         return false;
     }
 }

@@ -14,13 +14,13 @@ public interface Delivery {
 
     void prepare();
 
-    void ship();
+    void dispatch();
 
-    boolean isShipped();
+    boolean isDispatched();
 
     final class DeliveryAlreadyPreparedException extends IllegalStateException {
     }
 
-    final class DeliveryAlreadyShippedException extends IllegalStateException {
+    final class DeliveryAlreadyDispatchedException extends IllegalStateException {
     }
 }

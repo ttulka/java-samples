@@ -15,7 +15,7 @@ class UnknownDeliveryTest {
                 () -> assertThat(unknownDelivery.orderId()).isEqualTo(new OrderId(0)),
                 () -> assertThat(unknownDelivery.items()).hasSize(0),
                 () -> assertThat(unknownDelivery.address()).isNotNull(),
-                () -> assertThat(unknownDelivery.isShipped()).isFalse()
+                () -> assertThat(unknownDelivery.isDispatched()).isFalse()
         );
     }
 
@@ -26,8 +26,8 @@ class UnknownDeliveryTest {
     }
 
     @Test
-    void ship_noop() {
+    void dispatch_noop() {
         Delivery unknownDelivery = new UnknownDelivery();
-        unknownDelivery.ship();
+        unknownDelivery.dispatch();
     }
 }

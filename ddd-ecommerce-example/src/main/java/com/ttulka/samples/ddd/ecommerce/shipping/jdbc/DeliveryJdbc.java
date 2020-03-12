@@ -32,7 +32,7 @@ public final class DeliveryJdbc implements Delivery {
     private final @NonNull JdbcTemplate jdbcTemplate;
 
     private boolean prepared = false;
-    private boolean shipped = false;
+    private boolean dispatched = false;
 
     @Override
     public DeliveryId id() {
@@ -71,22 +71,22 @@ public final class DeliveryJdbc implements Delivery {
     }
 
     @Override
-    public void ship() {
-        if (shipped) {
-            throw new DeliveryAlreadyShippedException();
+    public void dispatch() {
+        if (dispatched) {
+            throw new DeliveryAlreadyDispatchedException();
         }
-        jdbcTemplate.update("UPDATE deliveries SET shipped = TRUE WHERE id = ?", id.value());
+        jdbcTemplate.update("UPDATE deliveries SET dispatched = TRUE WHERE id = ?", id.value());
 
         // Some other delivery stuff
         log.info("Shipping...");
         log.info("Items: {}", items);
         log.info("To address: {}", address);
 
-        shipped = true;
+        dispatched = true;
     }
 
     @Override
-    public boolean isShipped() {
-        return shipped;
+    public boolean isDispatched() {
+        return dispatched;
     }
 }

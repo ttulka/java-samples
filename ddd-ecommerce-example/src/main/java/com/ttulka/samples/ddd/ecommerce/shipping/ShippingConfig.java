@@ -22,8 +22,8 @@ class ShippingConfig {
     }
 
     @Bean("shipping-orderPaidListener")
-    OrderPaidListener orderPaidListener(ShipDelivery shipDelivery) {
-        return new OrderPaidListener(shipDelivery);
+    OrderPaidListener orderPaidListener(DispatchDelivery dispatchDelivery) {
+        return new OrderPaidListener(dispatchDelivery);
     }
 
     @RequiredArgsConstructor
@@ -51,11 +51,11 @@ class ShippingConfig {
     @RequiredArgsConstructor
     private static final class OrderPaidListener {
 
-        private final ShipDelivery shipDelivery;
+        private final DispatchDelivery dispatchDelivery;
 
         @EventListener
         public void on(OrderPaid event) {
-            shipDelivery.byOrderId(new OrderId(event.orderId));
+            dispatchDelivery.byOrderId(new OrderId(event.orderId));
         }
     }
 }

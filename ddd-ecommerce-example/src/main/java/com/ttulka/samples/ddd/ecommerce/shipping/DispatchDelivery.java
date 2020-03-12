@@ -4,11 +4,11 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public final class ShipDelivery {
+public final class DispatchDelivery {
 
     private final @NonNull Deliveries deliveries;
 
     public void byOrderId(OrderId orderId) {
-        deliveries.byOrderId(orderId).ship();
+        deliveries.byOrderId(orderId).dispatch();
     }
 }

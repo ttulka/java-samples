@@ -1,8 +1,7 @@
 package com.ttulka.samples.ddd.ecommerce.warehouse;
 
-import java.time.Instant;
+import java.util.stream.Collectors;
 
-import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
 import com.ttulka.samples.ddd.ecommerce.sales.OrderPlaced;
 import com.ttulka.samples.ddd.ecommerce.shipping.DeliveryDispatched;
 
@@ -19,38 +18,41 @@ import lombok.RequiredArgsConstructor;
 class WarehouseConfig {
 
     @Bean("warehouse-orderPlacedListener")
-    OrderPlacedListener orderPlacedListener(EventPublisher eventPublisher) {
-        return new OrderPlacedListener(eventPublisher);
+    OrderPlacedListener orderPlacedListener(FetchGoods fetchGoods) {
+        return new OrderPlacedListener(fetchGoods);
     }
 
     @Bean("warehouse-deliveryDispatchedListener")
-    DeliveryDispatchedListener deliveryDispatchedListener() {
-        return new DeliveryDispatchedListener();
+    DeliveryDispatchedListener deliveryDispatchedListener(RemoveFetchedGoods removeFetchedGoods) {
+        return new DeliveryDispatchedListener(removeFetchedGoods);
     }
 
     @RequiredArgsConstructor
     private static final class OrderPlacedListener {
 
-        private final @NonNull EventPublisher eventPublisher;
+        private final @NonNull FetchGoods fetchGoods;
 
         @EventListener
         @Async
         @Order(10)
         public void on(OrderPlaced event) {
-            System.out.println("WAREHOUSE: OrderPlaced " + event);
-            // TODO fetch goods and remove from inventory
-            eventPublisher.raise(new GoodsFetched(Instant.now(), event.orderId));
+            fetchGoods.fromOrder(
+                    new OrderId(event.orderId),
+                    event.orderItems.stream()
+                            .map(item -> new ToFetch(new ProductCode(item.code), new Amount(item.quantity)))
+                            .collect(Collectors.toList()));
         }
     }
 
     @RequiredArgsConstructor
     private static final class DeliveryDispatchedListener {
 
+        private final @NonNull RemoveFetchedGoods removeFetchedGoods;
+
         @EventListener
         @Async
         public void on(DeliveryDispatched event) {
-            System.out.println("WAREHOUSE: DeliveryDispatched " + event);
-            // TODO remove fetched goods
+            removeFetchedGoods.forOrder(new OrderId(event.orderId));
         }
     }
 }

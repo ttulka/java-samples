@@ -1,5 +1,6 @@
 package com.ttulka.samples.ddd.ecommerce.warehouse.jdbc;
 
+import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
 import com.ttulka.samples.ddd.ecommerce.warehouse.InStock;
 import com.ttulka.samples.ddd.ecommerce.warehouse.ProductCode;
 import com.ttulka.samples.ddd.ecommerce.warehouse.Warehouse;
@@ -7,6 +8,7 @@ import com.ttulka.samples.ddd.ecommerce.warehouse.Warehouse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,9 @@ class WarehouseTest {
 
     @Autowired
     private Warehouse warehouse;
+
+    @MockBean
+    private EventPublisher eventPublisher;
 
     @Test
     void left_in_stock_returned() {

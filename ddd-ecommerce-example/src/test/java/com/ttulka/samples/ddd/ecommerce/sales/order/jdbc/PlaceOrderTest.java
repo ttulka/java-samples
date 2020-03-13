@@ -3,8 +3,8 @@ package com.ttulka.samples.ddd.ecommerce.sales.order.jdbc;
 import java.util.List;
 
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
-import com.ttulka.samples.ddd.ecommerce.sales.order.OrderItem;
 import com.ttulka.samples.ddd.ecommerce.sales.PlaceOrder;
+import com.ttulka.samples.ddd.ecommerce.sales.order.OrderItem;
 import com.ttulka.samples.ddd.ecommerce.sales.order.customer.Address;
 import com.ttulka.samples.ddd.ecommerce.sales.order.customer.Customer;
 import com.ttulka.samples.ddd.ecommerce.sales.order.customer.Name;

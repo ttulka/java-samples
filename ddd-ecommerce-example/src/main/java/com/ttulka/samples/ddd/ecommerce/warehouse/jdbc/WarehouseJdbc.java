@@ -1,6 +1,5 @@
 package com.ttulka.samples.ddd.ecommerce.warehouse.jdbc;
 
-import com.ttulka.samples.ddd.ecommerce.sales.product.ProductId;
 import com.ttulka.samples.ddd.ecommerce.warehouse.InStock;
 import com.ttulka.samples.ddd.ecommerce.warehouse.ProductCode;
 import com.ttulka.samples.ddd.ecommerce.warehouse.Warehouse;

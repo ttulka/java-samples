@@ -5,9 +5,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
-import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Address;
 import com.ttulka.samples.ddd.ecommerce.shipping.FindDeliveries;
-import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Quantity;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Address;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Delivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryId;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryItem;
@@ -15,6 +14,7 @@ import com.ttulka.samples.ddd.ecommerce.shipping.delivery.OrderId;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Person;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Place;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.ProductCode;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Quantity;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.UnknownDelivery;
 
 import org.springframework.dao.DataAccessException;

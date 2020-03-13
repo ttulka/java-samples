@@ -1,8 +1,8 @@
 package com.ttulka.samples.ddd.ecommerce.catalogue;
 
 import com.ttulka.samples.ddd.ecommerce.sales.FindCategories;
-import com.ttulka.samples.ddd.ecommerce.sales.PlaceOrder;
 import com.ttulka.samples.ddd.ecommerce.sales.FindProducts;
+import com.ttulka.samples.ddd.ecommerce.sales.PlaceOrder;
 import com.ttulka.samples.ddd.ecommerce.warehouse.Warehouse;
 
 import org.springframework.context.annotation.Bean;

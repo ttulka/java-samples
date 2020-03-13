@@ -1,10 +1,10 @@
 package com.ttulka.samples.ddd.ecommerce.shipping.delivery.jdbc;
 
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
+import com.ttulka.samples.ddd.ecommerce.shipping.DispatchDelivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.FindDeliveries;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Delivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.OrderId;
-import com.ttulka.samples.ddd.ecommerce.shipping.DispatchDelivery;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

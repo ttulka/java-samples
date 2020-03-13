@@ -1,7 +1,7 @@
 package com.ttulka.samples.ddd.ecommerce.catalogue;
 
-import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Quantity;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Cart;
+import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Quantity;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.cookies.CartCookies;
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
 import com.ttulka.samples.ddd.ecommerce.sales.FindProducts;

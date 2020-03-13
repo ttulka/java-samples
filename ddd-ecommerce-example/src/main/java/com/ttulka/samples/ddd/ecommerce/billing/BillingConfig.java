@@ -12,6 +12,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -25,7 +26,7 @@ class BillingConfig {
     @RequiredArgsConstructor
     private static final class OrderPlacedListener {
 
-        private final EventPublisher eventPublisher;
+        private final @NonNull EventPublisher eventPublisher;
 
         @EventListener
         @Async

@@ -11,6 +11,7 @@ import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Person;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Place;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.ProductCode;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Quantity;
+import com.ttulka.samples.ddd.ecommerce.warehouse.GoodsFetched;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -28,15 +30,15 @@ class ShippingConfig {
         return new OrderPlacedListener(prepareDelivery);
     }
 
-    @Bean("shipping-orderPaidListener")
-    OrderPaidListener orderPaidListener(DispatchDelivery dispatchDelivery) {
-        return new OrderPaidListener(dispatchDelivery);
+    @Bean("shipping-dispatchingListener")
+    DispatchingListener dispatchingListener(UpdateDelivery updateDelivery) {
+        return new DispatchingListener(updateDelivery);
     }
 
     @RequiredArgsConstructor
     private static final class OrderPlacedListener {
 
-        private final PrepareDelivery prepareDelivery;
+        private final @NonNull PrepareDelivery prepareDelivery;
 
         @EventListener
         @Async
@@ -56,13 +58,18 @@ class ShippingConfig {
     }
 
     @RequiredArgsConstructor
-    private static final class OrderPaidListener {
+    private static final class DispatchingListener {
 
-        private final DispatchDelivery dispatchDelivery;
+        private final @NonNull UpdateDelivery updateDelivery;
+
+        @EventListener
+        public void on(GoodsFetched event) {
+            updateDelivery.asFetched(new OrderId(event.orderId));
+        }
 
         @EventListener
         public void on(PaymentReceived event) {
-            dispatchDelivery.byOrderId(new OrderId(event.referenceId));
+            updateDelivery.asPaid(new OrderId(event.referenceId));
         }
     }
 }

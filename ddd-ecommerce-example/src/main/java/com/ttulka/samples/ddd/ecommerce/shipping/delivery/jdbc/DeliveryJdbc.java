@@ -35,8 +35,7 @@ public final class DeliveryJdbc implements Delivery {
     private final @NonNull JdbcTemplate jdbcTemplate;
     private final @NonNull EventPublisher eventPublisher;
 
-    private boolean prepared = false;
-    private boolean dispatched = false;
+    private Status status = Status.NEW;
 
     @Override
     public DeliveryId id() {
@@ -60,38 +59,81 @@ public final class DeliveryJdbc implements Delivery {
 
     @Override
     public void prepare() {
-        if (prepared) {
+        if (status != Status.NEW) {
             throw new DeliveryAlreadyPreparedException();
         }
-        jdbcTemplate.update("INSERT INTO deliveries VALUES (?, ?, ?, ?, FALSE)",
-                            id.value(), orderId.value(), address.person().value(), address.place().value());
+        status = Status.PREPARED;
+
+        jdbcTemplate.update("INSERT INTO deliveries VALUES (?, ?, ?, ?, ?)",
+                            id.value(), orderId.value(), address.person().value(), address.place().value(), status.name());
 
         items.forEach(item -> jdbcTemplate.update(
                 "INSERT INTO delivery_items VALUES (?, ?, ?)",
                 item.productCode().value(), item.quantity().value(), id.value())
         );
 
-        prepared = true;
+        log.info("Delivery prepared... {}", this);
+    }
+
+    @Override
+    public void markAsPaid() {
+        switch (status) {
+            case NEW:
+            case PREPARED:
+                status = Status.PAID;
+                break;
+            case FETCHED:
+                status = Status.READY;
+                break;
+        }
+        updateStatus();
+
+        log.info("Delivery marked as paid... {}", this);
+    }
+
+    @Override
+    public void markAsFetched() {
+        switch (status) {
+            case NEW:
+            case PREPARED:
+                status = Status.FETCHED;
+                break;
+            case PAID:
+                status = Status.READY;
+                break;
+        }
+        updateStatus();
+
+        log.info("Delivery marked as fetched... {}", this);
     }
 
     @Override
     public void dispatch() {
-        if (dispatched) {
+        if (Status.DISPATCHED == status) {
             throw new DeliveryAlreadyDispatchedException();
         }
-        jdbcTemplate.update("UPDATE deliveries SET dispatched = TRUE WHERE id = ?", id.value());
+        if (Status.READY != status) {
+            throw new DeliveryNotReadyToBeDispatchedException();
+        }
+        status = Status.DISPATCHED;
+        updateStatus();
 
-        // do the delivery...
-        log.info("Delivery dispatching...");
-        log.info("Items: {}", items);
-        log.info("To: {}", address);
-
-        dispatched = true;
         eventPublisher.raise(new DeliveryDispatched(Instant.now(), orderId.value()));
+
+        log.info("Delivery dispatched... {}", this);
     }
 
     @Override
     public boolean isDispatched() {
-        return dispatched;
+        return Status.DISPATCHED == status;
+    }
+
+    @Override
+    public boolean isReadyToDispatch() {
+        return Status.READY == status;
+    }
+
+    private void updateStatus() {
+        jdbcTemplate.update("UPDATE deliveries SET status = ? WHERE id = ?", status.name(), id.value());
     }
 }

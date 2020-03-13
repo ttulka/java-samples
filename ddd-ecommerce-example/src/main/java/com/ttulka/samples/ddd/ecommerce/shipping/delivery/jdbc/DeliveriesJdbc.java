@@ -35,7 +35,7 @@ final class DeliveriesJdbc implements FindDeliveries {
     public Delivery byOrderId(OrderId orderId) {
         try {
             Map<String, Object> delivery = jdbcTemplate.queryForMap(
-                    "SELECT id, order_id orderId, person, place, dispatched FROM deliveries " +
+                    "SELECT id, order_id orderId, person, place, status FROM deliveries " +
                     "WHERE order_id = ?", orderId.value());
 
             List<Map<String, Object>> items = jdbcTemplate.queryForList(
@@ -64,7 +64,6 @@ final class DeliveriesJdbc implements FindDeliveries {
                         new Person((String) delivery.get("person")),
                         new Place((String) delivery.get("place"))),
                 jdbcTemplate, eventPublisher,
-                true,
-                (Boolean) delivery.get("dispatched"));
+                Enum.valueOf(Delivery.Status.class, (String) delivery.get("status")));
     }
 }

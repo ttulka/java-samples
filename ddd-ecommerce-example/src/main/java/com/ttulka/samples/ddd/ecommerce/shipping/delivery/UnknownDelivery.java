@@ -33,12 +33,27 @@ public final class UnknownDelivery implements Delivery {
     }
 
     @Override
+    public void markAsPaid() {
+        // do nothing
+    }
+
+    @Override
+    public void markAsFetched() {
+        // do nothing
+    }
+
+    @Override
     public void dispatch() {
         // do nothing
     }
 
     @Override
     public boolean isDispatched() {
+        return false;
+    }
+
+    @Override
+    public boolean isReadyToDispatch() {
         return false;
     }
 }

@@ -7,9 +7,11 @@ import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
+@ToString(of = {"referenceId", "total"})
 @Slf4j
 public final class Payment {
 
@@ -18,9 +20,7 @@ public final class Payment {
     private final @NonNull EventPublisher eventPublisher;
 
     public void confirm() {
-        log.info("Payment received...");
-        log.info("Reference ID: {}", referenceId);
-        log.info("Total amount: {}", total);
+        log.info("Payment received... {}", this);
 
         eventPublisher.raise(new PaymentReceived(Instant.now(), referenceId.value()));
     }

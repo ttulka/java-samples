@@ -1,9 +1,9 @@
 package com.ttulka.samples.ddd.ecommerce.shipping.delivery.jdbc;
 
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
-import com.ttulka.samples.ddd.ecommerce.shipping.DispatchDelivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.FindDeliveries;
 import com.ttulka.samples.ddd.ecommerce.shipping.PrepareDelivery;
+import com.ttulka.samples.ddd.ecommerce.shipping.UpdateDelivery;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +23,7 @@ class DeliveryJdbcConfig {
     }
 
     @Bean
-    DispatchDelivery dispatchDelivery(FindDeliveries findDeliveries) {
-        return new DispatchDelivery(findDeliveries);
+    UpdateDelivery updateDelivery(FindDeliveries findDeliveries) {
+        return new UpdateDelivery(findDeliveries);
     }
 }

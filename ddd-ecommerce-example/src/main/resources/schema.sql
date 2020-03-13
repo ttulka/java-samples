@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS deliveries (
     order_id BIGINT NOT NULL UNIQUE,
     person VARCHAR(50) NOT NULL,
     place VARCHAR(100) NOT NULL,
-    dispatched BOOLEAN NOT NULL DEFAULT FALSE
+    status VARCHAR(50) NOT NULL DEFAULT 'NEW'
 );
 
 CREATE TABLE IF NOT EXISTS delivery_items (

@@ -12,13 +12,33 @@ public interface Delivery {
 
     Address address();
 
+    /**
+     * @throws {@link DeliveryAlreadyPreparedException} when already prepared.
+     */
     void prepare();
 
+    void markAsPaid();
+
+    void markAsFetched();
+
+    /**
+     * @throws {@link DeliveryNotReadyToBeDispatchedException} when not ready to be dispatched.
+     * @throws {@link DeliveryAlreadyDispatchedException} when already dispatched.
+     */
     void dispatch();
 
     boolean isDispatched();
 
+    boolean isReadyToDispatch();
+
+    enum Status {
+        NEW, PREPARED, PAID, FETCHED, READY, DISPATCHED
+    }
+
     final class DeliveryAlreadyPreparedException extends IllegalStateException {
+    }
+
+    final class DeliveryNotReadyToBeDispatchedException extends IllegalStateException {
     }
 
     final class DeliveryAlreadyDispatchedException extends IllegalStateException {

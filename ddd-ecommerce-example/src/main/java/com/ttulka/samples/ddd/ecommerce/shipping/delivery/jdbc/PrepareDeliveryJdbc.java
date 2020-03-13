@@ -22,7 +22,7 @@ final class PrepareDeliveryJdbc implements PrepareDelivery {
 
     @Override
     public void forOrder(OrderId orderId, List<DeliveryItem> items, Address address) {
-        new DeliveryJdbc(new DeliveryId(orderId.value()), orderId, items, address, jdbcTemplate, eventPublisher)
+        new DeliveryJdbc(orderId, items, address, jdbcTemplate, eventPublisher)
                 .prepare();
     }
 }

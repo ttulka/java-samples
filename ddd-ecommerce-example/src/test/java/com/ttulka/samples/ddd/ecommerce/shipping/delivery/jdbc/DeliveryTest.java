@@ -1,18 +1,25 @@
 package com.ttulka.samples.ddd.ecommerce.shipping.delivery.jdbc;
 
+import java.util.List;
+
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
+import com.ttulka.samples.ddd.ecommerce.shipping.DeliveryDispatched;
 import com.ttulka.samples.ddd.ecommerce.shipping.FindDeliveries;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Address;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Delivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryId;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryItem;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.OrderId;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Person;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Place;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.ProductCode;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Quantity;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.verify;
 
 @JdbcTest
 @ContextConfiguration(classes = DeliveryJdbcConfig.class)
@@ -59,8 +68,17 @@ class DeliveryTest {
     }
 
     @Test
-    void delivery_is_prepared() {
-        // TODO
+    void delivery_is_prepared(@Autowired JdbcTemplate jdbcTemplate) {
+        new DeliveryJdbc(new DeliveryId(123L), new OrderId(123L),
+                         List.of(new DeliveryItem(new ProductCode("test"), new Quantity(123))),
+                         new Address(new Person("test"), new Place("test")),
+                         Delivery.Status.NEW,
+                         jdbcTemplate, eventPublisher)
+                .prepare();
+
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(123L));
+
+        assertThat(delivery.id()).isEqualTo(new DeliveryId(123L));
     }
 
     @Test
@@ -72,27 +90,43 @@ class DeliveryTest {
 
     @Test
     void delivery_is_ready() {
-        // TODO
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(15L));
+
+        assertThat(delivery.isReadyToDispatch()).isTrue();
     }
 
     @Test
     void delivery_was_paid() {
-        // TODO
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(13L));
+        delivery.markAsPaid();
+
+        assertThat(delivery.isReadyToDispatch()).isTrue();
     }
 
     @Test
     void delivery_was_paid_multiple_times() {
-        // TODO
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(13L));
+        delivery.markAsPaid();
+        delivery.markAsPaid();
+
+        assertThat(delivery.isReadyToDispatch()).isTrue();
     }
 
     @Test
     void delivery_was_fetched() {
-        // TODO
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(14L));
+        delivery.markAsFetched();
+
+        assertThat(delivery.isReadyToDispatch()).isTrue();
     }
 
     @Test
     void delivery_was_fetched_multiple_times() {
-        // TODO
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(14L));
+        delivery.markAsFetched();
+        delivery.markAsFetched();
+
+        assertThat(delivery.isReadyToDispatch()).isTrue();
     }
 
     @Test
@@ -105,7 +139,15 @@ class DeliveryTest {
 
     @Test
     void delivery_is_not_ready_to_be_dispatched() {
-        // TODO
+        assertAll(
+                () -> assertThrows(Delivery.DeliveryNotReadyToBeDispatchedException.class,
+                                   () -> findDeliveries.byOrderId(new OrderId(11L)).dispatch()),
+                () -> assertThrows(Delivery.DeliveryNotReadyToBeDispatchedException.class,
+                                   () -> findDeliveries.byOrderId(new OrderId(12L)).dispatch()),
+                () -> assertThrows(Delivery.DeliveryNotReadyToBeDispatchedException.class,
+                                   () -> findDeliveries.byOrderId(new OrderId(13L)).dispatch()),
+                () -> assertThrows(Delivery.DeliveryNotReadyToBeDispatchedException.class,
+                                   () -> findDeliveries.byOrderId(new OrderId(14L)).dispatch()));
     }
 
     @Test
@@ -118,6 +160,18 @@ class DeliveryTest {
 
     @Test
     void dispatching_a_delivery_raises_an_event() {
-        // TODO
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(15L));
+        delivery.dispatch();
+
+        verify(eventPublisher).raise(argThat(
+                event -> {
+                    assertThat(event).isInstanceOf(DeliveryDispatched.class);
+                    DeliveryDispatched deliveryDispatched = (DeliveryDispatched) event;
+                    assertAll(
+                            () -> assertThat(deliveryDispatched.when).isNotNull(),
+                            () -> assertThat(deliveryDispatched.orderId).isNotNull()
+                    );
+                    return true;
+                }));
     }
 }

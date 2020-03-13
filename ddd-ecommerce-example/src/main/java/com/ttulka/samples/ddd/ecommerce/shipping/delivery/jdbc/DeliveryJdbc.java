@@ -2,6 +2,7 @@ package com.ttulka.samples.ddd.ecommerce.shipping.delivery.jdbc;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
 import com.ttulka.samples.ddd.ecommerce.shipping.DeliveryDispatched;
@@ -13,29 +14,40 @@ import com.ttulka.samples.ddd.ecommerce.shipping.delivery.OrderId;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
-@RequiredArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @EqualsAndHashCode(of = "id")
 @ToString(of = {"id", "orderId", "items", "address"})
 @Slf4j
 public final class DeliveryJdbc implements Delivery {
+
+    private static final AtomicLong idSequence = new AtomicLong(); // TODO
 
     private final @NonNull DeliveryId id;
     private final @NonNull OrderId orderId;
     private final @NonNull List<DeliveryItem> items;
     private final @NonNull Address address;
 
+    private @NonNull Status status = Status.NEW;
+
     private final @NonNull JdbcTemplate jdbcTemplate;
     private final @NonNull EventPublisher eventPublisher;
 
-    private Status status = Status.NEW;
+    public DeliveryJdbc(@NonNull OrderId orderId, @NonNull List<DeliveryItem> items, @NonNull Address address,
+                        @NonNull JdbcTemplate jdbcTemplate, @NonNull EventPublisher eventPublisher) {
+        this.id = new DeliveryId(idSequence.incrementAndGet());
+        this.orderId = orderId;
+        this.items = items;
+        this.address = address;
+        this.jdbcTemplate = jdbcTemplate;
+        this.eventPublisher = eventPublisher;
+    }
 
     @Override
     public DeliveryId id() {

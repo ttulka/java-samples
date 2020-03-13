@@ -22,7 +22,7 @@ import lombok.ToString;
 @ToString(of = {"id", "items", "customer"})
 final class OrderJdbc implements PlaceableOrder {
 
-    private static final AtomicLong idSequence = new AtomicLong(1); // TODO
+    private static final AtomicLong idSequence = new AtomicLong(); // TODO
 
     private final @NonNull OrderId id;
     private final @NonNull List<OrderItem> items;
@@ -47,7 +47,7 @@ final class OrderJdbc implements PlaceableOrder {
 
     public OrderJdbc(@NonNull List<OrderItem> items, @NonNull Customer customer,
                      @NonNull JdbcTemplate jdbcTemplate, @NonNull EventPublisher eventPublisher) {
-        this(new OrderId(idSequence.getAndIncrement()), items, customer, jdbcTemplate, eventPublisher);
+        this(new OrderId(idSequence.incrementAndGet()), items, customer, jdbcTemplate, eventPublisher);
     }
 
     @Override

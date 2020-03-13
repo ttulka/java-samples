@@ -63,7 +63,7 @@ final class DeliveriesJdbc implements FindDeliveries {
                 new Address(
                         new Person((String) delivery.get("person")),
                         new Place((String) delivery.get("place"))),
-                jdbcTemplate, eventPublisher,
-                Enum.valueOf(Delivery.Status.class, (String) delivery.get("status")));
+                Enum.valueOf(Delivery.Status.class, (String) delivery.get("status")),
+                jdbcTemplate, eventPublisher);
     }
 }

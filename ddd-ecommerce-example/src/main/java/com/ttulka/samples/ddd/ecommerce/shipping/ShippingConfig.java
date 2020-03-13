@@ -15,9 +15,9 @@ import com.ttulka.samples.ddd.ecommerce.warehouse.GoodsFetched;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +40,7 @@ class ShippingConfig {
 
         private final @NonNull PrepareDelivery prepareDelivery;
 
-        @EventListener
+        @TransactionalEventListener
         @Async
         @Order(10)
         public void on(OrderPlaced event) {
@@ -62,12 +62,12 @@ class ShippingConfig {
 
         private final @NonNull UpdateDelivery updateDelivery;
 
-        @EventListener
+        @TransactionalEventListener
         public void on(GoodsFetched event) {
             updateDelivery.asFetched(new OrderId(event.orderId));
         }
 
-        @EventListener
+        @TransactionalEventListener
         public void on(PaymentReceived event) {
             updateDelivery.asPaid(new OrderId(event.referenceId));
         }

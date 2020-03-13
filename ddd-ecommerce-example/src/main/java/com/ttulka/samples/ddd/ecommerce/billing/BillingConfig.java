@@ -8,9 +8,9 @@ import com.ttulka.samples.ddd.ecommerce.sales.OrderPlaced;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -18,27 +18,30 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 class BillingConfig {
 
+    @Bean
+    CollectPayment collectPayment(EventPublisher eventPublisher) {
+        return new CollectPayment(eventPublisher);
+    }
+
     @Bean("billing-orderPlacedListener")
-    OrderPlacedListener orderPlacedListener(EventPublisher eventPublisher) {
-        return new OrderPlacedListener(eventPublisher);
+    OrderPlacedListener orderPlacedListener(CollectPayment collectPayment) {
+        return new OrderPlacedListener(collectPayment);
     }
 
     @RequiredArgsConstructor
     private static final class OrderPlacedListener {
 
-        private final @NonNull EventPublisher eventPublisher;
+        private final @NonNull CollectPayment collectPayment;
 
-        @EventListener
+        @TransactionalEventListener
         @Async
         @Order(20)
         public void on(OrderPlaced event) {
-            new Payment(
+            collectPayment.collect(new Payment(
                     new ReferenceId(event.orderId),
                     new Money(event.orderItems.stream()
                                       .mapToDouble(item -> item.price * item.quantity)
-                                      .sum()),
-                    eventPublisher)
-                    .confirm();
+                                      .sum())));
         }
     }
 }

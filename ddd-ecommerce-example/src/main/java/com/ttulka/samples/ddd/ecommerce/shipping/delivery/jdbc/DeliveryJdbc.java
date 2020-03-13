@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(of = "id")
 @ToString(of = {"id", "orderId", "items", "address"})
 @Slf4j
-public final class DeliveryJdbc implements Delivery {
+final class DeliveryJdbc implements Delivery {
 
     private static final AtomicLong idSequence = new AtomicLong(); // TODO
 

@@ -7,9 +7,9 @@ import com.ttulka.samples.ddd.ecommerce.shipping.DeliveryDispatched;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ class WarehouseConfig {
 
         private final @NonNull FetchGoods fetchGoods;
 
-        @EventListener
+        @TransactionalEventListener
         @Async
         @Order(10)
         public void on(OrderPlaced event) {
@@ -49,7 +49,7 @@ class WarehouseConfig {
 
         private final @NonNull RemoveFetchedGoods removeFetchedGoods;
 
-        @EventListener
+        @TransactionalEventListener
         @Async
         public void on(DeliveryDispatched event) {
             removeFetchedGoods.forOrder(new OrderId(event.orderId));

@@ -10,14 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @JdbcTest
 @ContextConfiguration(classes = CategoriesJdbcConfig.class)
 @Sql(statements = "INSERT INTO categories VALUES (1, 'test', 'Test');")
-@Transactional
 class ChangeCategoryTest {
 
     @Autowired

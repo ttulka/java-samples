@@ -34,7 +34,6 @@ class WarehouseConfig {
 
         @TransactionalEventListener
         @Async
-        @Order(10)
         public void on(OrderPlaced event) {
             fetchGoods.fromOrder(
                     new OrderId(event.orderId),

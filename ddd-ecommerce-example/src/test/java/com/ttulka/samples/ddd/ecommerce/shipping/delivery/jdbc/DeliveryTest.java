@@ -22,7 +22,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -39,7 +38,6 @@ import static org.mockito.Mockito.verify;
                   "(4, 14, 'Test Person 4', 'Test Place 4', 'PAID'), " +
                   "(5, 15, 'Test Person 5', 'Test Place 5', 'READY'), " +
                   "(6, 16, 'Test Person 6', 'Test Place 6', 'DISPATCHED');")
-@Transactional
 class DeliveryTest {
 
     @Autowired

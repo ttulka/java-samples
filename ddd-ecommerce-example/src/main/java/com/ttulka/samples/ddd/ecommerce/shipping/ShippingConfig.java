@@ -42,7 +42,6 @@ class ShippingConfig {
 
         @TransactionalEventListener
         @Async
-        @Order(10)
         public void on(OrderPlaced event) {
             prepareDelivery.forOrder(
                     new OrderId(event.orderId),

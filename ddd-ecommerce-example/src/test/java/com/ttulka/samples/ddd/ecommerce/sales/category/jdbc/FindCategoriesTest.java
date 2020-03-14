@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -22,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @JdbcTest
 @ContextConfiguration(classes = CategoriesJdbcConfig.class)
 @Sql(statements = "INSERT INTO categories VALUES (1, 'cat1', 'Cat 1'), (2, 'cat2', 'Cat 2');")
-@Transactional
 class FindCategoriesTest {
 
     @Autowired

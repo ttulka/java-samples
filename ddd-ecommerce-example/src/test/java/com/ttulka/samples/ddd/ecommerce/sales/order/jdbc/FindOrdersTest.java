@@ -13,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -21,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @JdbcTest
 @ContextConfiguration(classes = OrderJdbcConfig.class)
 @Sql("/test-data-sales-find-orders.sql")
-@Transactional
 class FindOrdersTest {
 
     @Autowired

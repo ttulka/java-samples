@@ -27,9 +27,10 @@ class FetchGoodsJdbc implements FetchGoods {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public void fromOrder(OrderId orderId, Collection<ToFetch> toFetch) {
-        // TODO fetch and remove from the stock
-
-        jdbcTemplate.execute("SELECT * FROM orders");
+        toFetch.forEach(item -> jdbcTemplate.update(
+                "INSERT INTO fetched_products VALUES (?, ?, ?)",
+                item.productCode().value(), item.amount().value(), orderId.value())
+        );
 
         eventPublisher.raise(new GoodsFetched(Instant.now(), orderId.value()));
 

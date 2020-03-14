@@ -35,7 +35,6 @@ class BillingConfig {
 
         @TransactionalEventListener
         @Async
-        @Order(20)
         public void on(OrderPlaced event) {
             collectPayment.collect(new Payment(
                     new ReferenceId(event.orderId),

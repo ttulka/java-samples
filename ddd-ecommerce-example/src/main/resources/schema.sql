@@ -60,7 +60,8 @@ CREATE TABLE IF NOT EXISTS products_in_stock (
 );
 
 CREATE TABLE IF NOT EXISTS fetched_products (
-    product_code VARCHAR(50) NOT NULL PRIMARY KEY,
+    product_code VARCHAR(50) NOT NULL,
     amount INT NOT NULL DEFAULT(0),
-    order_id BIGINT NOT NULL
+    order_id BIGINT NOT NULL,
+    PRIMARY KEY (order_id, product_code)
 );

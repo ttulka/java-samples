@@ -1,17 +1,26 @@
 package com.ttulka.samples.ddd.ecommerce.shipping.delivery.jdbc;
 
+import java.util.List;
+
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
 import com.ttulka.samples.ddd.ecommerce.shipping.FindDeliveries;
+import com.ttulka.samples.ddd.ecommerce.shipping.PrepareDelivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.UpdateDelivery;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Address;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Delivery;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryItem;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.OrderId;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Person;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Place;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.ProductCode;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Quantity;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,12 +28,14 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 @JdbcTest
 @ContextConfiguration(classes = DeliveryJdbcConfig.class)
-@Sql(statements = "INSERT INTO deliveries VALUES (1, 123, 'Test Person', 'Test Place', 'PREPARED');")
-@Transactional
+@Transactional(propagation = Propagation.NOT_SUPPORTED)
 class UpdateDeliveryTest {
 
     @Autowired
     private FindDeliveries findDeliveries;
+
+    @Autowired
+    private PrepareDelivery prepareDelivery;
 
     @Autowired
     private UpdateDelivery updateDelivery;
@@ -34,9 +45,11 @@ class UpdateDeliveryTest {
 
     @Test
     void fetched_delivery_is_not_ready_yet() {
-        updateDelivery.asFetched(new OrderId(123L));
+        OrderId orderId = prepareOrder();
 
-        Delivery delivery = findDeliveries.byOrderId(new OrderId(123L));
+        updateDelivery.asFetched(orderId);
+
+        Delivery delivery = findDeliveries.byOrderId(orderId);
         assertAll(
                 () -> assertThat(delivery.isReadyToDispatch()).isFalse(),
                 () -> assertThat(delivery.isDispatched()).isFalse()
@@ -45,9 +58,11 @@ class UpdateDeliveryTest {
 
     @Test
     void paid_delivery_is_not_ready_yet() {
-        updateDelivery.asPaid(new OrderId(123L));
+        OrderId orderId = prepareOrder();
 
-        Delivery delivery = findDeliveries.byOrderId(new OrderId(123L));
+        updateDelivery.asPaid(orderId);
+
+        Delivery delivery = findDeliveries.byOrderId(orderId);
         assertAll(
                 () -> assertThat(delivery.isReadyToDispatch()).isFalse(),
                 () -> assertThat(delivery.isDispatched()).isFalse()
@@ -56,13 +71,24 @@ class UpdateDeliveryTest {
 
     @Test
     void fetched_and_paid_delivery_is_ready_and_dispatched() {
-        updateDelivery.asFetched(new OrderId(123L));
-        updateDelivery.asPaid(new OrderId(123L));
+        OrderId orderId = prepareOrder();
 
-        Delivery delivery = findDeliveries.byOrderId(new OrderId(123L));
+        updateDelivery.asFetched(orderId);
+        updateDelivery.asPaid(orderId);
+
+        Delivery delivery = findDeliveries.byOrderId(orderId);
         assertAll(
                 () -> assertThat(delivery.isReadyToDispatch()).isFalse(),
                 () -> assertThat(delivery.isDispatched()).isTrue()
         );
+    }
+
+    private OrderId prepareOrder() {
+        OrderId orderId = new OrderId(System.nanoTime());
+        prepareDelivery.forOrder(
+                orderId,
+                List.of(new DeliveryItem(new ProductCode("test"), new Quantity(1))),
+                new Address(new Person("test"), new Place("test")));
+        return orderId;
     }
 }

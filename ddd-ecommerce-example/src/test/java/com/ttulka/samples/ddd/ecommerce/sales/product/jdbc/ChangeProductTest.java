@@ -12,14 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @JdbcTest
 @ContextConfiguration(classes = ProductsJdbcConfig.class)
 @Sql(statements = "INSERT INTO products VALUES (1, 'test-1', 'Test', 'Test', 1.00);")
-@Transactional
 class ChangeProductTest {
 
     @Autowired

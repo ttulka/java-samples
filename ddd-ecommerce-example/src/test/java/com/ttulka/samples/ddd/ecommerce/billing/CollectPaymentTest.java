@@ -1,13 +1,15 @@
-package com.ttulka.samples.ddd.ecommerce.billing.payment;
+package com.ttulka.samples.ddd.ecommerce.billing;
 
-import com.ttulka.samples.ddd.ecommerce.billing.CollectPayment;
-import com.ttulka.samples.ddd.ecommerce.billing.PaymentReceived;
+import com.ttulka.samples.ddd.ecommerce.billing.payment.Money;
+import com.ttulka.samples.ddd.ecommerce.billing.payment.Payment;
+import com.ttulka.samples.ddd.ecommerce.billing.payment.ReferenceId;
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,6 +18,7 @@ import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = BillingConfig.class)
 class CollectPaymentTest {
 
     @Autowired

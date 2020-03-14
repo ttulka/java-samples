@@ -12,7 +12,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -20,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @JdbcTest
 @ContextConfiguration(classes = {CatalogueConfig.class, CatalogueTest.ServicesTestConfig.class})
 @Sql("/test-data-catalogue.sql")
-@Transactional
 class CatalogueTest {
 
     @Autowired

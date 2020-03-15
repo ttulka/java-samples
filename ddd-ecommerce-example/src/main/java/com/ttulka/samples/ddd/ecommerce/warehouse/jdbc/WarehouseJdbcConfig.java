@@ -18,8 +18,8 @@ class WarehouseJdbcConfig {
     }
 
     @Bean
-    FetchGoods fetchProducts(JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {
-        return new FetchGoodsJdbc(jdbcTemplate, eventPublisher);
+    FetchGoods fetchProducts(Warehouse warehouse, JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {
+        return new FetchGoodsJdbc(warehouse, jdbcTemplate, eventPublisher);
     }
 
     @Bean

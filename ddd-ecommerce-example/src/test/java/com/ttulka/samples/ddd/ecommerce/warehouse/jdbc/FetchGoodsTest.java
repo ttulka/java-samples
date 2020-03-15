@@ -1,20 +1,27 @@
 package com.ttulka.samples.ddd.ecommerce.warehouse.jdbc;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
 import com.ttulka.samples.ddd.ecommerce.warehouse.Amount;
 import com.ttulka.samples.ddd.ecommerce.warehouse.FetchGoods;
 import com.ttulka.samples.ddd.ecommerce.warehouse.GoodsFetched;
+import com.ttulka.samples.ddd.ecommerce.warehouse.GoodsMissed;
+import com.ttulka.samples.ddd.ecommerce.warehouse.InStock;
 import com.ttulka.samples.ddd.ecommerce.warehouse.OrderId;
 import com.ttulka.samples.ddd.ecommerce.warehouse.ProductCode;
 import com.ttulka.samples.ddd.ecommerce.warehouse.ToFetch;
+import com.ttulka.samples.ddd.ecommerce.warehouse.Warehouse;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -23,10 +30,15 @@ import static org.mockito.Mockito.verify;
 
 @JdbcTest
 @ContextConfiguration(classes = WarehouseJdbcConfig.class)
+@Transactional(propagation = Propagation.NOT_SUPPORTED)
 class FetchGoodsTest {
 
     @Autowired
     private FetchGoods fetchGoods;
+    @Autowired
+    private Warehouse warehouse;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @MockBean
     private EventPublisher eventPublisher;
@@ -34,7 +46,7 @@ class FetchGoodsTest {
     @Test
     void fetched_goods_raises_an_event() {
         fetchGoods.fromOrder(new OrderId(123L), List.of(
-                new ToFetch(new ProductCode("test"), new Amount(123))));
+                new ToFetch(new ProductCode(productCodeInStock()), new Amount(123))));
 
         verify(eventPublisher).raise(argThat(
                 event -> {
@@ -46,5 +58,49 @@ class FetchGoodsTest {
                     );
                     return true;
                 }));
+    }
+
+    @Test
+    void fetching_decrease_amount_in_the_stock() {
+        String productCode = productCodeInStock();
+        fetchGoods.fromOrder(new OrderId(123L), List.of(
+                new ToFetch(new ProductCode(productCode), new Amount(1))));
+
+        assertThat(warehouse.leftInStock(new ProductCode(productCode))).isEqualTo(new InStock(0));
+    }
+
+    @Test
+    void cannot_decrease_amount_under_zero() {
+        String productCode = productCodeInStock();
+        fetchGoods.fromOrder(new OrderId(123L), List.of(
+                new ToFetch(new ProductCode(productCode), new Amount(2))));
+
+        assertThat(warehouse.leftInStock(new ProductCode(productCode))).isEqualTo(new InStock(0));
+    }
+
+    @Test
+    void missed_goods_raises_an_event() {
+        String productCode = productCodeInStock();
+        fetchGoods.fromOrder(new OrderId(123L), List.of(
+                new ToFetch(new ProductCode(productCode), new Amount(99))));
+
+        verify(eventPublisher).raise(argThat(
+                event -> {
+                    assertThat(event).isInstanceOf(GoodsMissed.class);
+                    GoodsMissed goodsMissed = (GoodsMissed) event;
+                    assertAll(
+                            () -> assertThat(goodsMissed.when).isNotNull(),
+                            () -> assertThat(goodsMissed.productCode).isEqualTo("test-1"),
+                            () -> assertThat(goodsMissed.amount).isEqualTo(98)
+                    );
+                    return true;
+                }));
+    }
+
+    String productCodeInStock() {
+        String productCode = UUID.randomUUID().toString();
+        // TODO
+        // warehouse.putIntoStock(new ProductCode(productCode), new Amount(1));
+        return productCode;
     }
 }

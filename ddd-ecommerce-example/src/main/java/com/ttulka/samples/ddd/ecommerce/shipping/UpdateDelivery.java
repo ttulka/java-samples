@@ -14,26 +14,23 @@ public class UpdateDelivery {
 
     private final @NonNull FindDeliveries findDeliveries;
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void asFetched(OrderId orderId) {
         Delivery delivery = findDeliveries.byOrderId(orderId);
         delivery.markAsFetched();
 
         if (delivery.isReadyToDispatch()) {
-            dispatch(delivery);
+            delivery.dispatch();
         }
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void asPaid(OrderId orderId) {
         Delivery delivery = findDeliveries.byOrderId(orderId);
         delivery.markAsPaid();
 
         if (delivery.isReadyToDispatch()) {
-            dispatch(delivery);
+            delivery.dispatch();
         }
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    protected void dispatch(Delivery delivery) {
-        delivery.dispatch();
     }
 }

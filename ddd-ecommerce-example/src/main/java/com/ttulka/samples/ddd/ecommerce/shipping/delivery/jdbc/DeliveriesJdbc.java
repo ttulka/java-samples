@@ -49,7 +49,7 @@ class DeliveriesJdbc implements FindDeliveries, PrepareDelivery {
                 return toDelivery(delivery, items, isFetched(orderId), isPaid(orderId));
             }
         } catch (DataAccessException ignore) {
-            log.warn("Delivery by order ID {} was not found.", orderId);
+            log.debug("Delivery by order ID {} was not found.", orderId);
         }
         return new UnknownDeliveryJdbc(orderId, jdbcTemplate);
     }

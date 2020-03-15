@@ -24,9 +24,9 @@ INSERT INTO products_in_categories VALUES
 -- ------ WAREHOUSE ------
 
 INSERT INTO products_in_stock VALUES
-    (1, 5),
-    (2, 0),
-    (3, 13),
-    (4, 55),
-    (5, 102),
-    (6, 1);
+    ('001', 5),
+    ('002', 0),
+    ('003', 13),
+    ('004', 55),
+    ('005', 102),
+    ('006', 1);

@@ -27,13 +27,20 @@ class FetchGoodsJdbc implements FetchGoods {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public void fromOrder(OrderId orderId, Collection<ToFetch> toFetch) {
-        toFetch.forEach(item -> jdbcTemplate.update(
-                "INSERT INTO fetched_products VALUES (?, ?, ?)",
-                item.productCode().value(), item.amount().value(), orderId.value())
-        );
+        toFetch.forEach(item -> fetch(item, orderId));
 
         eventPublisher.raise(new GoodsFetched(Instant.now(), orderId.value()));
 
         log.info("Goods fetched... {}", toFetch);
+    }
+
+    private void fetch(ToFetch item, OrderId orderId) {
+        jdbcTemplate.update(
+                "INSERT INTO fetched_products VALUES (?, ?, ?)",
+                item.productCode().value(), item.amount().value(), orderId.value());
+
+        jdbcTemplate.update(
+                "UPDATE products_in_stock SET amount = amount - ? WHERE product_code = ?",
+                item.amount().value(), item.productCode().value());
     }
 }

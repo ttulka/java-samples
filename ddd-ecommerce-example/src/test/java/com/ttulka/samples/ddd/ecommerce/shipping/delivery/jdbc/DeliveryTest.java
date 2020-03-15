@@ -32,12 +32,12 @@ import static org.mockito.Mockito.verify;
 @JdbcTest
 @ContextConfiguration(classes = DeliveryJdbcConfig.class)
 @Sql(statements = "INSERT INTO deliveries VALUES " +
-                  "(1, 11, 'Test Person 1', 'Test Place 1', 'NEW'), " +
-                  "(2, 12, 'Test Person 2', 'Test Place 2', 'PREPARED'), " +
-                  "(3, 13, 'Test Person 3', 'Test Place 3', 'FETCHED'), " +
-                  "(4, 14, 'Test Person 4', 'Test Place 4', 'PAID'), " +
-                  "(5, 15, 'Test Person 5', 'Test Place 5', 'READY'), " +
-                  "(6, 16, 'Test Person 6', 'Test Place 6', 'DISPATCHED');")
+                  "(101, 1001, 'Test Person 1', 'Test Place 1', 'NEW'), " +
+                  "(102, 1002, 'Test Person 2', 'Test Place 2', 'PREPARED'), " +
+                  "(103, 1003, 'Test Person 3', 'Test Place 3', 'FETCHED'), " +
+                  "(104, 1004, 'Test Person 4', 'Test Place 4', 'PAID'), " +
+                  "(105, 1005, 'Test Person 5', 'Test Place 5', 'READY'), " +
+                  "(106, 1006, 'Test Person 6', 'Test Place 6', 'DISPATCHED');")
 class DeliveryTest {
 
     @Autowired
@@ -48,10 +48,10 @@ class DeliveryTest {
 
     @Test
     void delivery_has_values() {
-        Delivery delivery = findDeliveries.byOrderId(new OrderId(11L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(1001L));
         assertAll(
-                () -> assertThat(delivery.id()).isEqualTo(new DeliveryId(1L)),
-                () -> assertThat(delivery.orderId()).isEqualTo(new OrderId(11L)),
+                () -> assertThat(delivery.id()).isEqualTo(new DeliveryId(101L)),
+                () -> assertThat(delivery.orderId()).isEqualTo(new OrderId(1001L)),
                 () -> assertThat(delivery.address()).isEqualTo(new Address(new Person("Test Person 1"), new Place("Test Place 1"))),
                 () -> assertThat(delivery.isReadyToDispatch()).isFalse(),
                 () -> assertThat(delivery.isDispatched()).isFalse()
@@ -60,42 +60,43 @@ class DeliveryTest {
 
     @Test
     void delivery_is_found_by_order_id() {
-        Delivery delivery = findDeliveries.byOrderId(new OrderId(11L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(1001L));
 
-        assertThat(delivery.id()).isEqualTo(new DeliveryId(1L));
+        assertThat(delivery.id()).isEqualTo(new DeliveryId(101L));
     }
 
     @Test
     void delivery_is_prepared(@Autowired JdbcTemplate jdbcTemplate) {
-        new DeliveryJdbc(new DeliveryId(123L), new OrderId(123L),
+        long randId = System.nanoTime();
+        new DeliveryJdbc(new DeliveryId(randId), new OrderId(randId),
                          List.of(new DeliveryItem(new ProductCode("test"), new Quantity(123))),
                          new Address(new Person("test"), new Place("test")),
                          Delivery.Status.NEW,
                          jdbcTemplate, eventPublisher)
                 .prepare();
 
-        Delivery delivery = findDeliveries.byOrderId(new OrderId(123L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(randId));
 
-        assertThat(delivery.id()).isEqualTo(new DeliveryId(123L));
+        assertThat(delivery.id()).isEqualTo(new DeliveryId(randId));
     }
 
     @Test
     void delivery_can_be_prepared_only_once() {
-        Delivery delivery = findDeliveries.byOrderId(new OrderId(16L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(1006L));
 
         assertThrows(Delivery.DeliveryAlreadyPreparedException.class, () -> delivery.prepare());
     }
 
     @Test
     void delivery_is_ready() {
-        Delivery delivery = findDeliveries.byOrderId(new OrderId(15L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(1005L));
 
         assertThat(delivery.isReadyToDispatch()).isTrue();
     }
 
     @Test
     void delivery_was_paid() {
-        Delivery delivery = findDeliveries.byOrderId(new OrderId(13L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(1003L));
         delivery.markAsPaid();
 
         assertThat(delivery.isReadyToDispatch()).isTrue();
@@ -103,7 +104,7 @@ class DeliveryTest {
 
     @Test
     void delivery_was_paid_multiple_times() {
-        Delivery delivery = findDeliveries.byOrderId(new OrderId(13L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(1003L));
         delivery.markAsPaid();
         delivery.markAsPaid();
 
@@ -112,7 +113,7 @@ class DeliveryTest {
 
     @Test
     void delivery_was_fetched() {
-        Delivery delivery = findDeliveries.byOrderId(new OrderId(14L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(1004L));
         delivery.markAsFetched();
 
         assertThat(delivery.isReadyToDispatch()).isTrue();
@@ -120,7 +121,7 @@ class DeliveryTest {
 
     @Test
     void delivery_was_fetched_multiple_times() {
-        Delivery delivery = findDeliveries.byOrderId(new OrderId(14L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(1004L));
         delivery.markAsFetched();
         delivery.markAsFetched();
 
@@ -129,7 +130,7 @@ class DeliveryTest {
 
     @Test
     void delivery_is_dispatched() {
-        Delivery delivery = findDeliveries.byOrderId(new OrderId(15L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(1005L));
         delivery.dispatch();
 
         assertThat(delivery.isDispatched()).isTrue();
@@ -150,7 +151,7 @@ class DeliveryTest {
 
     @Test
     void delivery_can_be_dispatched_only_once() {
-        Delivery delivery = findDeliveries.byOrderId(new OrderId(15L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(1005L));
         delivery.dispatch();
 
         assertThrows(Delivery.DeliveryAlreadyDispatchedException.class, () -> delivery.dispatch());
@@ -158,7 +159,7 @@ class DeliveryTest {
 
     @Test
     void dispatching_a_delivery_raises_an_event() {
-        Delivery delivery = findDeliveries.byOrderId(new OrderId(15L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(1005L));
         delivery.dispatch();
 
         verify(eventPublisher).raise(argThat(

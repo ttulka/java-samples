@@ -15,7 +15,6 @@ import com.ttulka.samples.ddd.ecommerce.warehouse.GoodsFetched;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.transaction.event.TransactionalEventListener;
 
@@ -43,7 +42,7 @@ class ShippingConfig {
         @TransactionalEventListener
         @Async
         public void on(OrderPlaced event) {
-            prepareDelivery.forOrder(
+            prepareDelivery.prepare(
                     new OrderId(event.orderId),
                     event.orderItems.stream()
                             .map(item -> new DeliveryItem(

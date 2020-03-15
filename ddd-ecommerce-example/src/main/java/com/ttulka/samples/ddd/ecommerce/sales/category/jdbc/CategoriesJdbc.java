@@ -37,13 +37,12 @@ final class CategoriesJdbc implements FindCategories {
         try {
             Map<String, Object> entry = jdbcTemplate.queryForMap(
                     "SELECT id, uri, title FROM categories " +
-                    "WHERE id = ?",
-                    new Object[]{id.value()});
+                    "WHERE id = ?", id.value());
             if (entry != null) {
                 return toCategory(entry);
             }
         } catch (DataAccessException ignore) {
-            log.warn("Category by id {} was not found: {}", id, ignore.getMessage());
+            log.warn("Category by ID {} was not found.", id);
         }
         return new UnknownCategory();
     }

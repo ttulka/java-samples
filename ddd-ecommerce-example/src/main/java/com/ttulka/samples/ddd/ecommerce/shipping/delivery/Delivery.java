@@ -17,9 +17,9 @@ public interface Delivery {
      */
     void prepare();
 
-    void markAsPaid();
-
     void markAsFetched();
+
+    void markAsPaid();
 
     /**
      * @throws {@link DeliveryNotReadyToBeDispatchedException} when not ready to be dispatched.

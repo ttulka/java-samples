@@ -60,7 +60,7 @@ final class ProductsJdbc implements FindProducts {
                 return toProduct(entry);
             }
         } catch (DataAccessException ignore) {
-            log.warn("Product by code {} was not found: {}", code, ignore.getMessage());
+            log.warn("Product by code {} was not found.", code);
         }
         return new UnknownProduct();
     }

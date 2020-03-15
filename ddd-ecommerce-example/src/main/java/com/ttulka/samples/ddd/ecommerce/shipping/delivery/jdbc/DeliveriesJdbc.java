@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
 import com.ttulka.samples.ddd.ecommerce.shipping.FindDeliveries;
+import com.ttulka.samples.ddd.ecommerce.shipping.PrepareDelivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Address;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Delivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryId;
@@ -15,10 +16,11 @@ import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Person;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Place;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.ProductCode;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Quantity;
-import com.ttulka.samples.ddd.ecommerce.shipping.delivery.UnknownDelivery;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -26,11 +28,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @Slf4j
-final class DeliveriesJdbc implements FindDeliveries {
+class DeliveriesJdbc implements FindDeliveries, PrepareDelivery {
 
     private final @NonNull JdbcTemplate jdbcTemplate;
     private final @NonNull EventPublisher eventPublisher;
 
+    @Transactional
     @Override
     public Delivery byOrderId(OrderId orderId) {
         try {
@@ -43,15 +46,42 @@ final class DeliveriesJdbc implements FindDeliveries {
                     "WHERE delivery_id = ?", delivery.get("id"));
 
             if (delivery != null && items != null) {
-                return toDelivery(delivery, items);
+                return toDelivery(delivery, items, isFetched(orderId), isPaid(orderId));
             }
         } catch (DataAccessException ignore) {
-            log.warn("Delivery by order ID {} was not found: {}", orderId, ignore.getMessage());
+            log.warn("Delivery by order ID {} was not found.", orderId);
         }
-        return new UnknownDelivery();
+        return new UnknownDeliveryJdbc(orderId, jdbcTemplate);
     }
 
-    private DeliveryJdbc toDelivery(Map<String, Object> delivery, List<Map<String, Object>> items) {
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void prepare(@NonNull OrderId orderId, @NonNull List<DeliveryItem> items, @NonNull Address address) {
+        Delivery delivery = new DeliveryJdbc(orderId, items, address, jdbcTemplate, eventPublisher);
+        delivery.prepare();
+
+        if (isFetched(orderId)) {
+            delivery.markAsFetched();
+        }
+        if (isPaid(orderId)) {
+            delivery.markAsPaid();
+        }
+    }
+
+    private boolean isFetched(OrderId orderId) {
+        return jdbcTemplate.queryForObject(
+                "SELECT COUNT(order_id) FROM delivery_fetched " +
+                "WHERE order_id = ?", Integer.class, orderId.value()) > 0;
+    }
+
+    private boolean isPaid(OrderId orderId) {
+        return jdbcTemplate.queryForObject(
+                "SELECT COUNT(order_id) FROM delivery_paid " +
+                "WHERE order_id = ?", Integer.class, orderId.value()) > 0;
+    }
+
+    private DeliveryJdbc toDelivery(
+            Map<String, Object> delivery, List<Map<String, Object>> items,
+            boolean fetched, boolean paid) {
         return new DeliveryJdbc(
                 new DeliveryId(delivery.get("id")),
                 new OrderId(delivery.get("orderId")),
@@ -63,7 +93,35 @@ final class DeliveriesJdbc implements FindDeliveries {
                 new Address(
                         new Person((String) delivery.get("person")),
                         new Place((String) delivery.get("place"))),
-                Enum.valueOf(Delivery.Status.class, (String) delivery.get("status")),
+                mergedStatus(
+                        Enum.valueOf(Delivery.Status.class, (String) delivery.get("status")),
+                        fetched, paid),
                 jdbcTemplate, eventPublisher);
+    }
+
+    private Delivery.Status mergedStatus(Delivery.Status status, boolean fetched, boolean paid) {
+        if (fetched || paid) {
+            switch (status) {
+                case NEW:
+                case PREPARED:
+                    if (fetched) {
+                        return Delivery.Status.FETCHED;
+                    }
+                    if (paid) {
+                        return Delivery.Status.PAID;
+                    }
+                case FETCHED:
+                    if (paid) {
+                        return Delivery.Status.READY;
+                    }
+                    break;
+                case PAID:
+                    if (fetched) {
+                        return Delivery.Status.READY;
+                    }
+                    break;
+            }
+        }
+        return status;
     }
 }

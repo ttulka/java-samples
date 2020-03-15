@@ -85,7 +85,7 @@ class UpdateDeliveryTest {
 
     private OrderId prepareOrder() {
         OrderId orderId = new OrderId(System.nanoTime());
-        prepareDelivery.forOrder(
+        prepareDelivery.prepare(
                 orderId,
                 List.of(new DeliveryItem(new ProductCode("test"), new Quantity(1))),
                 new Address(new Person("test"), new Place("test")));

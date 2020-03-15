@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @EqualsAndHashCode(of = "id")
-@ToString(of = {"id", "orderId", "items", "address"})
+@ToString(of = {"id", "orderId", "status", "items", "address"})
 @Slf4j
 final class DeliveryJdbc implements Delivery {
 
@@ -88,22 +88,6 @@ final class DeliveryJdbc implements Delivery {
     }
 
     @Override
-    public void markAsPaid() {
-        switch (status) {
-            case NEW:
-            case PREPARED:
-                status = Status.PAID;
-                break;
-            case FETCHED:
-                status = Status.READY;
-                break;
-        }
-        updateStatus();
-
-        log.info("Delivery marked as paid... {}", this);
-    }
-
-    @Override
     public void markAsFetched() {
         switch (status) {
             case NEW:
@@ -117,6 +101,22 @@ final class DeliveryJdbc implements Delivery {
         updateStatus();
 
         log.info("Delivery marked as fetched... {}", this);
+    }
+
+    @Override
+    public void markAsPaid() {
+        switch (status) {
+            case NEW:
+            case PREPARED:
+                status = Status.PAID;
+                break;
+            case FETCHED:
+                status = Status.READY;
+                break;
+        }
+        updateStatus();
+
+        log.info("Delivery marked as paid... {}", this);
     }
 
     @Override

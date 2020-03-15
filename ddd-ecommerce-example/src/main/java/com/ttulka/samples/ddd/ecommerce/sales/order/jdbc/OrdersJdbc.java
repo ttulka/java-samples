@@ -44,7 +44,7 @@ final class OrdersJdbc implements FindOrders {
                 return toOrder(order, items);
             }
         } catch (DataAccessException ignore) {
-            log.warn("Order by ID {} was not found: {}", id, ignore.getMessage());
+            log.warn("Order by ID {} was not found.", id);
         }
         return new UnknownOrder();
     }

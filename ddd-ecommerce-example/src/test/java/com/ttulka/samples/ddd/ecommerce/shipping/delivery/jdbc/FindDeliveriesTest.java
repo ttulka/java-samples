@@ -35,10 +35,10 @@ class FindDeliveriesTest {
 
     @Test
     void delivery_is_found_by_order_id() {
-        Delivery delivery = findDeliveries.byOrderId(new OrderId(123L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(3001L));
         assertAll(
-                () -> assertThat(delivery.id()).isEqualTo(new DeliveryId(1L)),
-                () -> assertThat(delivery.orderId()).isEqualTo(new OrderId(123L)),
+                () -> assertThat(delivery.id()).isEqualTo(new DeliveryId(301L)),
+                () -> assertThat(delivery.orderId()).isEqualTo(new OrderId(3001L)),
                 () -> assertThat(delivery.address()).isEqualTo(new Address(new Person("Person 1"), new Place("Place 1"))),
                 () -> assertThat(delivery.items()).containsExactly(new DeliveryItem(new ProductCode("test-1"), new Quantity(111))),
                 () -> assertThat(delivery.isReadyToDispatch()).isTrue(),

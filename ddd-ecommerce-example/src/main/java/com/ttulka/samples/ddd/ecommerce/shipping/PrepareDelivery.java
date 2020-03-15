@@ -8,5 +8,5 @@ import com.ttulka.samples.ddd.ecommerce.shipping.delivery.OrderId;
 
 public interface PrepareDelivery {
 
-    void forOrder(OrderId orderId, List<DeliveryItem> items, Address address);
+    void prepare(OrderId orderId, List<DeliveryItem> items, Address address);
 }

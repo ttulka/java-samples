@@ -20,9 +20,7 @@ final class WarehouseJdbc implements Warehouse {
         try {
             Integer leftInStock = jdbcTemplate.queryForObject(
                     "SELECT amount FROM products_in_stock " +
-                    "WHERE product_code = ?",
-                    new Object[]{productCode.value()},
-                    Integer.class);
+                    "WHERE product_code = ?", Integer.class, productCode.value());
             if (leftInStock != null) {
                 return new InStock(leftInStock);
             }

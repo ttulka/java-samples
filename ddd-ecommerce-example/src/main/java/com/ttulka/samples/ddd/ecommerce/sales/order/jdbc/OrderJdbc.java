@@ -75,8 +75,8 @@ final class OrderJdbc implements PlaceableOrder {
 
         items.forEach(item -> jdbcTemplate.update("INSERT INTO order_items VALUES (?, ?, ?, ?, ?)",
                                                   item.code(), item.title(), item.price(), item.quantity(), id.value()));
+        placed = true;
 
         eventPublisher.raise(new OrderPlaced(Instant.now(), this));
-        placed = true;
     }
 }

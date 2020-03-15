@@ -37,7 +37,7 @@ class PrepareDeliveryTest {
 
     @Test
     void delivery_for_order_is_prepared() {
-        prepareDelivery.forOrder(
+        prepareDelivery.prepare(
                 new OrderId(123L),
                 List.of(new DeliveryItem(new ProductCode("test"), new Quantity(1))),
                 new Address(new Person("test"), new Place("test")));

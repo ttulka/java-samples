@@ -1,6 +1,7 @@
 package com.ttulka.samples.ddd.ecommerce.warehouse.jdbc;
 
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
+import com.ttulka.samples.ddd.ecommerce.warehouse.Amount;
 import com.ttulka.samples.ddd.ecommerce.warehouse.InStock;
 import com.ttulka.samples.ddd.ecommerce.warehouse.ProductCode;
 import com.ttulka.samples.ddd.ecommerce.warehouse.Warehouse;
@@ -35,5 +36,11 @@ class WarehouseTest {
     void zero_left_in_stock_returned_for_an_unknown_product() {
         InStock inStock = warehouse.leftInStock(new ProductCode("XXX"));
         assertThat(inStock).isEqualTo(new InStock(0));
+    }
+
+    @Test
+    void product_is_put_into_stock() {
+        warehouse.putIntoStock(new ProductCode("test-xxx"), new Amount(123));
+        assertThat(warehouse.leftInStock(new ProductCode("test-xxx"))).isEqualTo(new InStock(123));
     }
 }

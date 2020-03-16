@@ -55,15 +55,15 @@ class InStockTest {
     }
 
     @Test
-    void has_in_stock() {
+    void has_enough_in_stock() {
         InStock inStock = new InStock(1);
-        assertThat(inStock.has(new Amount(1))).isTrue();
+        assertThat(inStock.hasEnough(new Amount(1))).isTrue();
     }
 
     @Test
-    void has_not_in_stock() {
+    void has_enough_not_in_stock() {
         InStock inStock = new InStock(1);
-        assertThat(inStock.has(new Amount(2))).isFalse();
+        assertThat(inStock.hasEnough(new Amount(2))).isFalse();
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.ttulka.samples.ddd.ecommerce.warehouse.jdbc;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,6 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 
 @JdbcTest
@@ -45,8 +48,9 @@ class FetchGoodsTest {
 
     @Test
     void fetched_goods_raises_an_event() {
+        String productCode = productCodeInStock(1);
         fetchGoods.fromOrder(new OrderId(123L), List.of(
-                new ToFetch(new ProductCode(productCodeInStock()), new Amount(123))));
+                new ToFetch(new ProductCode(productCode), new Amount(1))));
 
         verify(eventPublisher).raise(argThat(
                 event -> {
@@ -62,16 +66,16 @@ class FetchGoodsTest {
 
     @Test
     void fetching_decrease_amount_in_the_stock() {
-        String productCode = productCodeInStock();
+        String productCode = productCodeInStock(2);
         fetchGoods.fromOrder(new OrderId(123L), List.of(
                 new ToFetch(new ProductCode(productCode), new Amount(1))));
 
-        assertThat(warehouse.leftInStock(new ProductCode(productCode))).isEqualTo(new InStock(0));
+        assertThat(warehouse.leftInStock(new ProductCode(productCode))).isEqualTo(new InStock(1));
     }
 
     @Test
     void cannot_decrease_amount_under_zero() {
-        String productCode = productCodeInStock();
+        String productCode = productCodeInStock(1);
         fetchGoods.fromOrder(new OrderId(123L), List.of(
                 new ToFetch(new ProductCode(productCode), new Amount(2))));
 
@@ -80,27 +84,17 @@ class FetchGoodsTest {
 
     @Test
     void missed_goods_raises_an_event() {
-        String productCode = productCodeInStock();
+        String productCode = productCodeInStock(1);
         fetchGoods.fromOrder(new OrderId(123L), List.of(
                 new ToFetch(new ProductCode(productCode), new Amount(99))));
 
-        verify(eventPublisher).raise(argThat(
-                event -> {
-                    assertThat(event).isInstanceOf(GoodsMissed.class);
-                    GoodsMissed goodsMissed = (GoodsMissed) event;
-                    assertAll(
-                            () -> assertThat(goodsMissed.when).isNotNull(),
-                            () -> assertThat(goodsMissed.productCode).isEqualTo("test-1"),
-                            () -> assertThat(goodsMissed.amount).isEqualTo(98)
-                    );
-                    return true;
-                }));
+        verify(eventPublisher, atLeastOnce()).raise(eq(
+                new GoodsMissed(Instant.now(), productCode, 98)));
     }
 
-    String productCodeInStock() {
+    String productCodeInStock(int amount) {
         String productCode = UUID.randomUUID().toString();
-        // TODO
-        // warehouse.putIntoStock(new ProductCode(productCode), new Amount(1));
+        warehouse.putIntoStock(new ProductCode(productCode), new Amount(amount));
         return productCode;
     }
 }

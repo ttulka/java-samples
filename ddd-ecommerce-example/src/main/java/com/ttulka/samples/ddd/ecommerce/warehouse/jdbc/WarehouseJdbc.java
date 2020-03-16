@@ -1,5 +1,6 @@
 package com.ttulka.samples.ddd.ecommerce.warehouse.jdbc;
 
+import com.ttulka.samples.ddd.ecommerce.warehouse.Amount;
 import com.ttulka.samples.ddd.ecommerce.warehouse.InStock;
 import com.ttulka.samples.ddd.ecommerce.warehouse.ProductCode;
 import com.ttulka.samples.ddd.ecommerce.warehouse.Warehouse;
@@ -27,5 +28,12 @@ final class WarehouseJdbc implements Warehouse {
         } catch (DataAccessException ignore) {
         }
         return new InStock(0);
+    }
+
+    @Override
+    public void putIntoStock(ProductCode productCode, Amount amount) {
+        jdbcTemplate.update(
+                "INSERT INTO products_in_stock VALUES (?, ?)",
+                productCode.value(), amount.value());
     }
 }

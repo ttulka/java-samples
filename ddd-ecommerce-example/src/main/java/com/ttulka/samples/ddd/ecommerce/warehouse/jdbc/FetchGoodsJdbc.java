@@ -40,18 +40,19 @@ class FetchGoodsJdbc implements FetchGoods {
 
     private void fetch(ToFetch item, OrderId orderId) {
         InStock inStock = warehouse.leftInStock(item.productCode());
-        if (!inStock.has(item.amount())) {
+        if (!inStock.hasEnough(item.amount())) {
             eventPublisher.raise(new GoodsMissed(
                     Instant.now(), item.productCode().value(), inStock.needsYet(item.amount()).value()));
-
-        } else {
+        }
+        if (!inStock.isSoldOut()) {
+            int amountToFetch = Math.min(item.amount().value(), inStock.amount());
             jdbcTemplate.update(
                     "INSERT INTO fetched_products VALUES (?, ?, ?)",
-                    item.productCode().value(), item.amount().value(), orderId.value());
+                    item.productCode().value(), amountToFetch, orderId.value());
 
             jdbcTemplate.update(
                     "UPDATE products_in_stock SET amount = amount - ? WHERE product_code = ?",
-                    item.amount().value(), item.productCode().value());
+                    amountToFetch, item.productCode().value());
         }
     }
 }

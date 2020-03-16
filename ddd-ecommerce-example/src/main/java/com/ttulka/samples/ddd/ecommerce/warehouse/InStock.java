@@ -28,7 +28,7 @@ public final class InStock {
         return new InStock(Math.max(0, amount - addend.value()));
     }
 
-    public boolean has(Amount amount) {
+    public boolean hasEnough(Amount amount) {
         return this.amount >= amount.value();
     }
 

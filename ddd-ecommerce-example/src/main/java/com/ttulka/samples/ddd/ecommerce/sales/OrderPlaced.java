@@ -2,17 +2,14 @@ package com.ttulka.samples.ddd.ecommerce.sales;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import com.ttulka.samples.ddd.ecommerce.sales.order.Order;
-import com.ttulka.samples.ddd.ecommerce.sales.order.OrderItem;
-import com.ttulka.samples.ddd.ecommerce.sales.order.customer.Customer;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.Value;
 
+@RequiredArgsConstructor
 @EqualsAndHashCode(of = "orderId")
 @ToString
 public final class OrderPlaced {
@@ -21,23 +18,6 @@ public final class OrderPlaced {
     public final @NonNull Object orderId;
     public final @NonNull List<OrderItemData> orderItems;
     public final @NonNull CustomerData customer;
-
-    public OrderPlaced(@NonNull Instant when, @NonNull Order order) {
-        this.when = when;
-        this.orderId = order.id().value();
-        this.orderItems = order.items().stream()
-                .map(this::toData)
-                .collect(Collectors.toList());
-        this.customer = toData(order.customer());
-    }
-
-    private OrderItemData toData(OrderItem item) {
-        return new OrderItemData(item.code(), item.title(), item.price(), item.quantity());
-    }
-
-    private CustomerData toData(Customer customer) {
-        return new CustomerData(customer.name().value(), customer.address().value());
-    }
 
     @Value
     public static final class OrderItemData {

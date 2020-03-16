@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
 import com.ttulka.samples.ddd.ecommerce.sales.OrderPlaced;
@@ -79,7 +80,15 @@ final class OrderJdbc implements PlaceableOrder {
                                                   item.code(), item.title(), item.price(), item.quantity(), id.value()));
         placed = true;
 
-        eventPublisher.raise(new OrderPlaced(Instant.now(), this));
+        eventPublisher.raise(new OrderPlaced(Instant.now(),
+                                             id.value(),
+                                             items.stream()
+                                                     .map(item -> new OrderPlaced.OrderItemData(
+                                                             item.code(), item.title(), item.price(), item.quantity()))
+                                                     .collect(Collectors.toList()),
+                                             new OrderPlaced.CustomerData(
+                                                     customer.name().value(),
+                                                     customer.address().value())));
 
         log.info("Order placed: {}", this);
     }

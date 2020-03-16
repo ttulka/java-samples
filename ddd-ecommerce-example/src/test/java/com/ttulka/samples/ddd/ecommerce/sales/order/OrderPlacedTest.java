@@ -4,9 +4,6 @@ import java.time.Instant;
 import java.util.List;
 
 import com.ttulka.samples.ddd.ecommerce.sales.OrderPlaced;
-import com.ttulka.samples.ddd.ecommerce.sales.order.customer.Address;
-import com.ttulka.samples.ddd.ecommerce.sales.order.customer.Customer;
-import com.ttulka.samples.ddd.ecommerce.sales.order.customer.Name;
 
 import org.junit.jupiter.api.Test;
 
@@ -17,22 +14,21 @@ class OrderPlacedTest {
 
     @Test
     void when_is_set() {
-        Instant now = Instant.now();
-        OrderPlaced orderPlaced = new OrderPlaced(now, new FakeOrder());
+        OrderPlaced orderPlaced = fakeOrderPlaced();
 
-        assertThat(orderPlaced.when).isEqualTo(now);
+        assertThat(orderPlaced.when).isNotNull();
     }
 
     @Test
     void order_id_is_set() {
-        OrderPlaced orderPlaced = new OrderPlaced(Instant.now(), new FakeOrder());
+        OrderPlaced orderPlaced = fakeOrderPlaced();
 
         assertThat(orderPlaced.orderId).isEqualTo(123L);
     }
 
     @Test
     void order_items_are_set() {
-        OrderPlaced orderPlaced = new OrderPlaced(Instant.now(), new FakeOrder());
+        OrderPlaced orderPlaced = fakeOrderPlaced();
         assertAll(
                 () -> assertThat(orderPlaced.orderItems).hasSize(2),
                 () -> assertThat(orderPlaced.orderItems.get(0).code).isEqualTo("test-1"),
@@ -48,28 +44,18 @@ class OrderPlacedTest {
 
     @Test
     void customer_is_set() {
-        OrderPlaced orderPlaced = new OrderPlaced(Instant.now(), new FakeOrder());
+        OrderPlaced orderPlaced = fakeOrderPlaced();
         assertAll(
-                () -> assertThat(orderPlaced.customer.name).isEqualTo("test customer"),
+                () -> assertThat(orderPlaced.customer.name).isEqualTo("test name"),
                 () -> assertThat(orderPlaced.customer.address).isEqualTo("test address")
         );
     }
 
-    private static class FakeOrder implements Order {
-
-        @Override
-        public OrderId id() {
-            return new OrderId(123L);
-        }
-
-        @Override
-        public List<OrderItem> items() {
-            return List.of(new OrderItem("test-1", "Test 1", 1.f, 1), new OrderItem("test-2", "Test 2", 2.f, 2));
-        }
-
-        @Override
-        public Customer customer() {
-            return new Customer(new Name("test customer"), new Address("test address"));
-        }
+    private OrderPlaced fakeOrderPlaced() {
+        return new OrderPlaced(Instant.now(), 123L,
+                               List.of(
+                                       new OrderPlaced.OrderItemData("test-1", "Test 1", 1.f, 1),
+                                       new OrderPlaced.OrderItemData("test-2", "Test 2", 2.f, 2)),
+                               new OrderPlaced.CustomerData("test name", "test address"));
     }
 }

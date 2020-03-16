@@ -69,6 +69,14 @@ class OrderControllerTest {
     }
 
     @Test
+    void order_form_is_not_filled() throws Exception {
+        mockMvc.perform(
+                post("/order").contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/order/error?message=requires"));
+    }
+
+    @Test
     void success_is_shown() throws Exception {
         mockMvc.perform(get("/order/success"))
                 .andExpect(status().isOk());

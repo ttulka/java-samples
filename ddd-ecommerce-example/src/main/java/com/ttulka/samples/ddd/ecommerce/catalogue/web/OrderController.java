@@ -57,7 +57,7 @@ class OrderController {
         return "order-error";
     }
 
-    @ExceptionHandler({PlaceOrderFromCart.NoItemsToOrderException.class})
+    @ExceptionHandler({PlaceOrderFromCart.NoItemsToOrderException.class, IllegalArgumentException.class})
     String exception(Exception ex) {
         return "redirect:/order/error?message=" + errorCode(ex);
     }
@@ -65,6 +65,9 @@ class OrderController {
     private String errorCode(Exception e) {
         if (e instanceof PlaceOrderFromCart.NoItemsToOrderException) {
             return "noitems";
+        }
+        if (e instanceof IllegalArgumentException) {
+            return "requires";
         }
         return "default";
     }

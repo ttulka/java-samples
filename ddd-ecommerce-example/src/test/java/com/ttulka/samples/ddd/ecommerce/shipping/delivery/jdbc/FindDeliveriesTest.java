@@ -2,6 +2,7 @@ package com.ttulka.samples.ddd.ecommerce.shipping.delivery.jdbc;
 
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
 import com.ttulka.samples.ddd.ecommerce.shipping.FindDeliveries;
+import com.ttulka.samples.ddd.ecommerce.shipping.PrepareDelivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Address;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Delivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryId;
@@ -55,6 +56,8 @@ class FindDeliveriesTest {
 
     @Test
     void status_is_merged_with_events_ledger() {
-        // TODO
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(3002L));
+
+        assertThat(delivery.isDispatched()).isTrue();
     }
 }

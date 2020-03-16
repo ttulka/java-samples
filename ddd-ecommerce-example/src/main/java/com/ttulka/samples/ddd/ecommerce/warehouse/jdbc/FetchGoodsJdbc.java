@@ -35,7 +35,7 @@ class FetchGoodsJdbc implements FetchGoods {
 
         eventPublisher.raise(new GoodsFetched(Instant.now(), orderId.value()));
 
-        log.info("Goods fetched... {}", toFetch);
+        log.info("Goods fetched: {}", toFetch);
     }
 
     private void fetch(ToFetch item, OrderId orderId) {

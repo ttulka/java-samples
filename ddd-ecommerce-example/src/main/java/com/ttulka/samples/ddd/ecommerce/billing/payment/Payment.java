@@ -18,10 +18,10 @@ public final class Payment {
     }
 
     public void collect() {
-        log.info("Payment collected... {}", this);
+        log.info("Payment collected: {}", this);
     }
 
     public void confirm() {
-        log.info("Payment confirmed... {}", this);
+        log.info("Payment confirmed: {}", this);
     }
 }

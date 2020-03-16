@@ -84,7 +84,7 @@ final class DeliveryJdbc implements Delivery {
                 item.productCode().value(), item.quantity().value(), id.value())
         );
 
-        log.info("Delivery prepared... {}", this);
+        log.debug("Delivery prepared: {}", this);
     }
 
     @Override
@@ -100,7 +100,7 @@ final class DeliveryJdbc implements Delivery {
         }
         updateStatus();
 
-        log.debug("Delivery marked as fetched... {}", this);
+        log.debug("Delivery marked as fetched: {}", this);
     }
 
     @Override
@@ -116,7 +116,7 @@ final class DeliveryJdbc implements Delivery {
         }
         updateStatus();
 
-        log.debug("Delivery marked as paid... {}", this);
+        log.debug("Delivery marked as paid: {}", this);
     }
 
     @Override
@@ -132,7 +132,7 @@ final class DeliveryJdbc implements Delivery {
 
         eventPublisher.raise(new DeliveryDispatched(Instant.now(), orderId.value()));
 
-        log.info("Delivery dispatched... {}", this);
+        log.info("Delivery dispatched: {}", this);
     }
 
     @Override

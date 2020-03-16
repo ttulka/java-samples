@@ -24,6 +24,6 @@ class RemoveFetchedGoodsJdbc implements RemoveFetchedGoods {
                 "DELETE FROM fetched_products WHERE order_id = ?",
                 orderId.value());
 
-        log.info("Fetched goods removed... {}", orderId);
+        log.debug("Fetched goods removed: {}", orderId);
     }
 }

@@ -17,9 +17,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 @EqualsAndHashCode(of = "id")
 @ToString(of = {"id", "items", "customer"})
+@Slf4j
 final class OrderJdbc implements PlaceableOrder {
 
     private static final AtomicLong idSequence = new AtomicLong(); // TODO
@@ -78,5 +80,7 @@ final class OrderJdbc implements PlaceableOrder {
         placed = true;
 
         eventPublisher.raise(new OrderPlaced(Instant.now(), this));
+
+        log.info("Order placed: {}", this);
     }
 }

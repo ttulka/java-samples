@@ -35,6 +35,15 @@ CREATE TABLE IF NOT EXISTS order_items (
     PRIMARY KEY (order_id, product_code)
 );
 
+-- ------ BILLING ------
+
+CREATE TABLE IF NOT EXISTS payments (
+    id BIGINT NOT NULL PRIMARY KEY,
+    reference_id BIGINT NOT NULL,
+    total DECIMAL(10,2),
+    status VARCHAR(50) NOT NULL DEFAULT 'NEW'
+);
+
 -- ------ SHIPPING ------
 
 CREATE TABLE IF NOT EXISTS deliveries (

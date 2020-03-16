@@ -1,27 +1,27 @@
 package com.ttulka.samples.ddd.ecommerce.billing.payment;
 
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
+public interface Payment {
 
-@RequiredArgsConstructor
-@ToString(of = {"referenceId", "total"})
-@Slf4j
-public final class Payment {
+    PaymentId id();
 
-    private final @NonNull ReferenceId referenceId;
-    private final @NonNull Money total;
+    ReferenceId referenceId();
 
-    public ReferenceId referenceId() {
-        return referenceId;
+    Money total();
+
+    void collect();
+
+    void confirm();
+
+    enum Status {
+        NEW, REQUESTED, RECEIVED
     }
 
-    public void collect() {
-        log.info("Payment collected: {}", this);
+    final class PaymentAlreadyRequestedException extends IllegalStateException {
     }
 
-    public void confirm() {
-        log.info("Payment confirmed: {}", this);
+    final class PaymentNotRequestedYetException extends IllegalStateException {
+    }
+
+    final class PaymentAlreadyReceivedException extends IllegalStateException {
     }
 }

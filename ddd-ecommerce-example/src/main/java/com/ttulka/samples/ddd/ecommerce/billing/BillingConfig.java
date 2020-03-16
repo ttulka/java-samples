@@ -1,9 +1,7 @@
 package com.ttulka.samples.ddd.ecommerce.billing;
 
 import com.ttulka.samples.ddd.ecommerce.billing.payment.Money;
-import com.ttulka.samples.ddd.ecommerce.billing.payment.Payment;
 import com.ttulka.samples.ddd.ecommerce.billing.payment.ReferenceId;
-import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
 import com.ttulka.samples.ddd.ecommerce.sales.OrderPlaced;
 
 import org.springframework.context.annotation.Bean;
@@ -16,11 +14,6 @@ import lombok.RequiredArgsConstructor;
 
 @Configuration
 class BillingConfig {
-
-    @Bean
-    CollectPayment collectPayment(EventPublisher eventPublisher) {
-        return new CollectPayment(eventPublisher);
-    }
 
     @Bean("billing-orderPlacedListener")
     OrderPlacedListener orderPlacedListener(CollectPayment collectPayment) {
@@ -35,11 +28,11 @@ class BillingConfig {
         @TransactionalEventListener
         @Async
         public void on(OrderPlaced event) {
-            collectPayment.collect(new Payment(
+            collectPayment.collect(
                     new ReferenceId(event.orderId),
                     new Money(event.orderItems.stream()
                                       .mapToDouble(item -> item.price * item.quantity)
-                                      .sum())));
+                                      .sum()));
         }
     }
 }

@@ -52,4 +52,9 @@ class FindDeliveriesTest {
 
         assertThat(delivery.id()).isEqualTo(new DeliveryId(0));
     }
+
+    @Test
+    void status_is_merged_with_events_ledger() {
+        // TODO
+    }
 }

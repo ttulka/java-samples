@@ -17,6 +17,11 @@ class CatalogueConfig {
     }
 
     @Bean
+    CartItems cartItems(FindProducts findProducts) {
+        return new CartItems(findProducts);
+    }
+
+    @Bean
     PlaceOrderFromCart placeOrderFromCart(PlaceOrder placeOrder, FindProducts findProducts) {
         return new PlaceOrderFromCart(placeOrder, findProducts);
     }

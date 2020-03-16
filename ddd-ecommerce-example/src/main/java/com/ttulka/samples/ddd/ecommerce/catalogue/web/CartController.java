@@ -5,12 +5,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ttulka.samples.ddd.ecommerce.catalogue.AddIntoCart;
-import com.ttulka.samples.ddd.ecommerce.catalogue.ListCart;
+import com.ttulka.samples.ddd.ecommerce.catalogue.AddCartItem;
+import com.ttulka.samples.ddd.ecommerce.catalogue.ListCartItems;
+import com.ttulka.samples.ddd.ecommerce.catalogue.RemoveCartItem;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.Cart;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.CartItem;
 import com.ttulka.samples.ddd.ecommerce.catalogue.cart.cookies.CartCookies;
-import com.ttulka.samples.ddd.ecommerce.sales.FindProducts;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -27,7 +27,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 class CartController {
 
-    private final @NonNull FindProducts findProducts;
+    private final @NonNull ListCartItems listCartItems;
+    private final @NonNull AddCartItem addCartItem;
+    private final @NonNull RemoveCartItem removeCartItem;
 
     @GetMapping
     public String index(Model model, HttpServletRequest request, HttpServletResponse response) {
@@ -38,8 +40,7 @@ class CartController {
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String add(@NonNull String productCode, @NonNull Integer quantity,
                       HttpServletRequest request, HttpServletResponse response) {
-        Cart cart = new CartCookies(request, response);
-        new AddIntoCart(cart, findProducts).product(productCode, quantity);
+        addCartItem.intoCart(new CartCookies(request, response), productCode, quantity);
 
         return "redirect:/cart";
     }
@@ -47,8 +48,7 @@ class CartController {
     @GetMapping("/remove")
     public String remove(@NonNull String productCode,
                          HttpServletRequest request, HttpServletResponse response) {
-        Cart cart = new CartCookies(request, response);
-        cart.remove(productCode);
+        removeCartItem.fromCart(new CartCookies(request, response), productCode);
 
         return "redirect:/cart";
     }
@@ -61,7 +61,7 @@ class CartController {
 
     private void cartIntoModel(Cart cart, Model model) {
         model.addAttribute("items",
-                           new ListCart(cart).items().stream()
+                           listCartItems.ofCart(cart).stream()
                                    .map(this::toData)
                                    .toArray());
     }

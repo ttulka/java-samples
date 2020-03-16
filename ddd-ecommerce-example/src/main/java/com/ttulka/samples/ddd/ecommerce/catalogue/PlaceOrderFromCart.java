@@ -16,7 +16,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public final class PlaceOrderFromCart {
+public class PlaceOrderFromCart {
 
     private final @NonNull PlaceOrder placeOrder;
     private final @NonNull FindProducts findProducts;
@@ -44,7 +44,7 @@ public final class PlaceOrderFromCart {
                 .price().value();
     }
 
-    @NoArgsConstructor(access = AccessLevel.PRIVATE)
-    public static final class NoItemsToOrderException extends RuntimeException {
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class NoItemsToOrderException extends RuntimeException {
     }
 }

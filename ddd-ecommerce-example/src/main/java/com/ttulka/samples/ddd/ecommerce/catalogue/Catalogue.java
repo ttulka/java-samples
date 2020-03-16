@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
 @RequiredArgsConstructor
-public final class Catalogue {
+public class Catalogue {
 
     private final @NonNull FindCategories findCategories;
     private final @NonNull FindProducts findProducts;

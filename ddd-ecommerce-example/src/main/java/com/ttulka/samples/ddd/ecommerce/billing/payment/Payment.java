@@ -12,6 +12,10 @@ public interface Payment {
 
     void confirm();
 
+    boolean isCollected();
+
+    boolean isConfirmed();
+
     enum Status {
         NEW, REQUESTED, RECEIVED
     }

@@ -44,6 +44,8 @@ class PaymentTest {
         Payment payment = new PaymentJdbc(
                 new ReferenceId(123L), new Money(123.5), jdbcTemplate, eventPublisher);
         payment.collect();
+
+        assertThat(payment.isCollected()).isTrue();
     }
 
     @Test
@@ -52,6 +54,8 @@ class PaymentTest {
                 new ReferenceId(123L), new Money(123.5), jdbcTemplate, eventPublisher);
         payment.collect();
         payment.confirm();
+
+        assertThat(payment.isConfirmed()).isTrue();
     }
 
     @Test

@@ -33,16 +33,18 @@ final class PaymentJdbc implements Payment {
 
     private @NonNull Status status = Status.NEW;
 
-    public PaymentJdbc(@NonNull PaymentId id, @NonNull ReferenceId referenceId, @NonNull Money total, @NonNull JdbcTemplate jdbcTemplate, @NonNull EventPublisher eventPublisher) {
+    public PaymentJdbc(@NonNull PaymentId id, @NonNull ReferenceId referenceId, @NonNull Money total, @NonNull Status status,
+                       @NonNull JdbcTemplate jdbcTemplate, @NonNull EventPublisher eventPublisher) {
         this.id = id;
         this.referenceId = referenceId;
         this.total = total;
+        this.status = status;
         this.jdbcTemplate = jdbcTemplate;
         this.eventPublisher = eventPublisher;
     }
 
     public PaymentJdbc(@NonNull ReferenceId referenceId, @NonNull Money total, @NonNull JdbcTemplate jdbcTemplate, @NonNull EventPublisher eventPublisher) {
-        this(new PaymentId(idSequence.incrementAndGet()), referenceId, total, jdbcTemplate, eventPublisher);
+        this(new PaymentId(idSequence.incrementAndGet()), referenceId, total, Status.NEW, jdbcTemplate, eventPublisher);
     }
 
     @Override
@@ -95,7 +97,7 @@ final class PaymentJdbc implements Payment {
 
     @Override
     public boolean isCollected() {
-        return Status.REQUESTED == status;
+        return Status.REQUESTED == status || Status.RECEIVED == status;
     }
 
     @Override

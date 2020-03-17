@@ -45,6 +45,7 @@ class PaymentTest {
         payment.collect();
 
         assertThat(payment.isCollected()).isTrue();
+        assertThat(payment.isConfirmed()).isFalse();
     }
 
     @Test
@@ -54,6 +55,7 @@ class PaymentTest {
         payment.collect();
         payment.confirm();
 
+        assertThat(payment.isCollected()).isTrue();
         assertThat(payment.isConfirmed()).isTrue();
     }
 

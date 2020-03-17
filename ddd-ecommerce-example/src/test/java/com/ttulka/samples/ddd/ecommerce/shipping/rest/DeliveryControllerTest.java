@@ -56,7 +56,7 @@ class DeliveryControllerTest {
         when(findDeliveries.byOrderId(eq(new OrderId("TEST-1")))).thenReturn(
                 testDelivery(new DeliveryId(123L), new OrderId("TEST-1"), "test person", "test place", "test-1", 25));
 
-        mockMvc.perform(get("/delivery/TEST-1"))
+        mockMvc.perform(get("/delivery/order/TEST-1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(123)))
                 .andExpect(jsonPath("$.address.person", is("test person")))

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-@ControllerAdvice
+@ControllerAdvice(basePackageClasses = WebLayoutAdvice.class)
 @RequiredArgsConstructor
 class WebLayoutAdvice {
 

@@ -8,13 +8,13 @@ public interface Payment {
 
     Money total();
 
+    void request();
+
     void collect();
 
-    void confirm();
+    boolean isRequested();
 
     boolean isCollected();
-
-    boolean isConfirmed();
 
     enum Status {
         NEW, REQUESTED, RECEIVED

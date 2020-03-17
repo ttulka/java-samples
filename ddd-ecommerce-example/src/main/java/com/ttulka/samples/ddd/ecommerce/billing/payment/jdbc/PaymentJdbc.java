@@ -63,8 +63,8 @@ final class PaymentJdbc implements Payment {
     }
 
     @Override
-    public void collect() {
-        if (isCollected() || isConfirmed()) {
+    public void request() {
+        if (isRequested() || isCollected()) {
             throw new PaymentAlreadyRequestedException();
         }
         status = Status.REQUESTED;
@@ -73,15 +73,15 @@ final class PaymentJdbc implements Payment {
                 "INSERT INTO payments VALUES (?, ?, ?, ?)",
                 id.value(), referenceId.value(), total.value(), status.name());
 
-        log.info("Payment collected: {}", this);
+        log.info("Payment requested: {}", this);
     }
 
     @Override
-    public void confirm() {
-        if (isConfirmed()) {
+    public void collect() {
+        if (isCollected()) {
             throw new PaymentAlreadyReceivedException();
         }
-        if (!isCollected()) {
+        if (!isRequested()) {
             throw new PaymentNotRequestedYetException();
         }
         status = Status.RECEIVED;
@@ -92,16 +92,16 @@ final class PaymentJdbc implements Payment {
 
         eventPublisher.raise(new PaymentReceived(Instant.now(), referenceId.value()));
 
-        log.info("Payment confirmed: {}", this);
+        log.info("Payment collected: {}", this);
     }
 
     @Override
-    public boolean isCollected() {
+    public boolean isRequested() {
         return Status.REQUESTED == status || Status.RECEIVED == status;
     }
 
     @Override
-    public boolean isConfirmed() {
+    public boolean isCollected() {
         return Status.RECEIVED == status;
     }
 }

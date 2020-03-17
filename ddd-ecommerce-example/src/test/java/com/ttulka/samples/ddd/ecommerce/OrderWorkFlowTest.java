@@ -144,7 +144,7 @@ class OrderWorkFlowTest {
                 .jsonPath().getMap("[0]");
 
         assertAll(
-                () -> assertThat(payment.get("confirmed")).isEqualTo(true).as("Payment is not collected."),
+                () -> assertThat(payment.get("collected")).isEqualTo(true).as("Payment is not collected."),
                 () -> assertThat(payment.get("total")).isEqualTo(10.5f).as("Payment does not match."));
     }
 }

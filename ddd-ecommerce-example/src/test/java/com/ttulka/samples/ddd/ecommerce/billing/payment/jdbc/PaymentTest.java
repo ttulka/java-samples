@@ -39,32 +39,32 @@ class PaymentTest {
     }
 
     @Test
+    void payment_is_requested() {
+        Payment payment = new PaymentJdbc(
+                new ReferenceId(123L), new Money(123.5), jdbcTemplate, eventPublisher);
+        payment.request();
+
+        assertThat(payment.isRequested()).isTrue();
+        assertThat(payment.isCollected()).isFalse();
+    }
+
+    @Test
     void payment_is_collected() {
         Payment payment = new PaymentJdbc(
                 new ReferenceId(123L), new Money(123.5), jdbcTemplate, eventPublisher);
+        payment.request();
         payment.collect();
 
+        assertThat(payment.isRequested()).isTrue();
         assertThat(payment.isCollected()).isTrue();
-        assertThat(payment.isConfirmed()).isFalse();
     }
 
     @Test
-    void payment_is_confirmed() {
+    void collected_payment_raises_an_event() {
         Payment payment = new PaymentJdbc(
                 new ReferenceId(123L), new Money(123.5), jdbcTemplate, eventPublisher);
+        payment.request();
         payment.collect();
-        payment.confirm();
-
-        assertThat(payment.isCollected()).isTrue();
-        assertThat(payment.isConfirmed()).isTrue();
-    }
-
-    @Test
-    void confirmed_payment_raises_an_event() {
-        Payment payment = new PaymentJdbc(
-                new ReferenceId(123L), new Money(123.5), jdbcTemplate, eventPublisher);
-        payment.collect();
-        payment.confirm();
 
         verify(eventPublisher).raise(argThat(
                 event -> {
@@ -79,39 +79,39 @@ class PaymentTest {
     }
 
     @Test
+    void cannot_request_already_requested_payment() {
+        Payment payment = new PaymentJdbc(
+                new ReferenceId(123L), new Money(123.5), jdbcTemplate, eventPublisher);
+        payment.request();
+
+        assertThrows(Payment.PaymentAlreadyRequestedException.class, () -> payment.request());
+    }
+
+    @Test
+    void cannot_request_already_collected_payment() {
+        Payment payment = new PaymentJdbc(
+                new ReferenceId(123L), new Money(123.5), jdbcTemplate, eventPublisher);
+        payment.request();
+        payment.collect();
+
+        assertThrows(Payment.PaymentAlreadyRequestedException.class, () -> payment.request());
+    }
+
+    @Test
+    void cannot_collect_unrequested_payment() {
+        Payment payment = new PaymentJdbc(
+                new ReferenceId(123L), new Money(123.5), jdbcTemplate, eventPublisher);
+
+        assertThrows(Payment.PaymentNotRequestedYetException.class, () -> payment.collect());
+    }
+
+    @Test
     void cannot_collect_already_collected_payment() {
         Payment payment = new PaymentJdbc(
                 new ReferenceId(123L), new Money(123.5), jdbcTemplate, eventPublisher);
+        payment.request();
         payment.collect();
 
-        assertThrows(Payment.PaymentAlreadyRequestedException.class, () -> payment.collect());
-    }
-
-    @Test
-    void cannot_collect_already_confirmed_payment() {
-        Payment payment = new PaymentJdbc(
-                new ReferenceId(123L), new Money(123.5), jdbcTemplate, eventPublisher);
-        payment.collect();
-        payment.confirm();
-
-        assertThrows(Payment.PaymentAlreadyRequestedException.class, () -> payment.collect());
-    }
-
-    @Test
-    void cannot_confirm_unrequested_payment() {
-        Payment payment = new PaymentJdbc(
-                new ReferenceId(123L), new Money(123.5), jdbcTemplate, eventPublisher);
-
-        assertThrows(Payment.PaymentNotRequestedYetException.class, () -> payment.confirm());
-    }
-
-    @Test
-    void cannot_confirm_already_confirmed_payment() {
-        Payment payment = new PaymentJdbc(
-                new ReferenceId(123L), new Money(123.5), jdbcTemplate, eventPublisher);
-        payment.collect();
-        payment.confirm();
-
-        assertThrows(Payment.PaymentAlreadyReceivedException.class, () -> payment.confirm());
+        assertThrows(Payment.PaymentAlreadyReceivedException.class, () -> payment.collect());
     }
 }

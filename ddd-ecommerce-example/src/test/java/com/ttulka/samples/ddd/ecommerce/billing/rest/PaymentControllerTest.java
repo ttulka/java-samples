@@ -64,22 +64,22 @@ class PaymentControllerTest {
             }
 
             @Override
+            public void request() {
+
+            }
+
+            @Override
             public void collect() {
 
             }
 
             @Override
-            public void confirm() {
-
-            }
-
-            @Override
-            public boolean isCollected() {
+            public boolean isRequested() {
                 return false;
             }
 
             @Override
-            public boolean isConfirmed() {
+            public boolean isCollected() {
                 return false;
             }
         };

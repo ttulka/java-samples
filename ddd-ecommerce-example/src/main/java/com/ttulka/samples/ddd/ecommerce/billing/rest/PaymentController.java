@@ -27,7 +27,7 @@ class PaymentController {
                         "id", payment.id().value(),
                         "referenceId", payment.referenceId().value(),
                         "total", payment.total().value(),
-                        "confirmed", payment.isConfirmed()))
+                        "collected", payment.isCollected()))
                 .collect(Collectors.toList());
     }
 }

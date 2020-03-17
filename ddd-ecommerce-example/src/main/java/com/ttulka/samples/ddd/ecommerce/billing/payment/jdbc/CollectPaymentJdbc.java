@@ -23,7 +23,7 @@ class CollectPaymentJdbc implements CollectPayment {
     @Override
     public void collect(ReferenceId referenceId, Money total) {
         Payment payment = new PaymentJdbc(referenceId, total, jdbcTemplate, eventPublisher);
+        payment.request();
         payment.collect();
-        payment.confirm();
     }
 }

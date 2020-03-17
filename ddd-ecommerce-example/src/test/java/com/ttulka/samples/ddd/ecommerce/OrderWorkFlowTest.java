@@ -136,13 +136,15 @@ class OrderWorkFlowTest {
 
         // payment is collected
 
-        Double totalPayment = with()
+        Map<String, Object> payment = with()
                 .port(port)
                 .basePath("/payment")
                 .get()
                 .andReturn()
-                .jsonPath().getDouble("[0].total");
+                .jsonPath().getMap("[0]");
 
-        assertThat(totalPayment).isEqualTo(10.5).as("Payment does not match.");
+        assertAll(
+                () -> assertThat(payment.get("confirmed")).isEqualTo(true).as("Payment is not collected."),
+                () -> assertThat(payment.get("total")).isEqualTo(10.5f).as("Payment does not match."));
     }
 }

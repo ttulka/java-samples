@@ -6,6 +6,7 @@ import java.util.List;
 import com.ttulka.samples.ddd.ecommerce.billing.PaymentReceived;
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
 import com.ttulka.samples.ddd.ecommerce.sales.OrderPlaced;
+import com.ttulka.samples.ddd.ecommerce.shipping.FindDeliveries;
 import com.ttulka.samples.ddd.ecommerce.shipping.PrepareDelivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.UpdateDelivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Address;
@@ -42,6 +43,8 @@ class ShippingListenersTest {
     private PrepareDelivery prepareDelivery;
     @MockBean
     private UpdateDelivery updateDelivery;
+    @MockBean
+    private FindDeliveries findDeliveries;
 
     @Test
     void on_order_placed_a_delivery_is_prepared() {

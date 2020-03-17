@@ -1,3 +1,6 @@
+TRUNCATE TABLE orders;
+TRUNCATE TABLE order_items;
+
 INSERT INTO orders VALUES
     (1, 'Test Customer 1', 'Test Address 1'),
     (2, 'Test Customer 2', 'Test Address 2');

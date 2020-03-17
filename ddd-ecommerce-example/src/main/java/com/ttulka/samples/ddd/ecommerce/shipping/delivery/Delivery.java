@@ -2,11 +2,7 @@ package com.ttulka.samples.ddd.ecommerce.shipping.delivery;
 
 import java.util.List;
 
-public interface Delivery {
-
-    DeliveryId id();
-
-    OrderId orderId();
+public interface Delivery extends DeliveryInfo {
 
     List<DeliveryItem> items();
 

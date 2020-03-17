@@ -10,6 +10,7 @@ import com.ttulka.samples.ddd.ecommerce.shipping.PrepareDelivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Address;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Delivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryId;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryInfo;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryItem;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.OrderId;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Person;
@@ -32,6 +33,17 @@ class DeliveriesJdbc implements FindDeliveries, PrepareDelivery {
 
     private final @NonNull JdbcTemplate jdbcTemplate;
     private final @NonNull EventPublisher eventPublisher;
+
+    @Override
+    public List<DeliveryInfo> all() {
+        List<Map<String, Object>> deliveries = jdbcTemplate.queryForList(
+                "SELECT id, order_id orderId FROM deliveries");
+        return deliveries.stream()
+                .map(delivery -> new DeliveryInfoDefault(
+                        new DeliveryId(delivery.get("id")),
+                        new OrderId(delivery.get("orderId"))))
+                .collect(Collectors.toList());
+    }
 
     @Transactional
     @Override

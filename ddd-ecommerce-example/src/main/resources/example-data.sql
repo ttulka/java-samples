@@ -1,5 +1,9 @@
 -- ------ SALES ------
 
+TRUNCATE TABLE categories;
+TRUNCATE TABLE products;
+TRUNCATE TABLE products_in_categories;
+
 INSERT INTO categories VALUES
     (1, 'books', 'books'),
     (2, 'games-toys', 'games and toys'),
@@ -22,6 +26,8 @@ INSERT INTO products_in_categories VALUES
     (6, 3);
 
 -- ------ WAREHOUSE ------
+
+TRUNCATE TABLE products_in_stock;
 
 INSERT INTO products_in_stock VALUES
     ('001', 5),

@@ -40,9 +40,21 @@ class DeliveryControllerTest {
     private Catalogue catalogue;
 
     @Test
+    void all_deliveries() throws Exception {
+        when(findDeliveries.all()).thenReturn(List.of(
+                testDelivery(new DeliveryId(123L), new OrderId("TEST-1"), "test person", "test place", "test-1", 25)));
+
+        mockMvc.perform(get("/delivery"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id", is(123)))
+                .andExpect(jsonPath("$[0].orderId", is("TEST-1")));
+    }
+
+    @Test
     void delivery_by_order() throws Exception {
         when(findDeliveries.byOrderId(eq(new OrderId("TEST-1")))).thenReturn(
-                testDelivery(new DeliveryId(123L), "test person", "test place", "test-1", 25));
+                testDelivery(new DeliveryId(123L), new OrderId("TEST-1"), "test person", "test place", "test-1", 25));
 
         mockMvc.perform(get("/delivery/TEST-1"))
                 .andExpect(status().isOk())
@@ -55,7 +67,8 @@ class DeliveryControllerTest {
                 .andExpect(jsonPath("$.dispatched", is(false)));
     }
 
-    private Delivery testDelivery(DeliveryId deliveryId, String person, String place, String productCode, Integer quantity) {
+    private Delivery testDelivery(DeliveryId deliveryId, OrderId orderId,
+                                  String person, String place, String productCode, Integer quantity) {
         return new Delivery() {
             @Override
             public DeliveryId id() {
@@ -64,7 +77,7 @@ class DeliveryControllerTest {
 
             @Override
             public OrderId orderId() {
-                return new OrderId("TEST");
+                return orderId;
             }
 
             @Override

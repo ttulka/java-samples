@@ -5,7 +5,6 @@ import com.ttulka.samples.ddd.ecommerce.billing.payment.Money;
 import com.ttulka.samples.ddd.ecommerce.billing.payment.Payment;
 import com.ttulka.samples.ddd.ecommerce.billing.payment.ReferenceId;
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
-import com.ttulka.samples.ddd.ecommerce.warehouse.GoodsFetched;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

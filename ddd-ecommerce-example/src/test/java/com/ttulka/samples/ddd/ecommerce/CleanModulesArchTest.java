@@ -37,8 +37,7 @@ class CleanModulesArchTest {
                         "com.ttulka.samples.ddd.ecommerce.sales.category.jdbc..",
                         "com.ttulka.samples.ddd.ecommerce.sales.product.jdbc..",
                         "com.ttulka.samples.ddd.ecommerce.sales.order.jdbc..")
-                .should().onlyDependOnClassesThat()
-                .resideOutsideOfPackages(
+                .should().onlyDependOnClassesThat().resideOutsideOfPackages(
                         "com.ttulka.samples.ddd.ecommerce.sales.category.jdbc..",
                         "com.ttulka.samples.ddd.ecommerce.sales.product.jdbc..",
                         "com.ttulka.samples.ddd.ecommerce.sales.order.jdbc..");
@@ -76,8 +75,7 @@ class CleanModulesArchTest {
         ArchRule rule = classes()
                 .that().resideOutsideOfPackages(
                         "com.ttulka.samples.ddd.ecommerce.warehouse.jdbc..")
-                .should().onlyDependOnClassesThat()
-                .resideOutsideOfPackages(
+                .should().onlyDependOnClassesThat().resideOutsideOfPackages(
                         "com.ttulka.samples.ddd.ecommerce.warehouse.jdbc..");
         rule.check(importedClasses);
     }
@@ -103,8 +101,7 @@ class CleanModulesArchTest {
         ArchRule rule = classes()
                 .that().resideOutsideOfPackages(
                         "com.ttulka.samples.ddd.ecommerce.shipping.delivery.jdbc..")
-                .should().onlyDependOnClassesThat()
-                .resideOutsideOfPackages(
+                .should().onlyDependOnClassesThat().resideOutsideOfPackages(
                         "com.ttulka.samples.ddd.ecommerce.shipping.delivery.jdbc..");
         rule.check(importedClasses);
     }
@@ -128,8 +125,7 @@ class CleanModulesArchTest {
         ArchRule rule = classes()
                 .that().resideOutsideOfPackages(
                         "com.ttulka.samples.ddd.ecommerce.billing.payment.jdbc..")
-                .should().onlyDependOnClassesThat()
-                .resideOutsideOfPackages(
+                .should().onlyDependOnClassesThat().resideOutsideOfPackages(
                         "com.ttulka.samples.ddd.ecommerce.billing.payment.jdbc..");
         rule.check(importedClasses);
     }
@@ -141,8 +137,7 @@ class CleanModulesArchTest {
                 .that().resideOutsideOfPackages(
                         "com.ttulka.samples.ddd.ecommerce.catalogue..")
                 .and().areNotAnnotatedWith(WebMvcTest.class)
-                .should().onlyDependOnClassesThat()
-                .resideOutsideOfPackages(
+                .should().onlyDependOnClassesThat().resideOutsideOfPackages(
                         "com.ttulka.samples.ddd.ecommerce.catalogue..");
         rule.check(importedClasses);
     }
@@ -151,10 +146,22 @@ class CleanModulesArchTest {
     void catalogue_service_has_no_dependencies_on_shipping_and_billing() {
         JavaClasses importedClasses = new ClassFileImporter().importPackages("com.ttulka.samples.ddd.ecommerce.catalogue");
         ArchRule rule = classes()
-                .should().onlyDependOnClassesThat()
-                .resideOutsideOfPackages(
+                .should().onlyDependOnClassesThat().resideOutsideOfPackages(
                         "com.ttulka.samples.ddd.ecommerce.shipping..",
                         "com.ttulka.samples.ddd.ecommerce.billing..");
+        rule.check(importedClasses);
+    }
+
+    @Test
+    void catalogue_web_uses_only_its_own_use_cases_and_no_direct_dependencies_on_other_services() {
+        JavaClasses importedClasses = new ClassFileImporter().importPackages(
+                "com.ttulka.samples.ddd.ecommerce.sales",
+                "com.ttulka.samples.ddd.ecommerce.warehouse",
+                "com.ttulka.samples.ddd.ecommerce.shipping.",
+                "com.ttulka.samples.ddd.ecommerce.billing");
+        ArchRule rule = classes()
+                .should().onlyHaveDependentClassesThat().resideOutsideOfPackage(
+                        "com.ttulka.samples.ddd.ecommerce.catalogue.web..");
         rule.check(importedClasses);
     }
 }

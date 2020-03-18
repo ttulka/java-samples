@@ -56,7 +56,7 @@ The communication among services is implemented via events:
 When the customer places an order the following process starts up (happy path):
 
 1. Sales service creates a new order and publishes the OrderPlaced event.
-2. Billing service collects payment for the order and publishes the PaymentReceived event.
+2. Billing service collects payment for the order and publishes the PaymentCollected event.
 2. Shipping service prepares a delivery.
 2. Warehouse service fetches goods from the stock and publishes the GoodsFetched event.
 3. Shipping service dispatches the delivery and publishes the DeliveryDispatched event.

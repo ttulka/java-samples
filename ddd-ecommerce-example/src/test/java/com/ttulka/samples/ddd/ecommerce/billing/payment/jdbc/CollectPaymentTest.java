@@ -1,7 +1,7 @@
 package com.ttulka.samples.ddd.ecommerce.billing.payment.jdbc;
 
 import com.ttulka.samples.ddd.ecommerce.billing.CollectPayment;
-import com.ttulka.samples.ddd.ecommerce.billing.PaymentReceived;
+import com.ttulka.samples.ddd.ecommerce.billing.PaymentCollected;
 import com.ttulka.samples.ddd.ecommerce.billing.payment.Money;
 import com.ttulka.samples.ddd.ecommerce.billing.payment.ReferenceId;
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
@@ -33,11 +33,11 @@ class CollectPaymentTest {
 
         verify(eventPublisher).raise(argThat(
                 event -> {
-                    assertThat(event).isInstanceOf(PaymentReceived.class);
-                    PaymentReceived paymentReceived = (PaymentReceived) event;
+                    assertThat(event).isInstanceOf(PaymentCollected.class);
+                    PaymentCollected paymentCollected = (PaymentCollected) event;
                     assertAll(
-                            () -> assertThat(paymentReceived.when).isNotNull(),
-                            () -> assertThat(paymentReceived.referenceId).isEqualTo(123L)
+                            () -> assertThat(paymentCollected.when).isNotNull(),
+                            () -> assertThat(paymentCollected.referenceId).isEqualTo(123L)
                     );
                     return true;
                 }));

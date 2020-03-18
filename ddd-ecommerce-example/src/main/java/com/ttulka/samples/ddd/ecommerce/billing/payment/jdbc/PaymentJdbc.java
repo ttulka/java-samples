@@ -3,7 +3,7 @@ package com.ttulka.samples.ddd.ecommerce.billing.payment.jdbc;
 import java.time.Instant;
 import java.util.concurrent.atomic.AtomicLong;
 
-import com.ttulka.samples.ddd.ecommerce.billing.PaymentReceived;
+import com.ttulka.samples.ddd.ecommerce.billing.PaymentCollected;
 import com.ttulka.samples.ddd.ecommerce.billing.payment.Money;
 import com.ttulka.samples.ddd.ecommerce.billing.payment.Payment;
 import com.ttulka.samples.ddd.ecommerce.billing.payment.PaymentId;
@@ -90,7 +90,7 @@ final class PaymentJdbc implements Payment {
                 "UPDATE payments SET status = ? WHERE id = ?",
                 status.name(), id.value());
 
-        eventPublisher.raise(new PaymentReceived(Instant.now(), referenceId.value()));
+        eventPublisher.raise(new PaymentCollected(Instant.now(), referenceId.value()));
 
         log.info("Payment collected: {}", this);
     }

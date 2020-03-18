@@ -1,6 +1,6 @@
 package com.ttulka.samples.ddd.ecommerce.shipping.listeners;
 
-import com.ttulka.samples.ddd.ecommerce.billing.PaymentReceived;
+import com.ttulka.samples.ddd.ecommerce.billing.PaymentCollected;
 import com.ttulka.samples.ddd.ecommerce.shipping.UpdateDelivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.OrderId;
 import com.ttulka.samples.ddd.ecommerce.warehouse.GoodsFetched;
@@ -21,7 +21,7 @@ class DispatchingListener {
     }
 
     @TransactionalEventListener
-    public void on(PaymentReceived event) {
+    public void on(PaymentCollected event) {
         updateDelivery.asPaid(new OrderId(event.referenceId));
     }
 }

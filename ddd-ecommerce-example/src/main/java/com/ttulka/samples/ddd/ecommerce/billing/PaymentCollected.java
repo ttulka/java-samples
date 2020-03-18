@@ -10,7 +10,7 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @EqualsAndHashCode(of = "referenceId")
 @ToString
-public final class PaymentReceived {
+public final class PaymentCollected {
 
     public final @NonNull Instant when;
     public final @NonNull Object referenceId;

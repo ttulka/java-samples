@@ -3,7 +3,7 @@ package com.ttulka.samples.ddd.ecommerce.shipping.listeners;
 import java.time.Instant;
 import java.util.List;
 
-import com.ttulka.samples.ddd.ecommerce.billing.PaymentReceived;
+import com.ttulka.samples.ddd.ecommerce.billing.PaymentCollected;
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
 import com.ttulka.samples.ddd.ecommerce.sales.OrderPlaced;
 import com.ttulka.samples.ddd.ecommerce.shipping.FindDeliveries;
@@ -67,7 +67,7 @@ class ShippingListenersTest {
 
     @Test
     void on_payment_received_a_delivery_is_updated() {
-        runTx(() -> eventPublisher.raise(new PaymentReceived(Instant.now(), 123L)));
+        runTx(() -> eventPublisher.raise(new PaymentCollected(Instant.now(), 123L)));
 
         verify(updateDelivery).asPaid(new OrderId(123L));
     }

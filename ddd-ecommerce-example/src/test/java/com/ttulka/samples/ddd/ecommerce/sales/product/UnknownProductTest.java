@@ -1,5 +1,7 @@
 package com.ttulka.samples.ddd.ecommerce.sales.product;
 
+import com.ttulka.samples.ddd.ecommerce.sales.category.CategoryId;
+
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -56,5 +58,11 @@ class UnknownProductTest {
     void put_for_sale_noop() {
         Product unknownProduct = new UnknownProduct();
         unknownProduct.putForSale();
+    }
+
+    @Test
+    void categorize_noop() {
+        Product unknownProduct = new UnknownProduct();
+        unknownProduct.categorize(new CategoryId(123L));
     }
 }

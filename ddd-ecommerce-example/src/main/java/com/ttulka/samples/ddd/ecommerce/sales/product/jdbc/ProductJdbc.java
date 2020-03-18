@@ -1,5 +1,6 @@
 package com.ttulka.samples.ddd.ecommerce.sales.product.jdbc;
 
+import com.ttulka.samples.ddd.ecommerce.sales.category.CategoryId;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Code;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Description;
 import com.ttulka.samples.ddd.ecommerce.sales.product.Price;
@@ -75,6 +76,12 @@ final class ProductJdbc implements Product {
     @Override
     public void putForSale() {
         jdbcTemplate.update("INSERT INTO products VALUES(?, ?, ?, ?, ?)",
-                             id.value(), code.value(), title.value(), description.value(), price.value());
+                            id.value(), code.value(), title.value(), description.value(), price.value());
+    }
+
+    @Override
+    public void categorize(CategoryId categoryId) {
+        jdbcTemplate.update("INSERT INTO products_in_categories VALUES(?, ?)",
+                            id.value(), categoryId.value());
     }
 }

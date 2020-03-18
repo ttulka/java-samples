@@ -1,5 +1,7 @@
 package com.ttulka.samples.ddd.ecommerce.sales.product;
 
+import com.ttulka.samples.ddd.ecommerce.sales.category.CategoryId;
+
 public interface Product {
 
     ProductId id();
@@ -19,4 +21,6 @@ public interface Product {
     void changePrice(Price price);
 
     void putForSale();
+
+    void categorize(CategoryId categoryId);
 }

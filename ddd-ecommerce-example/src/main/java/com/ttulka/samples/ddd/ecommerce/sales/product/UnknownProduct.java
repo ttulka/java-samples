@@ -1,5 +1,7 @@
 package com.ttulka.samples.ddd.ecommerce.sales.product;
 
+import com.ttulka.samples.ddd.ecommerce.sales.category.CategoryId;
+
 import lombok.ToString;
 
 @ToString
@@ -47,6 +49,11 @@ public final class UnknownProduct implements Product {
 
     @Override
     public void putForSale() {
+        // do nothing
+    }
+
+    @Override
+    public void categorize(CategoryId categoryId) {
         // do nothing
     }
 }

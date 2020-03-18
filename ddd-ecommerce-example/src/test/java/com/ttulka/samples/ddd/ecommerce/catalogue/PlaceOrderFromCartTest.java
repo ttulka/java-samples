@@ -33,7 +33,7 @@ class PlaceOrderFromCartTest {
     @Test
     void order_is_placed() {
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.setCookies(new Cookie("cart", "test-1|Test 1|123"));
+        request.setCookies(new Cookie("cart", "test-1|Test_1|123"));
 
         placeOrderFromCart.placeOrder(
                 new CartCookies(request, new MockHttpServletResponse()),

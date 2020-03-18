@@ -22,7 +22,7 @@ class CartCookiesTest {
     @Test
     void cart_item_is_created_from_cookies() {
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.setCookies(new Cookie("cart", "test-1|Test 1|123"));
+        request.setCookies(new Cookie("cart", "test-1|Test_1|123"));
 
         Cart cart = new CartCookies(request, new MockHttpServletResponse());
         assertAll(
@@ -36,7 +36,7 @@ class CartCookiesTest {
     @Test
     void two_cart_items_are_created_from_cookies() {
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.setCookies(new Cookie("cart", "test-1|Test 1|123#test-2|Test 2|321"));
+        request.setCookies(new Cookie("cart", "test-1|Test_1|123#test-2|Test_2|321"));
 
         Cart cart = new CartCookies(request, new MockHttpServletResponse());
         assertAll(

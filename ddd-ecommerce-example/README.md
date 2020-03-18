@@ -6,17 +6,22 @@ Programming language is Java 11 with heavy use of Spring framework.
 
 ## Domain Services
 
-Several primary [business capabilities][1] have been identified:
+Several [business capabilities][1] have been identified:
+
+### Core Domain
 
 - **Sales**
-  - add a product to sale
+  - put a product for sale
   - categorize a product
-  - do product pricing
+  - update a product
+  - change a product price
   - validate an order
   - place an order
   
+### Supporting Subdomains
+  
 - **Warehouse**
-  - store goods
+  - stack goods
   - fetch goods for shipping
   
 - **Billing**
@@ -25,7 +30,7 @@ Several primary [business capabilities][1] have been identified:
 - **Shipping**
   - dispatch a delivery
 
-There are also possible secondary (supporting) business capabilities:
+Later, we can think about more supporting domains (not implemented in this project):
 
 - **Marketing**
   - discount a product
@@ -43,7 +48,7 @@ The e-commerce system is a web application using a **Catalogue** service impleme
 
 ### Services Dependencies
 
-Services cooperate together to work out a bussiness capability: sell and deliver products.
+Services cooperate together to work out the business capabilities: products sale and delivery.
 
 ![Service Dependencies](services-dependencies.png)
 
@@ -53,7 +58,7 @@ The communication among services is implemented via events:
 
 ![Service Event Workflow](services-event-workflow.png)
 
-When the customer places an order the following process starts up (happy path):
+When the customer places an order the following process starts up (the happy path):
 
 1. Sales service creates a new order and publishes the OrderPlaced event.
 2. Billing service collects payment for the order and publishes the PaymentCollected event.

@@ -7,6 +7,7 @@ import com.ttulka.samples.ddd.ecommerce.shipping.FindDeliveries;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Address;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Delivery;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryId;
+import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryInfo;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.DeliveryItem;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.OrderId;
 import com.ttulka.samples.ddd.ecommerce.shipping.delivery.Person;
@@ -42,7 +43,7 @@ class DeliveryControllerTest {
     @Test
     void all_deliveries() throws Exception {
         when(findDeliveries.all()).thenReturn(List.of(
-                testDelivery(new DeliveryId(123L), new OrderId("TEST-1"), "test person", "test place", "test-1", 25)));
+                new DeliveryInfo(new DeliveryId(123L), new OrderId("TEST-1"))));
 
         mockMvc.perform(get("/delivery"))
                 .andExpect(status().isOk())

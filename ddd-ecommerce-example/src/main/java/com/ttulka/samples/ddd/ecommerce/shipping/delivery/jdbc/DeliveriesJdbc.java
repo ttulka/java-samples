@@ -39,7 +39,7 @@ class DeliveriesJdbc implements FindDeliveries, PrepareDelivery {
         List<Map<String, Object>> deliveries = jdbcTemplate.queryForList(
                 "SELECT id, order_id orderId FROM deliveries");
         return deliveries.stream()
-                .map(delivery -> new DeliveryInfoDefault(
+                .map(delivery -> new DeliveryInfo(
                         new DeliveryId(delivery.get("id")),
                         new OrderId(delivery.get("orderId"))))
                 .collect(Collectors.toList());

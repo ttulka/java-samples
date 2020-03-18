@@ -1,8 +1,23 @@
 package com.ttulka.samples.ddd.ecommerce.shipping.delivery;
 
-public interface DeliveryInfo {
+import lombok.EqualsAndHashCode;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
-    DeliveryId id();
+@EqualsAndHashCode(of = "deliveryId")
+@RequiredArgsConstructor
+@ToString
+public final class DeliveryInfo {
 
-    OrderId orderId();
+    private final @NonNull DeliveryId deliveryId;
+    private final @NonNull OrderId orderId;
+
+    public DeliveryId id() {
+        return deliveryId;
+    }
+
+    public OrderId orderId() {
+        return orderId;
+    }
 }

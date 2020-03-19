@@ -43,23 +43,23 @@ class DeliveryControllerTest {
     @Test
     void all_deliveries() throws Exception {
         when(findDeliveries.all()).thenReturn(List.of(
-                new DeliveryInfo(new DeliveryId(123L), new OrderId("TEST-1"))));
+                new DeliveryInfo(new DeliveryId("TEST123"), new OrderId("TEST-ORDER1"))));
 
         mockMvc.perform(get("/delivery"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].id", is(123)))
-                .andExpect(jsonPath("$[0].orderId", is("TEST-1")));
+                .andExpect(jsonPath("$[0].id", is("TEST123")))
+                .andExpect(jsonPath("$[0].orderId", is("TEST-ORDER1")));
     }
 
     @Test
     void delivery_by_order() throws Exception {
-        when(findDeliveries.byOrderId(eq(new OrderId("TEST-1")))).thenReturn(
-                testDelivery(new DeliveryId(123L), new OrderId("TEST-1"), "test person", "test place", "test-1", 25));
+        when(findDeliveries.byOrderId(eq(new OrderId("TEST-ORDER1")))).thenReturn(
+                testDelivery(new DeliveryId("TEST123"), new OrderId("TEST-ORDER1"), "test person", "test place", "test-1", 25));
 
-        mockMvc.perform(get("/delivery/order/TEST-1"))
+        mockMvc.perform(get("/delivery/order/TEST-ORDER1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", is(123)))
+                .andExpect(jsonPath("$.id", is("TEST123")))
                 .andExpect(jsonPath("$.address.person", is("test person")))
                 .andExpect(jsonPath("$.address.place", is("test place")))
                 .andExpect(jsonPath("$.items", hasSize(1)))

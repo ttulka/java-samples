@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 @JdbcTest
 @ContextConfiguration(classes = CategoriesJdbcConfig.class)
-@Sql(statements = "INSERT INTO categories VALUES (1, 'cat1', 'Cat 1'), (2, 'cat2', 'Cat 2');")
+@Sql(statements = "INSERT INTO categories VALUES ('1', 'cat1', 'Cat 1'), (2, 'cat2', 'Cat 2');")
 class FindCategoriesTest {
 
     @Autowired
@@ -33,14 +33,14 @@ class FindCategoriesTest {
                 .collect(Collectors.toList());
 
         assertThat(categoryIds).containsExactlyInAnyOrder(
-                new CategoryId(1L), new CategoryId(2L));
+                new CategoryId(1), new CategoryId(2));
     }
 
     @Test
     void category_by_id_is_found() {
-        Category category = findCategories.byId(new CategoryId(1L));
+        Category category = findCategories.byId(new CategoryId(1));
         assertAll(
-                () -> assertThat(category.id()).isEqualTo(new CategoryId(1L)),
+                () -> assertThat(category.id()).isEqualTo(new CategoryId(1)),
                 () -> assertThat(category.uri()).isEqualTo(new Uri("cat1")),
                 () -> assertThat(category.title()).isEqualTo(new Title("Cat 1"))
         );
@@ -48,7 +48,7 @@ class FindCategoriesTest {
 
     @Test
     void unknown_category_found_for_unknown_id() {
-        Category category = findCategories.byId(new CategoryId(123456789L));
+        Category category = findCategories.byId(new CategoryId("does not exist"));
 
         assertThat(category.id()).isEqualTo(new CategoryId(0));
     }

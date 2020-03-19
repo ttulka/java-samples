@@ -29,7 +29,7 @@ class CollectPaymentTest {
 
     @Test
     void payment_confirmation_raises_an_event() {
-        collectPayment.collect(new ReferenceId(123L), new Money(123.5));
+        collectPayment.collect(new ReferenceId("TEST123"), new Money(123.5));
 
         verify(eventPublisher).raise(argThat(
                 event -> {
@@ -37,7 +37,7 @@ class CollectPaymentTest {
                     PaymentCollected paymentCollected = (PaymentCollected) event;
                     assertAll(
                             () -> assertThat(paymentCollected.when).isNotNull(),
-                            () -> assertThat(paymentCollected.referenceId).isEqualTo(123L)
+                            () -> assertThat(paymentCollected.referenceId).isEqualTo("TEST123")
                     );
                     return true;
                 }));

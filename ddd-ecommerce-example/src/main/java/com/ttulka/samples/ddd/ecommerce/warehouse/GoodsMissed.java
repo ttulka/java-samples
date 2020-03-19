@@ -19,6 +19,6 @@ import lombok.ToString;
 public final class GoodsMissed {
 
     public final @NonNull Instant when;
-    public final @NonNull Object productCode;
+    public final @NonNull String productCode;
     public final @NonNull Integer amount;
 }

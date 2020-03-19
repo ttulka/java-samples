@@ -21,7 +21,7 @@ class PaymentController {
     private final @NonNull FindPayments findPayments;
 
     @GetMapping
-    public List<Map<String, Object>> all() {
+    public List<Map<String, ?>> all() {
         return findPayments.all().stream()
                 .map(payment -> Map.of(
                         "id", payment.id().value(),

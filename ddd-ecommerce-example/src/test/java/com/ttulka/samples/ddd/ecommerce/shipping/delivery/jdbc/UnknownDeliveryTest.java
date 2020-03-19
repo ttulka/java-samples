@@ -21,8 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @JdbcTest
 @ContextConfiguration(classes = DeliveryJdbcConfig.class)
 @Sql(statements = "INSERT INTO deliveries VALUES " +
-                  "(201, 2001, 'Test Person 1', 'Test Place 1', 'FETCHED')," +
-                  "(202, 2002, 'Test Person 2', 'Test Place 2', 'PAID')")
+                  "('201', '2001', 'Test Person 1', 'Test Place 1', 'FETCHED')," +
+                  "('202', '2002', 'Test Person 2', 'Test Place 2', 'PAID')")
 class UnknownDeliveryTest {
 
     @Autowired
@@ -35,10 +35,10 @@ class UnknownDeliveryTest {
 
     @Test
     void unknown_delivery_has_values() {
-        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(123L), jdbcTemplate);
+        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(123), jdbcTemplate);
         assertAll(
                 () -> assertThat(unknownDelivery.id()).isEqualTo(new DeliveryId(0)),
-                () -> assertThat(unknownDelivery.orderId()).isEqualTo(new OrderId(123L)),
+                () -> assertThat(unknownDelivery.orderId()).isEqualTo(new OrderId(123)),
                 () -> assertThat(unknownDelivery.items()).hasSize(0),
                 () -> assertThat(unknownDelivery.address()).isNotNull(),
                 () -> assertThat(unknownDelivery.isReadyToDispatch()).isFalse(),
@@ -48,33 +48,33 @@ class UnknownDeliveryTest {
 
     @Test
     void prepare_noop() {
-        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(123L), jdbcTemplate);
+        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(123), jdbcTemplate);
         unknownDelivery.prepare();
     }
 
     @Test
     void marked_as_fetched() {
-        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(2002L), jdbcTemplate);
+        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(2002), jdbcTemplate);
         unknownDelivery.markAsFetched();
 
-        Delivery delivery = findDeliveries.byOrderId(new OrderId(2002L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(2002));
 
         assertThat(delivery.isReadyToDispatch());
     }
 
     @Test
     void marked_as_paid() {
-        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(2001L), jdbcTemplate);
+        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(2001), jdbcTemplate);
         unknownDelivery.markAsPaid();
 
-        Delivery delivery = findDeliveries.byOrderId(new OrderId(2001L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(2001));
 
         assertThat(delivery.isReadyToDispatch());
     }
 
     @Test
     void dispatch_throws_an_error() {
-        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(123L), jdbcTemplate);
+        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(123), jdbcTemplate);
 
         assertThrows(Delivery.DeliveryNotReadyToBeDispatchedException.class,
                      () -> unknownDelivery.dispatch());

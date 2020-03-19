@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 @JdbcTest
 @ContextConfiguration(classes = ProductsJdbcConfig.class)
-@Sql(statements = "INSERT INTO categories VALUES (123, 'test-category', 'Test Category')")
+@Sql(statements = "INSERT INTO categories VALUES ('123', 'test-category', 'Test Category')")
 class CategorizeProductTest {
 
     @Autowired
@@ -35,7 +35,7 @@ class CategorizeProductTest {
     @Test
     void product_is_categorized() {
         Product product = new ProductJdbc(
-                new ProductId(456L),
+                new ProductId(456),
                 new Code("test"),
                 new Title("test"),
                 new Description("test"),
@@ -44,12 +44,12 @@ class CategorizeProductTest {
         );
         product.putForSale();
 
-        product.categorize(new CategoryId(123L));
+        product.categorize(new CategoryId(123));
 
         List<Product> productsFound = findProducts.fromCategory(new Uri("test-category"));
         assertAll(
                 () -> assertThat(productsFound).hasSize(1),
-                () -> assertThat(productsFound.get(0).id()).isEqualTo(new ProductId(456L))
+                () -> assertThat(productsFound.get(0).id()).isEqualTo(new ProductId(456))
         );
     }
 }

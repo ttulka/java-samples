@@ -30,9 +30,9 @@ class FindOrdersTest {
 
     @Test
     void order_by_id_is_found() {
-        Order order = findOrders.byId(new OrderId(1L));
+        Order order = findOrders.byId(new OrderId(1));
         assertAll(
-                () -> assertThat(order.id()).isEqualTo(new OrderId(1L)),
+                () -> assertThat(order.id()).isEqualTo(new OrderId(1)),
                 () -> assertThat(order.customer().name()).isEqualTo(new Name("Test Customer 1")),
                 () -> assertThat(order.customer().address()).isEqualTo(new Address("Test Address 1")),
                 () -> assertThat(order.items()).hasSize(2),
@@ -49,7 +49,7 @@ class FindOrdersTest {
 
     @Test
     void unknown_product_found_for_an_unknown_code() {
-        Order order = findOrders.byId(new OrderId(123L));
+        Order order = findOrders.byId(new OrderId(123));
 
         assertThat(order.id()).isEqualTo(new OrderId(0));
     }

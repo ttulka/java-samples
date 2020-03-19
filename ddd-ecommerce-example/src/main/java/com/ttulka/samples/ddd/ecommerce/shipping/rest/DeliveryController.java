@@ -24,7 +24,7 @@ class DeliveryController {
     private final @NonNull FindDeliveries findDeliveries;
 
     @GetMapping
-    public List<Map<String, Object>> all() {
+    public List<Map<String, ?>> all() {
         return findDeliveries.all().stream()
                 .map(delivery -> Map.of(
                         "id", delivery.id().value(),
@@ -33,7 +33,7 @@ class DeliveryController {
     }
 
     @GetMapping("/order/{orderId}")
-    public Map<String, Object> byOrder(@PathVariable @NonNull Object orderId) {
+    public Map<String, ?> byOrder(@PathVariable @NonNull Object orderId) {
         Delivery delivery = findDeliveries.byOrderId(new OrderId(orderId));
         return Map.of(
                 "id", delivery.id().value(),

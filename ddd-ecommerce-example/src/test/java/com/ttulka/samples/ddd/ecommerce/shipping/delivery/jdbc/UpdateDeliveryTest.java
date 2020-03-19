@@ -1,6 +1,7 @@
 package com.ttulka.samples.ddd.ecommerce.shipping.delivery.jdbc;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
 import com.ttulka.samples.ddd.ecommerce.shipping.FindDeliveries;
@@ -84,7 +85,7 @@ class UpdateDeliveryTest {
     }
 
     private OrderId prepareOrder() {
-        OrderId orderId = new OrderId(System.nanoTime());
+        OrderId orderId = new OrderId(UUID.randomUUID());
         prepareDelivery.prepare(
                 orderId,
                 List.of(new DeliveryItem(new ProductCode("test"), new Quantity(1))),

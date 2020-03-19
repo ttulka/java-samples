@@ -42,18 +42,18 @@ class WarehouseListenersTest {
     @Test
     void on_order_placed_fetches_goods() {
         runTx(() -> eventPublisher.raise(
-                new OrderPlaced(Instant.now(), 123L,
+                new OrderPlaced(Instant.now(), "TEST123",
                                 List.of(new OrderPlaced.OrderItemData("test-1", "Title", 123.5f, 2)),
                                 new OrderPlaced.CustomerData("test name", "test address"))));
 
-        verify(fetchGoods).fromOrder(new OrderId(123L), List.of(new ToFetch(new ProductCode("test-1"), new Amount(2))));
+        verify(fetchGoods).fromOrder(new OrderId("TEST123"), List.of(new ToFetch(new ProductCode("test-1"), new Amount(2))));
     }
 
     @Test
     void on_delivery_dispatched_removes_fetched_goods() {
-        runTx(() -> eventPublisher.raise(new DeliveryDispatched(Instant.now(), 123L)));
+        runTx(() -> eventPublisher.raise(new DeliveryDispatched(Instant.now(), "TEST123")));
 
-        verify(removeFetchedGoods).forOrder(new OrderId(123L));
+        verify(removeFetchedGoods).forOrder(new OrderId("TEST123"));
     }
 
     private void runTx(Runnable runnable) {

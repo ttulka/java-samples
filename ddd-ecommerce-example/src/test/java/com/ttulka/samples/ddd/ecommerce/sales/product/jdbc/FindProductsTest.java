@@ -36,7 +36,7 @@ class FindProductsTest {
                 .collect(Collectors.toList());
 
         assertThat(productIds).containsExactlyInAnyOrder(
-                new ProductId(1L), new ProductId(2L), new ProductId(3L));
+                new ProductId(1), new ProductId(2), new ProductId(3));
     }
 
     @Test
@@ -46,14 +46,14 @@ class FindProductsTest {
                 .collect(Collectors.toList());
 
         assertThat(productIds).containsExactlyInAnyOrder(
-                new ProductId(1L), new ProductId(2L));
+                new ProductId(1), new ProductId(2));
     }
 
     @Test
     void product_by_code_is_found() {
         Product product = findProducts.byCode(new Code("001"));
         assertAll(
-                () -> assertThat(product.id()).isEqualTo(new ProductId(1L)),
+                () -> assertThat(product.id()).isEqualTo(new ProductId(1)),
                 () -> assertThat(product.code()).isEqualTo(new Code("001")),
                 () -> assertThat(product.title()).isEqualTo(new Title("Prod 1")),
                 () -> assertThat(product.description()).isEqualTo(new Description("Prod 1 Desc")),

@@ -1,7 +1,7 @@
 package com.ttulka.samples.ddd.ecommerce.billing.payment.jdbc;
 
 import java.time.Instant;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.UUID;
 
 import com.ttulka.samples.ddd.ecommerce.billing.PaymentCollected;
 import com.ttulka.samples.ddd.ecommerce.billing.payment.Money;
@@ -21,8 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(of = {"referenceId", "total"})
 @Slf4j
 final class PaymentJdbc implements Payment {
-
-    private static final AtomicLong idSequence = new AtomicLong(); // TODO
 
     private final @NonNull PaymentId id;
     private final @NonNull ReferenceId referenceId;
@@ -44,7 +42,7 @@ final class PaymentJdbc implements Payment {
     }
 
     public PaymentJdbc(@NonNull ReferenceId referenceId, @NonNull Money total, @NonNull JdbcTemplate jdbcTemplate, @NonNull EventPublisher eventPublisher) {
-        this(new PaymentId(idSequence.incrementAndGet()), referenceId, total, Status.NEW, jdbcTemplate, eventPublisher);
+        this(new PaymentId(UUID.randomUUID()), referenceId, total, Status.NEW, jdbcTemplate, eventPublisher);
     }
 
     @Override

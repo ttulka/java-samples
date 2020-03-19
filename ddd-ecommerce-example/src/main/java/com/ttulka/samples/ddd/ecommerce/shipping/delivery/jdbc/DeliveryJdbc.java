@@ -2,7 +2,7 @@ package com.ttulka.samples.ddd.ecommerce.shipping.delivery.jdbc;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.UUID;
 
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
 import com.ttulka.samples.ddd.ecommerce.shipping.DeliveryDispatched;
@@ -27,8 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 final class DeliveryJdbc implements Delivery {
 
-    private static final AtomicLong idSequence = new AtomicLong(); // TODO
-
     private final @NonNull DeliveryId id;
     private final @NonNull OrderId orderId;
     private final @NonNull List<DeliveryItem> items;
@@ -41,7 +39,7 @@ final class DeliveryJdbc implements Delivery {
 
     public DeliveryJdbc(@NonNull OrderId orderId, @NonNull List<DeliveryItem> items, @NonNull Address address,
                         @NonNull JdbcTemplate jdbcTemplate, @NonNull EventPublisher eventPublisher) {
-        this.id = new DeliveryId(idSequence.incrementAndGet());
+        this.id = new DeliveryId(UUID.randomUUID());
         this.orderId = orderId;
         this.items = items;
         this.address = address;

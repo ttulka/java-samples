@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @JdbcTest
 @ContextConfiguration(classes = CategoriesJdbcConfig.class)
-@Sql(statements = "INSERT INTO categories VALUES (1, 'test', 'Test');")
+@Sql(statements = "INSERT INTO categories VALUES ('1', 'test', 'Test');")
 class ChangeCategoryTest {
 
     @Autowired
@@ -23,10 +23,10 @@ class ChangeCategoryTest {
 
     @Test
     void product_title_is_changed() {
-        Category category = findCategories.byId(new CategoryId(1L));
+        Category category = findCategories.byId(new CategoryId(1));
         category.changeTitle(new Title("Updated title"));
 
-        Category productUpdated = findCategories.byId(new CategoryId(1L));
+        Category productUpdated = findCategories.byId(new CategoryId(1));
 
         assertThat(productUpdated.title()).isEqualTo(new Title("Updated title"));
     }

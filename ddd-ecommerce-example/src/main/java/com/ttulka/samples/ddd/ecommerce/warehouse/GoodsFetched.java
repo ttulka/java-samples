@@ -13,5 +13,5 @@ import lombok.ToString;
 public final class GoodsFetched {
 
     public final @NonNull Instant when;
-    public final @NonNull Object orderId;
+    public final @NonNull String orderId;
 }

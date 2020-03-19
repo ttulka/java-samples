@@ -36,13 +36,13 @@ class PaymentControllerTest {
     @Test
     void all_payments() throws Exception {
         when(findPayments.all()).thenReturn(List.of(
-                testPayment(new PaymentId(123L), new ReferenceId("TEST-1"), new Money(456.5))));
+                testPayment(new PaymentId("TEST123"), new ReferenceId("TEST-REF1"), new Money(456.5))));
 
         mockMvc.perform(get("/payment"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].id", is(123)))
-                .andExpect(jsonPath("$[0].referenceId", is("TEST-1")))
+                .andExpect(jsonPath("$[0].id", is("TEST123")))
+                .andExpect(jsonPath("$[0].referenceId", is("TEST-REF1")))
                 .andExpect(jsonPath("$[0].total", is(456.5)));
     }
 

@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @JdbcTest
 @ContextConfiguration(classes = ProductsJdbcConfig.class)
-@Sql(statements = "INSERT INTO products VALUES (1, 'test-1', 'Test', 'Test', 1.00);")
+@Sql(statements = "INSERT INTO products VALUES ('1', 'test-1', 'Test', 'Test', 1.00);")
 class ChangeProductTest {
 
     @Autowired

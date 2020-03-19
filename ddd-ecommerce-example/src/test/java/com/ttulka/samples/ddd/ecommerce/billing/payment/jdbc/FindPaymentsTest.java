@@ -35,13 +35,13 @@ class FindPaymentsTest {
         List<Payment> payments = findPayments.all();
         assertAll(
                 () -> assertThat(payments).hasSize(2),
-                () -> assertThat(payments.get(0).id()).isEqualTo(new PaymentId(101L)),
-                () -> assertThat(payments.get(0).referenceId()).isEqualTo(new ReferenceId(1001L)),
+                () -> assertThat(payments.get(0).id()).isEqualTo(new PaymentId(101)),
+                () -> assertThat(payments.get(0).referenceId()).isEqualTo(new ReferenceId(1001)),
                 () -> assertThat(payments.get(0).total()).isEqualTo(new Money(100.5)),
                 () -> assertThat(payments.get(0).isRequested()).isTrue(),
                 () -> assertThat(payments.get(0).isCollected()).isFalse(),
-                () -> assertThat(payments.get(1).id()).isEqualTo(new PaymentId(102L)),
-                () -> assertThat(payments.get(1).referenceId()).isEqualTo(new ReferenceId(1002L)),
+                () -> assertThat(payments.get(1).id()).isEqualTo(new PaymentId(102)),
+                () -> assertThat(payments.get(1).referenceId()).isEqualTo(new ReferenceId(1002)),
                 () -> assertThat(payments.get(1).total()).isEqualTo(new Money(200.5)),
                 () -> assertThat(payments.get(1).isRequested()).isTrue(),
                 () -> assertThat(payments.get(1).isCollected()).isTrue()

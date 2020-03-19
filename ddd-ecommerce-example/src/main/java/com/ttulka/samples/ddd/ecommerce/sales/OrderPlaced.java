@@ -15,7 +15,7 @@ import lombok.Value;
 public final class OrderPlaced {
 
     public final @NonNull Instant when;
-    public final @NonNull Object orderId;
+    public final @NonNull String orderId;
     public final @NonNull List<OrderItemData> orderItems;
     public final @NonNull CustomerData customer;
 

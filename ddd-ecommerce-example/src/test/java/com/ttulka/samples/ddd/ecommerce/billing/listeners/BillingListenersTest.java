@@ -36,11 +36,11 @@ class BillingListenersTest {
     @Test
     void on_order_placed_collects_a_payment() {
         runTx(() -> eventPublisher.raise(
-                new OrderPlaced(Instant.now(), 123L,
+                new OrderPlaced(Instant.now(), "TEST123",
                                 List.of(new OrderPlaced.OrderItemData("test", "Title", 123.5f, 2)),
                                 new OrderPlaced.CustomerData("test name", "test address"))));
 
-        verify(collectPayment).collect(new ReferenceId(123L), new Money(247.));
+        verify(collectPayment).collect(new ReferenceId("TEST123"), new Money(247.));
     }
 
     private void runTx(Runnable runnable) {

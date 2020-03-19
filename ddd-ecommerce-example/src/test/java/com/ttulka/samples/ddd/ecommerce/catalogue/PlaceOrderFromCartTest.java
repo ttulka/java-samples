@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @JdbcTest
 @ContextConfiguration(classes = {CatalogueConfig.class, PlaceOrderFromCartTest.ServicesTestConfig.class})
-@Sql(statements = "INSERT INTO products VALUES (1, 'test-1', 'Test 1', 'Test', 1.00), (2, 'test-2', 'Test 2', 'Test', 2.00);")
+@Sql(statements = "INSERT INTO products VALUES ('1', 'test-1', 'Test 1', 'Test', 1.00), (2, 'test-2', 'Test 2', 'Test', 2.00);")
 class PlaceOrderFromCartTest {
 
     @Autowired

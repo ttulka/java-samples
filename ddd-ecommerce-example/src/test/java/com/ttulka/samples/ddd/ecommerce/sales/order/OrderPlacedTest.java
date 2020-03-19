@@ -23,7 +23,7 @@ class OrderPlacedTest {
     void order_id_is_set() {
         OrderPlaced orderPlaced = fakeOrderPlaced();
 
-        assertThat(orderPlaced.orderId).isEqualTo(123L);
+        assertThat(orderPlaced.orderId).isEqualTo("TEST123");
     }
 
     @Test
@@ -52,7 +52,7 @@ class OrderPlacedTest {
     }
 
     private OrderPlaced fakeOrderPlaced() {
-        return new OrderPlaced(Instant.now(), 123L,
+        return new OrderPlaced(Instant.now(), "TEST123",
                                List.of(
                                        new OrderPlaced.OrderItemData("test-1", "Test 1", 1.f, 1),
                                        new OrderPlaced.OrderItemData("test-2", "Test 2", 2.f, 2)),

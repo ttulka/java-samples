@@ -38,14 +38,14 @@ class PrepareDeliveryTest {
     @Test
     void delivery_for_order_is_prepared() {
         prepareDelivery.prepare(
-                new OrderId(123L),
+                new OrderId(123),
                 List.of(new DeliveryItem(new ProductCode("test"), new Quantity(1))),
                 new Address(new Person("test"), new Place("test")));
 
-        Delivery delivery = findDeliveries.byOrderId(new OrderId(123L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(123));
 
         assertAll(
-                () -> assertThat(delivery.orderId()).isEqualTo(new OrderId(123L)),
+                () -> assertThat(delivery.orderId()).isEqualTo(new OrderId(123)),
                 () -> assertThat(delivery.items()).containsExactly(new DeliveryItem(new ProductCode("test"), new Quantity(1))),
                 () -> assertThat(delivery.address()).isEqualTo(new Address(new Person("test"), new Place("test")))
         );

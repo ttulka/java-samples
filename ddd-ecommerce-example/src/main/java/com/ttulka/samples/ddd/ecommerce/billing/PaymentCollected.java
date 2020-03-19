@@ -13,5 +13,5 @@ import lombok.ToString;
 public final class PaymentCollected {
 
     public final @NonNull Instant when;
-    public final @NonNull Object referenceId;
+    public final @NonNull String referenceId;
 }

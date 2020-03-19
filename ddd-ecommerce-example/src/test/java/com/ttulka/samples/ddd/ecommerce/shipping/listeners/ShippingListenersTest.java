@@ -49,27 +49,27 @@ class ShippingListenersTest {
     @Test
     void on_order_placed_a_delivery_is_prepared() {
         runTx(() -> eventPublisher.raise(
-                new OrderPlaced(Instant.now(), 123L,
+                new OrderPlaced(Instant.now(), "TEST123",
                                 List.of(new OrderPlaced.OrderItemData("test-code", "Title", 123.5f, 2)),
                                 new OrderPlaced.CustomerData("test name", "test address"))));
 
-        verify(prepareDelivery).prepare(new OrderId(123L),
+        verify(prepareDelivery).prepare(new OrderId("TEST123"),
                                         List.of(new DeliveryItem(new ProductCode("test-code"), new Quantity(2))),
                                         new Address(new Person("test name"), new Place("test address")));
     }
 
     @Test
     void on_goods_fetched_a_delivery_is_updated() {
-        runTx(() -> eventPublisher.raise(new GoodsFetched(Instant.now(), 123L)));
+        runTx(() -> eventPublisher.raise(new GoodsFetched(Instant.now(), "TEST123")));
 
-        verify(updateDelivery).asFetched(new OrderId(123L));
+        verify(updateDelivery).asFetched(new OrderId("TEST123"));
     }
 
     @Test
     void on_payment_received_a_delivery_is_updated() {
-        runTx(() -> eventPublisher.raise(new PaymentCollected(Instant.now(), 123L)));
+        runTx(() -> eventPublisher.raise(new PaymentCollected(Instant.now(), "TEST123")));
 
-        verify(updateDelivery).asPaid(new OrderId(123L));
+        verify(updateDelivery).asPaid(new OrderId("TEST123"));
     }
 
     private void runTx(Runnable runnable) {

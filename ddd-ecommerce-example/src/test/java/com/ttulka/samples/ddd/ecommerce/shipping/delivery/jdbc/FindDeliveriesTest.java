@@ -41,19 +41,19 @@ class FindDeliveriesTest {
         List<DeliveryInfo> deliveries = findDeliveries.all();
         assertAll(
                 () -> assertThat(deliveries).hasSize(2),
-                () -> assertThat(deliveries.get(0).id()).isEqualTo(new DeliveryId(301L)),
-                () -> assertThat(deliveries.get(0).orderId()).isEqualTo(new OrderId(3001L)),
-                () -> assertThat(deliveries.get(1).id()).isEqualTo(new DeliveryId(302L)),
-                () -> assertThat(deliveries.get(1).orderId()).isEqualTo(new OrderId(3002L))
+                () -> assertThat(deliveries.get(0).id()).isEqualTo(new DeliveryId(301)),
+                () -> assertThat(deliveries.get(0).orderId()).isEqualTo(new OrderId(3001)),
+                () -> assertThat(deliveries.get(1).id()).isEqualTo(new DeliveryId(302)),
+                () -> assertThat(deliveries.get(1).orderId()).isEqualTo(new OrderId(3002))
         );
     }
 
     @Test
     void delivery_is_found_by_order_id() {
-        Delivery delivery = findDeliveries.byOrderId(new OrderId(3001L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(3001));
         assertAll(
-                () -> assertThat(delivery.id()).isEqualTo(new DeliveryId(301L)),
-                () -> assertThat(delivery.orderId()).isEqualTo(new OrderId(3001L)),
+                () -> assertThat(delivery.id()).isEqualTo(new DeliveryId(301)),
+                () -> assertThat(delivery.orderId()).isEqualTo(new OrderId(3001)),
                 () -> assertThat(delivery.address()).isEqualTo(new Address(new Person("Person 1"), new Place("Place 1"))),
                 () -> assertThat(delivery.items()).containsExactly(new DeliveryItem(new ProductCode("test-1"), new Quantity(111))),
                 () -> assertThat(delivery.isReadyToDispatch()).isTrue(),
@@ -63,14 +63,14 @@ class FindDeliveriesTest {
 
     @Test
     void delivery_is_not_found_by_order_id() {
-        Delivery delivery = findDeliveries.byOrderId(new OrderId(888L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId("does not exist"));
 
         assertThat(delivery.id()).isEqualTo(new DeliveryId(0));
     }
 
     @Test
     void status_is_merged_with_events_ledger() {
-        Delivery delivery = findDeliveries.byOrderId(new OrderId(3002L));
+        Delivery delivery = findDeliveries.byOrderId(new OrderId(3002));
 
         assertThat(delivery.isDispatched()).isTrue();
     }

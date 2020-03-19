@@ -63,6 +63,6 @@ class UnknownProductTest {
     @Test
     void categorize_noop() {
         Product unknownProduct = new UnknownProduct();
-        unknownProduct.categorize(new CategoryId(123L));
+        unknownProduct.categorize(new CategoryId(123));
     }
 }

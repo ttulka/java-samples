@@ -46,12 +46,6 @@ Later, we can think about more supporting domains (not implemented in this proje
   
 The e-commerce system is a web application using a **Catalogue** service implementing the [Backends For Frontends (BFF)][2] pattern.
 
-### Services Dependencies
-
-Services cooperate together to work out the business capabilities: products sale and delivery.
-
-![Service Dependencies](services-dependencies.png)
-
 ### Services Event Workflow
 
 The communication among services is implemented via events:
@@ -69,3 +63,10 @@ When the customer places an order the following process starts up (the happy pat
 
 [1]: http://bill-poole.blogspot.com/2008/07/value-chain-analysis.html
 [2]: https://samnewman.io/patterns/architectural/bff/
+
+### Services Dependencies
+
+Services cooperate together to work out the business capabilities: products sale and delivery.
+
+![Service Dependencies](services-dependencies.png)
+

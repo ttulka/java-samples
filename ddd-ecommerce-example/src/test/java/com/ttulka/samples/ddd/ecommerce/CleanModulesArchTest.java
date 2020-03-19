@@ -70,6 +70,17 @@ class CleanModulesArchTest {
     }
 
     @Test
+    void warehouse_only_listeners_have_dependencies_on_other_services_events() {
+        JavaClasses importedClasses = new ClassFileImporter().importPackages("com.ttulka.samples.ddd.ecommerce.warehouse");
+        ArchRule rule = classes().that().resideOutsideOfPackage("com.ttulka.samples.ddd.ecommerce.warehouse.listeners..")
+                .should().onlyDependOnClassesThat().resideOutsideOfPackages(
+                        "com.ttulka.samples.ddd.ecommerce.sales..",
+                        "com.ttulka.samples.ddd.ecommerce.shipping..",
+                        "com.ttulka.samples.ddd.ecommerce.billing..");
+        rule.check(importedClasses);
+    }
+
+    @Test
     void warehouse_domain_has_no_dependency_to_its_implementation() {
         JavaClasses importedClasses = new ClassFileImporter().importPackages("com.ttulka.samples.ddd.ecommerce.warehouse");
         ArchRule rule = classes()
@@ -96,6 +107,17 @@ class CleanModulesArchTest {
     }
 
     @Test
+    void shipping_only_listeners_have_dependencies_on_other_services_events() {
+        JavaClasses importedClasses = new ClassFileImporter().importPackages("com.ttulka.samples.ddd.ecommerce.shipping");
+        ArchRule rule = classes().that().resideOutsideOfPackage("com.ttulka.samples.ddd.ecommerce.shipping.listeners..")
+                .should().onlyDependOnClassesThat().resideOutsideOfPackages(
+                        "com.ttulka.samples.ddd.ecommerce.sales..",
+                        "com.ttulka.samples.ddd.ecommerce.warehouse..",
+                        "com.ttulka.samples.ddd.ecommerce.billing..");
+        rule.check(importedClasses);
+    }
+
+    @Test
     void shipping_domain_has_no_dependency_to_its_implementation() {
         JavaClasses importedClasses = new ClassFileImporter().importPackages("com.ttulka.samples.ddd.ecommerce.shipping");
         ArchRule rule = classes()
@@ -116,6 +138,17 @@ class CleanModulesArchTest {
                                 "com.ttulka.samples.ddd.ecommerce.warehouse..",
                                 "com.ttulka.samples.ddd.ecommerce.shipping.."
                         ).or(type(OrderPlaced.class).or(NESTED_CLASSES)));
+        rule.check(importedClasses);
+    }
+
+    @Test
+    void billing_only_listeners_have_dependencies_on_other_services_events() {
+        JavaClasses importedClasses = new ClassFileImporter().importPackages("com.ttulka.samples.ddd.ecommerce.billing");
+        ArchRule rule = classes().that().resideOutsideOfPackage("com.ttulka.samples.ddd.ecommerce.billing.listeners..")
+                .should().onlyDependOnClassesThat().resideOutsideOfPackages(
+                        "com.ttulka.samples.ddd.ecommerce.sales..",
+                        "com.ttulka.samples.ddd.ecommerce.warehouse..",
+                        "com.ttulka.samples.ddd.ecommerce.shipping..");
         rule.check(importedClasses);
     }
 

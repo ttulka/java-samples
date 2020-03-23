@@ -69,4 +69,3 @@ When the customer places an order the following process starts up (the happy pat
 Services cooperate together to work out the business capabilities: products sale and delivery.
 
 ![Service Dependencies](services-dependencies.png)
-

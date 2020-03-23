@@ -21,13 +21,19 @@ public class PlaceOrderFromCart {
     private final @NonNull PlaceOrder placeOrder;
     private final @NonNull FindProducts findProducts;
 
+    /**
+     * Places a new order created from the cart.
+     *
+     * @param cart     the cart
+     * @param customer the customer
+     */
     public void placeOrder(@NonNull Cart cart, @NonNull Customer customer) {
         if (!cart.hasItems()) {
             throw new PlaceOrderFromCart.NoItemsToOrderException();
         }
         placeOrder.place(cart.items().stream()
-                                    .map(this::toOrderItem)
-                                    .collect(Collectors.toList()),
+                                 .map(this::toOrderItem)
+                                 .collect(Collectors.toList()),
                          customer);
     }
 

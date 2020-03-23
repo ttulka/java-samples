@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
+/**
+ * Some sample data to be filled into the database.
+ */
 @Configuration
 @ConditionalOnClass(name = "org.h2.Driver")
 @Profile("!test")

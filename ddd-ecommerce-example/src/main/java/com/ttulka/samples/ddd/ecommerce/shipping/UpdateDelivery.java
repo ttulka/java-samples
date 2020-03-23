@@ -14,6 +14,11 @@ public class UpdateDelivery {
 
     private final @NonNull FindDeliveries findDeliveries;
 
+    /**
+     * Updates a delivery by the order ID as fetched.
+     *
+     * @param orderId the order ID
+     */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void asFetched(OrderId orderId) {
         Delivery delivery = findDeliveries.byOrderId(orderId);
@@ -24,6 +29,11 @@ public class UpdateDelivery {
         }
     }
 
+    /**
+     * Updates a delivery by the order ID as paid.
+     *
+     * @param orderId the order ID
+     */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void asPaid(OrderId orderId) {
         Delivery delivery = findDeliveries.byOrderId(orderId);

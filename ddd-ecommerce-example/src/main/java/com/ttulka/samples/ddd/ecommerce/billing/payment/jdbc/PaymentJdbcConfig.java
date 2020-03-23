@@ -1,6 +1,5 @@
 package com.ttulka.samples.ddd.ecommerce.billing.payment.jdbc;
 
-import com.ttulka.samples.ddd.ecommerce.billing.CollectPayment;
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
 
 import org.springframework.context.annotation.Bean;
@@ -16,7 +15,7 @@ class PaymentJdbcConfig {
     }
 
     @Bean
-    CollectPayment collectPayment(JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {
+    CollectPaymentJdbc collectPayment(JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {
         return new CollectPaymentJdbc(jdbcTemplate, eventPublisher);
     }
 }

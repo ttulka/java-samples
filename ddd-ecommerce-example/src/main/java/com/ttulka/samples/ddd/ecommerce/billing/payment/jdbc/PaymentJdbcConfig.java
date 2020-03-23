@@ -13,9 +13,4 @@ class PaymentJdbcConfig {
     PaymentsJdbc payments(JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {
         return new PaymentsJdbc(jdbcTemplate, eventPublisher);
     }
-
-    @Bean
-    CollectPaymentJdbc collectPayment(JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {
-        return new CollectPaymentJdbc(jdbcTemplate, eventPublisher);
-    }
 }

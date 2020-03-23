@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.List;
 
 import com.ttulka.samples.ddd.ecommerce.billing.CollectPayment;
+import com.ttulka.samples.ddd.ecommerce.billing.FindPayments;
 import com.ttulka.samples.ddd.ecommerce.billing.payment.Money;
 import com.ttulka.samples.ddd.ecommerce.billing.payment.ReferenceId;
 import com.ttulka.samples.ddd.ecommerce.common.EventPublisher;
@@ -32,6 +33,8 @@ class BillingListenersTest {
 
     @MockBean
     private CollectPayment collectPayment;
+    @MockBean
+    private FindPayments findPayments;
 
     @Test
     void on_order_placed_collects_a_payment() {

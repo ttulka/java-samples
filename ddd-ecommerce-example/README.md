@@ -50,7 +50,7 @@ The e-commerce system is a web application using a **Catalogue** service impleme
 
 The communication among services is implemented via events:
 
-![Service Event Workflow](services-event-workflow.png)
+![Service Event Workflow](doc/services-event-workflow.png)
 
 When the customer places an order the following process starts up (the happy path):
 
@@ -68,4 +68,157 @@ When the customer places an order the following process starts up (the happy pat
 
 Services cooperate together to work out the business capabilities: products sale and delivery.
 
-![Service Dependencies](services-dependencies.png)
+![Service Dependencies](doc/services-dependencies.png)
+
+The actual dependencies come only from Listeners which fulfill the role of the Anti-corruption layer and depend only on Domain Events.
+
+![Event and Listener](doc/event-listener.png)
+
+## Architectural Overview
+
+While no popular architecture ([Onion](http://jeffreypalermo.com/blog/the-onion-architecture-part-1), [Clean](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html), [Hexagonal](https://alistair.cockburn.us/hexagonal-architecture/), [Trinity](https://github.com/oregor-projects/trinity-demo-java) was strictly implemented, the used architectural style allows principles and good practices found over all of them.
+- Separation of concerns
+- The Dependency Rule
+
+The below proposed architecture tries to solve one problem often common for these architectural styles: [exposing internals of objects](https://blog.ttulka.com/object-oriented-design-vs-persistence) and breaking their encapsulation. The proposed architecture employs full object encapsulation and rejects anti-patterns Anemic domain model and JavaBean. An Object is a solid unit of behavior. A Service is an Object on higher level of architectural abstraction. 
+
+### Screaming Architecture
+
+The architecture "screams" its intentions just by looking at the code structure:
+```
+ecommerce
+    billing
+        payment
+    sales
+        category
+        order
+            customer
+        product
+    shipping
+        delivery
+    warehouse
+```
+
+Going deeper the technical concepts are visible too:
+```
+ecommerce
+    billing
+        payment
+            jdbc
+        listeners
+        rest
+```
+
+### Packaging
+
+As shown in the previous section, the code is structured by the domain together with packages for technical concerns (`jdbc`, `rest`, `web`, etc.).
+
+Such a packaging is the first step for a further modularization. 
+
+The semantic of a package is following: `company.product.domain.aggregate.impl`, where `aggregate` and `impl` are optional. Full example: `com.ttulka.ecommerce.billing.payment.jdbc`. 
+
+#### Assembling
+
+To show that the Monolith architectural pattern is not equal to the Big ball of mud, a modular monolithic architecture was chosen as the start point.
+
+The services can be further cut into separate modules (eg. Maven artifacts) by features:
+```
+com.ttulka.samples.ecommerce:ecommerce-application
+com.ttulka.samples.ecommerce:billing-service
+com.ttulka.samples.ecommerce:sales-service
+com.ttulka.samples.ecommerce:shipping-service
+com.ttulka.samples.ecommerce:warehouse-service
+```
+
+Or by [component](https://blog.ttulka.com/package-by-component-with-clean-modules-in-java):
+```
+com.ttulka.samples.ecommerce:billing-domain
+com.ttulka.samples.ecommerce:billing-jdbc
+com.ttulka.samples.ecommerce:billing-rest
+com.ttulka.samples.ecommerce:billing-events
+com.ttulka.samples.ecommerce:billing-listeners
+```
+
+In detail:
+```
+com.ttulka.samples.ecommerce:billing-domain
+    ecommerce.billing
+        payment
+            Payment
+            PaymentId
+            ReferenceId
+            Money
+        CollectPayment
+        FindPayments
+com.ttulka.samples.ecommerce:billing-jdbc
+    ecommerce.billing.payment.jdbc
+        PaymentJdbc
+        PaymentsJdbc        
+com.ttulka.samples.ecommerce:billing-rest
+    ecommerce.billing.rest
+        PaymentController
+com.ttulka.samples.ecommerce:billing-events
+    ecommerce.billing
+        PaymentCollected
+com.ttulka.samples.ecommerce:billing-listeners
+    ecommerce.billing.listeners
+        OrderPlacedListener        
+```
+
+Which can be brought together with a Spring Boot Starter, containing only Configuration classes and dependencies on other modules:
+```
+com.ttulka.samples.ecommerce:billing-spring-boot-starter
+    ecommerce.billing
+        payment.jdbc
+            PaymentJdbcConfig
+        listeners
+            BillingListenersConfig
+    META-INF
+        spring.factories
+```
+
+Note: Events are actually part of the domain, that's why they are in the package `ecommerce.billing` and not `ecommerce.billing.events`. They are in a separate module to break the build cyclic dependencies: a dependent module (Listener) needs only Events and not the entire Domain. 
+
+### Anatomy of a Service 
+
+**Application** is a deployment unit. A monolithic Application can have more Services.
+- Bootstrap (application container etc.). 
+- Cross-cutting concerns (security, transactions, messaging, logging, etc.).
+
+![Application and Services](doc/application-services.png)
+
+**Configuration** assemblies the Service as a single component.
+- Has dependencies to all inner layers.
+- Can be implemented by Spring's context `@Configuration` or simply object composition.
+- Implements the Dependency inversion principle.  
+
+**Gateways** create the published API of the service.
+ - Driving Adapters in the Hexagonal architecture.
+ - REST, SOAP, or web Controllers,
+ - Event Listeners,
+ - CLI.
+ 
+**Use-Cases** are entry points to the service capabilities and together with **Entities** form the _Domain API_.
+- Ports in the Hexagonal architecture.
+ 
+_Domain Implementation_ fulfills the business capabilities with particular technologies.
+- Driven Adapters in the Hexagonal architecture.
+- Tools and libraries,
+- persistence,
+- external interfaces access.
+
+Source code dependencies point always inwards and, except Configuration, are strict: allows coupling only to the one layer below it (for example, Gateways mustn't call Entities directly, etc.).
+ 
+![Service Anatomy](doc/service-anatomy.png)
+
+As a concrete example consider the business capability to find payments in Billing service:
+
+- Application is implemented via Spring Boot Application.
+- `PaymentJdbcConfig` configures the JDBC implementations for Use-cases and Domain. 
+- Gateway is implemented as a REST Controller.
+- Use-case interface  `FindPayments` is implemented with `PaymentsJdbc` in Implementation.  
+- Domain interface `Payment` is implemented with `PaymentJdbc` in Implementation.
+
+![Service Anatomy](doc/service-anatomy-example.png)
+
+There is no array from Configuration to Gateways because `PaymentController` is annotated with Spring's `@Component` which makes it available for component scanning the application is based on. This is only one possible approach. Another option would be to put the Controller as a Bean into the Configuration.  

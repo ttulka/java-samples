@@ -4,9 +4,23 @@ The purpose of this project is to provide a sample implementation of an e-commer
 
 Programming language is Java 11 with heavy use of Spring framework.
 
+## Table of Contents
+
+- [Domain Services](#domain-services)
+  + [Core Domain](#core-domain)
+  + [Supporting Subdomains](#supporting-subdomains)
+  + [Services Event Workflow](#services-event-workflow)
+  + [Services Dependencies](#services-dependencies)
+- [Architectural Overview](#architectural-overview)
+  + [Screaming Architecture](#screaming-architecture)
+  + [Packaging](#packaging)
+  + [Anatomy of a Service](#anatomy-of-a-service)
+
 ## Domain Services
 
-Several [business capabilities][1] have been identified:
+Several [business capabilities][vcha] have been identified:
+
+[vcha]: http://bill-poole.blogspot.com/2008/07/value-chain-analysis.html
 
 ### Core Domain
 
@@ -44,7 +58,9 @@ Later, we can think about more supporting domains (not implemented in this proje
   - answer a question
   - provide help
   
-The e-commerce system is a web application using a **Catalogue** service implementing the [Backends For Frontends (BFF)][2] pattern.
+The e-commerce system is a web application using a **Catalogue** service implementing the [Backends For Frontends (BFF)][bff] pattern.
+
+[bff]: https://samnewman.io/patterns/architectural/bff/
 
 ### Services Event Workflow
 
@@ -61,9 +77,6 @@ When the customer places an order the following process starts up (the happy pat
 3. Shipping service dispatches the delivery and publishes the DeliveryDispatched event.
 4. Warehouse service updates the stock.
 
-[1]: http://bill-poole.blogspot.com/2008/07/value-chain-analysis.html
-[2]: https://samnewman.io/patterns/architectural/bff/
-
 ### Services Dependencies
 
 Services cooperate together to work out the business capabilities: products sale and delivery.
@@ -76,11 +89,16 @@ The actual dependencies come only from Listeners which fulfill the role of the A
 
 ## Architectural Overview
 
-While no popular architecture ([Onion](http://jeffreypalermo.com/blog/the-onion-architecture-part-1), [Clean](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html), [Hexagonal](https://alistair.cockburn.us/hexagonal-architecture/), [Trinity](https://github.com/oregor-projects/trinity-demo-java) was strictly implemented, the used architectural style allows principles and good practices found over all of them.
+While no popular architecture ([Onion][onion], [Clean][clean], [Hexagonal][hexagonal], [Trinity][trinity] was strictly implemented, the used architectural style allows principles and good practices found over all of them.
 - Separation of concerns
 - The Dependency Rule
 
 The below proposed architecture tries to solve one problem often common for these architectural styles: [exposing internals of objects](https://blog.ttulka.com/object-oriented-design-vs-persistence) and breaking their encapsulation. The proposed architecture employs full object encapsulation and rejects anti-patterns Anemic domain model and JavaBean. An Object is a solid unit of behavior. A Service is an Object on higher level of architectural abstraction. 
+
+[onion]: http://jeffreypalermo.com/blog/the-onion-architecture-part-1
+[clean]: https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+[hexagonal]: https://alistair.cockburn.us/hexagonal-architecture/
+[trinity]: https://github.com/oregor-projects/trinity-demo-java
 
 ### Screaming Architecture
 
@@ -189,7 +207,7 @@ Note: Events are actually part of the domain, that's why they are in the package
 
 **Configuration** assemblies the Service as a single component.
 - Has dependencies to all inner layers.
-- Can be implemented by Spring's context `@Configuration` or simply object composition.
+- Can be implemented by Spring's context `@Configuration` or simply by object composition.
 - Implements the Dependency inversion principle.  
 
 **Gateways** create the published API of the service.
@@ -210,6 +228,8 @@ _Domain Implementation_ fulfills the business capabilities with particular techn
 Source code dependencies point always inwards and, except Configuration, are strict: allows coupling only to the one layer below it (for example, Gateways mustn't call Entities directly, etc.).
  
 ![Service Anatomy](doc/service-anatomy.png)
+
+#### Example of a Service Anatomy 
 
 As a concrete example consider the business capability to find payments in Billing service:
 

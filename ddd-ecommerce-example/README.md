@@ -14,6 +14,7 @@ Programming language is Java 11 with heavy use of Spring framework.
 - [Architectural Overview](#architectural-overview)
   + [Screaming Architecture](#screaming-architecture)
   + [Packaging](#packaging)
+  + [Assembling](#assembling)
   + [Anatomy of a Service](#anatomy-of-a-service)
 
 ## Domain Services
@@ -131,35 +132,35 @@ ecommerce
 
 As shown in the previous section, the code is structured by the domain together with packages for technical concerns (`jdbc`, `rest`, `web`, etc.).
 
-Such a packaging is the first step for a further modularization. 
+Such a packaging style is the first step for a further modularization. 
 
 The semantic of a package is following: `company.product.domain.aggregate.impl`, where `aggregate` and `impl` are optional. Full example: `com.ttulka.ecommerce.billing.payment.jdbc`. 
 
-#### Assembling
+### Assembling
 
-To show that the Monolith architectural pattern is not equal to the Big ball of mud, a modular monolithic architecture was chosen as the start point.
+To show that the Monolith architectural pattern is not equal to the Big Ball Of Mud, a modular monolithic architecture was chosen as the start point.
 
-The services can be further cut into separate modules (eg. Maven artifacts) by features:
+The services can be further cut into separate modules (eg. Maven artifacts) by feature:
 ```
-com.ttulka.samples.ecommerce:ecommerce-application
-com.ttulka.samples.ecommerce:billing-service
-com.ttulka.samples.ecommerce:sales-service
-com.ttulka.samples.ecommerce:shipping-service
-com.ttulka.samples.ecommerce:warehouse-service
+com.ttulka.ecommerce:ecommerce-application
+com.ttulka.ecommerce:billing-service
+com.ttulka.ecommerce:sales-service
+com.ttulka.ecommerce:shipping-service
+com.ttulka.ecommerce:warehouse-service
 ```
 
 Or by [component](https://blog.ttulka.com/package-by-component-with-clean-modules-in-java):
 ```
-com.ttulka.samples.ecommerce:billing-domain
-com.ttulka.samples.ecommerce:billing-jdbc
-com.ttulka.samples.ecommerce:billing-rest
-com.ttulka.samples.ecommerce:billing-events
-com.ttulka.samples.ecommerce:billing-listeners
+com.ttulka.ecommerce:billing-domain
+com.ttulka.ecommerce:billing-jdbc
+com.ttulka.ecommerce:billing-rest
+com.ttulka.ecommerce:billing-events
+com.ttulka.ecommerce:billing-listeners
 ```
 
 In detail:
 ```
-com.ttulka.samples.ecommerce:billing-domain
+com.ttulka.ecommerce:billing-domain
     ecommerce.billing
         payment
             Payment
@@ -168,24 +169,24 @@ com.ttulka.samples.ecommerce:billing-domain
             Money
         CollectPayment
         FindPayments
-com.ttulka.samples.ecommerce:billing-jdbc
+com.ttulka.ecommerce:billing-jdbc
     ecommerce.billing.payment.jdbc
         PaymentJdbc
         PaymentsJdbc        
-com.ttulka.samples.ecommerce:billing-rest
+com.ttulka.ecommerce:billing-rest
     ecommerce.billing.rest
         PaymentController
-com.ttulka.samples.ecommerce:billing-events
+com.ttulka.ecommerce:billing-events
     ecommerce.billing
         PaymentCollected
-com.ttulka.samples.ecommerce:billing-listeners
+com.ttulka.ecommerce:billing-listeners
     ecommerce.billing.listeners
         OrderPlacedListener        
 ```
 
 Which can be brought together with a Spring Boot Starter, containing only Configuration classes and dependencies on other modules:
 ```
-com.ttulka.samples.ecommerce:billing-spring-boot-starter
+com.ttulka.ecommerce:billing-spring-boot-starter
     ecommerce.billing
         payment.jdbc
             PaymentJdbcConfig
@@ -208,19 +209,19 @@ Note: Events are actually part of the domain, that's why they are in the package
 **Configuration** assemblies the Service as a single component.
 - Has dependencies to all inner layers.
 - Can be implemented by Spring's context `@Configuration` or simply by object composition.
-- Implements the Dependency inversion principle.  
+- Implements the Dependency Inversion Principle.  
 
 **Gateways** create the published API of the service.
- - Driving Adapters in the Hexagonal architecture.
+ - Driving Adapters in the Hexagonal Architecture.
  - REST, SOAP, or web Controllers,
  - Event Listeners,
  - CLI.
  
 **Use-Cases** are entry points to the service capabilities and together with **Entities** form the _Domain API_.
-- Ports in the Hexagonal architecture.
+- Ports in the Hexagonal Architecture.
  
 _Domain Implementation_ fulfills the business capabilities with particular technologies.
-- Driven Adapters in the Hexagonal architecture.
+- Driven Adapters in the Hexagonal Architecture.
 - Tools and libraries,
 - persistence,
 - external interfaces access.
@@ -234,11 +235,11 @@ Source code dependencies point always inwards and, except Configuration, are str
 As a concrete example consider the business capability to find payments in Billing service:
 
 - Application is implemented via Spring Boot Application.
-- `PaymentJdbcConfig` configures the JDBC implementations for Use-cases and Domain. 
+- `PaymentJdbcConfig` configures the JDBC implementations for the Domain. 
 - Gateway is implemented as a REST Controller.
-- Use-case interface  `FindPayments` is implemented with `PaymentsJdbc` in Implementation.  
-- Domain interface `Payment` is implemented with `PaymentJdbc` in Implementation.
+- Use-Case interface  `FindPayments` is implemented with `PaymentsJdbc` in Use-Cases Implementation.  
+- Entity `Payment` is implemented with `PaymentJdbc` in Entities Implementation.
 
 ![Service Anatomy](doc/service-anatomy-example.png)
 
-There is no array from Configuration to Gateways because `PaymentController` is annotated with Spring's `@Component` which makes it available for component scanning the application is based on. This is only one possible approach. Another option would be to put the Controller as a Bean into the Configuration.  
+There is no arrow from Configuration to Gateways because `PaymentController` is annotated with Spring's `@Component` which makes it available for component scanning the application is based on. This is only one possible approach. Another option would be to put the Controller as a Bean into the Configuration, etc..  

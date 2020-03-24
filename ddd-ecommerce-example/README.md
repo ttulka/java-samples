@@ -78,6 +78,8 @@ When the customer places an order the following process starts up (the happy pat
 3. Shipping service dispatches the delivery and publishes the DeliveryDispatched event.
 4. Warehouse service updates the stock.
 
+There is only the basic "happy path" workflow implemented with a big room for improvement, for example when Shipping doesn't get bot Events within a time period, the delivery process should be cancelled etc.. 
+
 ### Services Dependencies
 
 Services cooperate together to work out the Business Capabilities: products sale and delivery.
@@ -87,6 +89,10 @@ Services cooperate together to work out the Business Capabilities: products sale
 The actual dependencies come only from Listeners which fulfill the role of the Anti-corruption layer and depend only on Domain Events.
 
 ![Event and Listener](doc/event-listener.png)
+
+Events contain no Domain Objects. 
+
+For communication across Services an Event Publisher abstraction is used, located in the package `ecommerce.common`. The interface is an Output Port (in the Hexagonal Architecture) and as a cross-cutting concern is its implementation injected by the Application.  
 
 ## Architectural Overview
 

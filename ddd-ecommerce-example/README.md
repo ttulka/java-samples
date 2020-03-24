@@ -19,7 +19,7 @@ Programming language is Java 11 with heavy use of Spring framework.
 
 ## Domain Services
 
-Several [business capabilities][vcha] have been identified:
+Several [Business Capabilities][vcha] have been identified:
 
 [vcha]: http://bill-poole.blogspot.com/2008/07/value-chain-analysis.html
 
@@ -80,7 +80,7 @@ When the customer places an order the following process starts up (the happy pat
 
 ### Services Dependencies
 
-Services cooperate together to work out the business capabilities: products sale and delivery.
+Services cooperate together to work out the Business Capabilities: products sale and delivery.
 
 ![Service Dependencies](doc/services-dependencies.png)
 
@@ -90,11 +90,11 @@ The actual dependencies come only from Listeners which fulfill the role of the A
 
 ## Architectural Overview
 
-While no popular architecture ([Onion][onion], [Clean][clean], [Hexagonal][hexagonal], [Trinity][trinity] was strictly implemented, the used architectural style allows principles and good practices found over all of them.
+While no popular architecture ([Onion][onion], [Clean][clean], [Hexagonal][hexagonal], [Trinity][trinity]) was strictly implemented, the used architectural style follows principles and good practices found over all of them.
 - Separation of concerns
 - The Dependency Rule
 
-The below proposed architecture tries to solve one problem often common for these architectural styles: [exposing internals of objects](https://blog.ttulka.com/object-oriented-design-vs-persistence) and breaking their encapsulation. The proposed architecture employs full object encapsulation and rejects anti-patterns Anemic domain model and JavaBean. An Object is a solid unit of behavior. A Service is an Object on higher level of architectural abstraction. 
+The below proposed architecture tries to solve one problem often common for these architectural styles: [exposing internals of objects](https://blog.ttulka.com/object-oriented-design-vs-persistence) and breaking their encapsulation. The proposed architecture employs full object encapsulation and rejects anti-patterns like Anemic Domain Model or JavaBean. An Object is a solid unit of behavior. A Service is an Object on higher level of architectural abstraction. 
 
 [onion]: http://jeffreypalermo.com/blog/the-onion-architecture-part-1
 [clean]: https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
@@ -196,7 +196,7 @@ com.ttulka.ecommerce:billing-spring-boot-starter
         spring.factories
 ```
 
-Note: Events are actually part of the domain, that's why they are in the package `ecommerce.billing` and not `ecommerce.billing.events`. They are in a separate module to break the build cyclic dependencies: a dependent module (Listener) needs only Events and not the entire Domain. 
+Note: Events are actually part of the domain, that's why they are in the package `ecommerce.billing` and not in `ecommerce.billing.events`. They are in a separate module to break the build cyclic dependencies: a dependent module (Listener) needs to know only Events and not the entire Domain. 
 
 ### Anatomy of a Service 
 
@@ -208,10 +208,10 @@ Note: Events are actually part of the domain, that's why they are in the package
 
 **Configuration** assemblies the Service as a single component.
 - Has dependencies to all inner layers.
-- Can be implemented by Spring's context `@Configuration` or simply by object composition.
+- Can be implemented by Spring's context `@Configuration` or simply by object composition and Dependency Injection.
 - Implements the Dependency Inversion Principle.  
 
-**Gateways** create the published API of the service.
+**Gateways** create the published API of the Service.
  - Driving Adapters in the Hexagonal Architecture.
  - REST, SOAP, or web Controllers,
  - Event Listeners,
@@ -220,7 +220,7 @@ Note: Events are actually part of the domain, that's why they are in the package
 **Use-Cases** are entry points to the service capabilities and together with **Entities** form the _Domain API_.
 - Ports in the Hexagonal Architecture.
  
-_Domain Implementation_ fulfills the business capabilities with particular technologies.
+_Domain Implementation_ fulfills the Business Capabilities with particular technologies.
 - Driven Adapters in the Hexagonal Architecture.
 - Tools and libraries,
 - persistence,
@@ -232,7 +232,7 @@ Source code dependencies point always inwards and, except Configuration, are str
 
 #### Example of a Service Anatomy 
 
-As a concrete example consider the business capability to find payments in Billing service:
+As a concrete example consider the Business Capability to find payments in Billing service:
 
 - Application is implemented via Spring Boot Application.
 - `PaymentJdbcConfig` configures the JDBC implementations for the Domain. 

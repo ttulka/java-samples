@@ -71,11 +71,11 @@ The communication among services is implemented via events:
 
 When the customer places an order the following process starts up (the happy path):
 
-1. Sales service creates a new order and publishes the OrderPlaced event.
-2. Billing service collects payment for the order and publishes the PaymentCollected event.
+1. Sales service creates a new order and publishes the `OrderPlaced` event.
+2. Billing service collects payment for the order and publishes the `PaymentCollected` event.
 2. Shipping service prepares a delivery.
-2. Warehouse service fetches goods from the stock and publishes the GoodsFetched event.
-3. Shipping service dispatches the delivery and publishes the DeliveryDispatched event.
+2. Warehouse service fetches goods from the stock and publishes the `GoodsFetched` event.
+3. Shipping service dispatches the delivery and publishes the `DeliveryDispatched` event.
 4. Warehouse service updates the stock.
 
 There is only the basic "happy path" workflow implemented with a big room for improvement, for example when Shipping doesn't get bot Events within a time period, the delivery process should be cancelled etc.. 
@@ -86,7 +86,7 @@ Services cooperate together to work out the Business Capabilities: products sale
 
 ![Service Dependencies](doc/services-dependencies.png)
 
-The actual dependencies come only from Listeners which fulfill the role of the Anti-corruption layer and depend only on Domain Events.
+The actual dependencies come only from Listeners which fulfill the role of the Anti-Corruption Layer and depend only on Domain Events.
 
 ![Event and Listener](doc/event-listener.png)
 
@@ -202,7 +202,7 @@ com.ttulka.ecommerce:billing-spring-boot-starter
         spring.factories
 ```
 
-Note: Events are actually part of the domain, that's why they are in the package `ecommerce.billing` and not in `ecommerce.billing.events`. They are in a separate module to break the build cyclic dependencies: a dependent module (Listener) needs to know only Events and not the entire Domain. 
+Note: Events are actually part of the domain, that's why they are in the package `..ecommerce.billing` and not in `..ecommerce.billing.events`. They are in a separate module to break the build cyclic dependencies: a dependent module (Listener) needs to know only Events and not the entire Domain. 
 
 ### Anatomy of a Service 
 

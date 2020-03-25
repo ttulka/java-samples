@@ -92,7 +92,7 @@ The actual dependencies come only from Listeners which fulfill the role of the A
 
 Events contain no Domain Objects. 
 
-For communication across Services an Event Publisher abstraction is used, located in the package `ecommerce.common`. The interface is an Output Port (in the Hexagonal Architecture) and as a cross-cutting concern is its implementation injected by the Application.  
+For communication across Services an Event Publisher abstraction is used, located in the package `..ecommerce.common`. The interface is an Output Port (in the Hexagonal Architecture) and as a cross-cutting concern is its implementation injected by the Application.  
 
 ## Architectural Overview
 

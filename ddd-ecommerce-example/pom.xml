@@ -9,7 +9,7 @@
         <version>2.2.5.RELEASE</version>
     </parent>
     <groupId>com.ttulka.samples</groupId>
-    <artifactId>ddd-ecommerce-example</artifactId>
+    <artifactId>ddd-example-ecommerce</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>

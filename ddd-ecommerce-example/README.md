@@ -111,7 +111,7 @@ The below proposed architecture tries to solve one problem often common for thes
 
 The architecture "screams" its intentions just by looking at the code structure:
 ```
-ecommerce
+..ecommerce
     billing
         payment
     sales
@@ -126,7 +126,7 @@ ecommerce
 
 Going deeper the technical concepts are visible too:
 ```
-ecommerce
+..ecommerce
     billing
         payment
             jdbc
@@ -167,7 +167,7 @@ com.ttulka.ecommerce:billing-listeners
 In detail:
 ```
 com.ttulka.ecommerce:billing-domain
-    ecommerce.billing
+    ..billing
         payment
             Payment
             PaymentId
@@ -176,24 +176,24 @@ com.ttulka.ecommerce:billing-domain
         CollectPayment
         FindPayments
 com.ttulka.ecommerce:billing-jdbc
-    ecommerce.billing.payment.jdbc
+    ..billing.payment.jdbc
         PaymentJdbc
         PaymentsJdbc        
 com.ttulka.ecommerce:billing-rest
-    ecommerce.billing.rest
+    ..billing.rest
         PaymentController
 com.ttulka.ecommerce:billing-events
-    ecommerce.billing
+    ..billing
         PaymentCollected
 com.ttulka.ecommerce:billing-listeners
-    ecommerce.billing.listeners
+    ..billing.listeners
         OrderPlacedListener        
 ```
 
 Which can be brought together with a Spring Boot Starter, containing only Configuration classes and dependencies on other modules:
 ```
 com.ttulka.ecommerce:billing-spring-boot-starter
-    ecommerce.billing
+    ..billing
         payment.jdbc
             PaymentJdbcConfig
         listeners

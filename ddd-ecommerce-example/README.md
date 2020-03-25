@@ -225,6 +225,8 @@ Note: Events are actually part of the domain, that's why they are in the package
  
 **Use-Cases** are entry points to the service capabilities and together with **Entities** form the _Domain API_.
 - Ports in the Hexagonal Architecture.
+- No implementation details.
+- None or minimal dependencies.
  
 _Domain Implementation_ fulfills the Business Capabilities with particular technologies.
 - Driven Adapters in the Hexagonal Architecture.

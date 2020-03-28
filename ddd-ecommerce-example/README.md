@@ -4,6 +4,10 @@ The purpose of this project is to provide a sample implementation of an e-commer
 
 Programming language is Java 11 with heavy use of Spring framework.
 
+```
+mvn spring-boot:run
+```
+
 ## Table of Contents
 
 - [Domain Services](#domain-services)

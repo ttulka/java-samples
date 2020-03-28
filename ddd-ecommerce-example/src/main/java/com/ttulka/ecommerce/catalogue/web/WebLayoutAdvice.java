@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Web Layout Advice for Catalogue.
+ * <p>
+ * Adds a list of Category items into the layout model.
+ */
 @ControllerAdvice(basePackageClasses = WebLayoutAdvice.class)
 @RequiredArgsConstructor
 class WebLayoutAdvice {

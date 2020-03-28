@@ -2,6 +2,9 @@ package com.ttulka.ecommerce.catalogue.cart;
 
 import java.util.List;
 
+/**
+ * Cart entity.
+ */
 public interface Cart {
 
     List<CartItem> items();

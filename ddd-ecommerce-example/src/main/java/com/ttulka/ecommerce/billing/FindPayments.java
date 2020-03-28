@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.ttulka.ecommerce.billing.payment.Payment;
 
+/**
+ * Find Payments use-case.
+ */
 public interface FindPayments {
 
     /**

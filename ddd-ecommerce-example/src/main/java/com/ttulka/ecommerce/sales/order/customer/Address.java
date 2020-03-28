@@ -4,6 +4,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
 
+/**
+ * Customer Address domain primitive.
+ */
 @EqualsAndHashCode
 @ToString
 public final class Address {

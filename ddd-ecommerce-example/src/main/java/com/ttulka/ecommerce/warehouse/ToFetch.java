@@ -5,6 +5,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Warehouse To Fetch entity.
+ */
 @RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString

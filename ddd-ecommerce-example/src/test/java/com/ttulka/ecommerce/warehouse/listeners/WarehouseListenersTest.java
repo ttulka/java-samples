@@ -46,14 +46,14 @@ class WarehouseListenersTest {
                                 List.of(new OrderPlaced.OrderItemData("test-1", "Title", 123.5f, 2)),
                                 new OrderPlaced.CustomerData("test name", "test address"))));
 
-        verify(fetchGoods).fromOrder(new OrderId("TEST123"), List.of(new ToFetch(new ProductCode("test-1"), new Amount(2))));
+        verify(fetchGoods).fetchFromOrder(new OrderId("TEST123"), List.of(new ToFetch(new ProductCode("test-1"), new Amount(2))));
     }
 
     @Test
     void on_delivery_dispatched_removes_fetched_goods() {
         runTx(() -> eventPublisher.raise(new DeliveryDispatched(Instant.now(), "TEST123")));
 
-        verify(removeFetchedGoods).forOrder(new OrderId("TEST123"));
+        verify(removeFetchedGoods).removeForOrder(new OrderId("TEST123"));
     }
 
     private void runTx(Runnable runnable) {

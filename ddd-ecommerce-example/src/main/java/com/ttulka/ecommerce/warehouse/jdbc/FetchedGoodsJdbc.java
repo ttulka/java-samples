@@ -9,6 +9,7 @@ import com.ttulka.ecommerce.warehouse.GoodsFetched;
 import com.ttulka.ecommerce.warehouse.GoodsMissed;
 import com.ttulka.ecommerce.warehouse.InStock;
 import com.ttulka.ecommerce.warehouse.OrderId;
+import com.ttulka.ecommerce.warehouse.RemoveFetchedGoods;
 import com.ttulka.ecommerce.warehouse.ToFetch;
 import com.ttulka.ecommerce.warehouse.Warehouse;
 
@@ -20,9 +21,12 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Implementation for Fetched Goods use-case.
+ */
 @RequiredArgsConstructor
 @Slf4j
-class FetchGoodsJdbc implements FetchGoods {
+class FetchedGoodsJdbc implements FetchGoods, RemoveFetchedGoods {
 
     private final @NonNull Warehouse warehouse;
     private final @NonNull JdbcTemplate jdbcTemplate;
@@ -30,7 +34,7 @@ class FetchGoodsJdbc implements FetchGoods {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
-    public void fromOrder(OrderId orderId, Collection<ToFetch> toFetch) {
+    public void fetchFromOrder(OrderId orderId, Collection<ToFetch> toFetch) {
         toFetch.forEach(item -> fetch(item, orderId));
 
         eventPublisher.raise(new GoodsFetched(Instant.now(), orderId.value()));
@@ -54,5 +58,15 @@ class FetchGoodsJdbc implements FetchGoods {
                     "UPDATE products_in_stock SET amount = amount - ? WHERE product_code = ?",
                     amountToFetch, item.productCode().value());
         }
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public void removeForOrder(OrderId orderId) {
+        jdbcTemplate.update(
+                "DELETE FROM fetched_products WHERE order_id = ?",
+                orderId.value());
+
+        log.debug("Fetched goods removed: {}", orderId);
     }
 }

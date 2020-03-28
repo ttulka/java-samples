@@ -21,6 +21,9 @@ import lombok.NonNull;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * JDBC implementation for Delivery entity.
+ */
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @EqualsAndHashCode(of = "id")
 @ToString(of = {"id", "orderId", "status", "items", "address"})

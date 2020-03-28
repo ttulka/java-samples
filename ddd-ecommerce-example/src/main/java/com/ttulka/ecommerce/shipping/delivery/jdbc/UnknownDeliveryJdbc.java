@@ -17,6 +17,11 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Null object JDBC implementation for Delivery entity.
+ * <p>
+ * Tracks Paid and Fetched events for unknown deliveries.
+ */
 @RequiredArgsConstructor
 @Slf4j
 final class UnknownDeliveryJdbc implements Delivery {

@@ -4,6 +4,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
 
+/**
+ * Category URI domain primitive.
+ */
 @EqualsAndHashCode
 @ToString
 public final class Uri {

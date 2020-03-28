@@ -5,6 +5,9 @@ import java.util.List;
 import com.ttulka.ecommerce.sales.category.Category;
 import com.ttulka.ecommerce.sales.category.CategoryId;
 
+/**
+ * Find Categories use-case.
+ */
 public interface FindCategories {
 
     /**

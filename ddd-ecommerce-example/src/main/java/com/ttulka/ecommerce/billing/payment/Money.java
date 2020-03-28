@@ -3,6 +3,9 @@ package com.ttulka.ecommerce.billing.payment;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/**
+ * Money entity.
+ */
 @EqualsAndHashCode
 @ToString
 public final class Money {

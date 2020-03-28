@@ -3,6 +3,9 @@ package com.ttulka.ecommerce.warehouse;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/**
+ * Warehouse In Stock Amount domain primitive.
+ */
 @EqualsAndHashCode
 @ToString
 public final class Amount {

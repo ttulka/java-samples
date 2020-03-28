@@ -27,6 +27,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Implementation for Delivery use-cases.
+ */
 @RequiredArgsConstructor
 @Slf4j
 class DeliveriesJdbc implements FindDeliveries, PrepareDelivery {

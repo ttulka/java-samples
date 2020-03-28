@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Bean;
 
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
+/**
+ * Spring Boot based monolithic application.
+ */
 @SpringBootApplication
 public class ECommerceApplication {
 

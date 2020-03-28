@@ -15,6 +15,9 @@ import org.springframework.transaction.event.TransactionalEventListener;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Listener for OrderPlaced event.
+ */
 @RequiredArgsConstructor
 class OrderPlacedListener {
 
@@ -23,7 +26,7 @@ class OrderPlacedListener {
     @TransactionalEventListener
     @Async
     public void on(OrderPlaced event) {
-        fetchGoods.fromOrder(
+        fetchGoods.fetchFromOrder(
                 new OrderId(event.orderId),
                 event.orderItems.stream()
                         .map(item -> new ToFetch(new ProductCode(item.code), new Amount(item.quantity)))

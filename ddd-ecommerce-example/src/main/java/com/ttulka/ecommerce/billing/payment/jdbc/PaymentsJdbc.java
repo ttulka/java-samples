@@ -20,6 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Implementation for Payment use-cases.
+ */
 @RequiredArgsConstructor
 class PaymentsJdbc implements FindPayments, CollectPayment {
 
@@ -35,7 +38,7 @@ class PaymentsJdbc implements FindPayments, CollectPayment {
                         new PaymentId(payment.get("id")),
                         new ReferenceId(payment.get("referenceId")),
                         new Money(((BigDecimal) payment.get("total")).doubleValue()),
-                        Enum.valueOf(Payment.Status.class, (String) payment.get("status")),
+                        Enum.valueOf(PaymentJdbc.Status.class, (String) payment.get("status")),
                         jdbcTemplate, eventPublisher))
                 .collect(Collectors.toList());
     }

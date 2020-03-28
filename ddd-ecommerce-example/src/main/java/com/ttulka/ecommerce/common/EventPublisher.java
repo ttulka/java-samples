@@ -1,8 +1,9 @@
 package com.ttulka.ecommerce.common;
 
 /**
- * <p>Publisher for domain events.</p>
- * <p>Decouples the domain layer from the messaging implementation.</p>
+ * Publisher for domain events.
+ * <p>
+ * Decouples the domain layer from the messaging implementation.
  */
 public interface EventPublisher {
 

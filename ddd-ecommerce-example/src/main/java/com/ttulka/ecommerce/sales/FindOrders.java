@@ -3,6 +3,9 @@ package com.ttulka.ecommerce.sales;
 import com.ttulka.ecommerce.sales.order.Order;
 import com.ttulka.ecommerce.sales.order.OrderId;
 
+/**
+ * Find Orders use-case.
+ */
 public interface FindOrders {
 
     /**

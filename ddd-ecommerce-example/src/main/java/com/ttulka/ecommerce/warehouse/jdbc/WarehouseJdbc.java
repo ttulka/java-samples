@@ -11,6 +11,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Implementation for Warehouse use-cases.
+ */
 @RequiredArgsConstructor
 final class WarehouseJdbc implements Warehouse {
 

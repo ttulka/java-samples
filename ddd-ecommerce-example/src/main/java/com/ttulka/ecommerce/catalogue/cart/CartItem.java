@@ -7,6 +7,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Cart Item entity.
+ */
 @RequiredArgsConstructor
 @EqualsAndHashCode(of = "productCode")
 @ToString

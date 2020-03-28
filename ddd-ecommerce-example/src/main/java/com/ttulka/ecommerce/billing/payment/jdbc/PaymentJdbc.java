@@ -17,10 +17,17 @@ import lombok.NonNull;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * JDBC implementation of Payment entity.
+ */
 @EqualsAndHashCode(of = "id")
 @ToString(of = {"referenceId", "total"})
 @Slf4j
 final class PaymentJdbc implements Payment {
+
+    enum Status {
+        NEW, REQUESTED, RECEIVED
+    }
 
     private final @NonNull PaymentId id;
     private final @NonNull ReferenceId referenceId;

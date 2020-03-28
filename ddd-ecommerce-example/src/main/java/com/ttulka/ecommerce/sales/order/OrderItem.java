@@ -4,6 +4,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
 
+/**
+ * Order Item entity.
+ */
 @EqualsAndHashCode
 @ToString
 public final class OrderItem {

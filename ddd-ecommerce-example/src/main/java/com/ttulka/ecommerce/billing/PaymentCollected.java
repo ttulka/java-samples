@@ -7,6 +7,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Payment Collected domain event.
+ */
 @RequiredArgsConstructor
 @EqualsAndHashCode(of = "referenceId")
 @ToString

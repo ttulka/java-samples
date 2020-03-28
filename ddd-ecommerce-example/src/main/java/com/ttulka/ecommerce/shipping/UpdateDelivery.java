@@ -9,6 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Update Delivery use-case.
+ */
 @RequiredArgsConstructor
 public class UpdateDelivery {
 

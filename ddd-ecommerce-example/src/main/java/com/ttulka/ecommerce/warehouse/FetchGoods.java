@@ -2,6 +2,9 @@ package com.ttulka.ecommerce.warehouse;
 
 import java.util.Collection;
 
+/**
+ * Fetch Goods use-case.
+ */
 public interface FetchGoods {
 
     /**
@@ -10,5 +13,5 @@ public interface FetchGoods {
      * @param orderId the order ID
      * @param toFetch the goods to fetch
      */
-    void fromOrder(OrderId orderId, Collection<ToFetch> toFetch);
+    void fetchFromOrder(OrderId orderId, Collection<ToFetch> toFetch);
 }

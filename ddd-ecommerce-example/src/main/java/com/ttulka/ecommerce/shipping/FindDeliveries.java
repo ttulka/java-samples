@@ -6,6 +6,9 @@ import com.ttulka.ecommerce.shipping.delivery.Delivery;
 import com.ttulka.ecommerce.shipping.delivery.DeliveryInfo;
 import com.ttulka.ecommerce.shipping.delivery.OrderId;
 
+/**
+ * Find Deliveries use-case.
+ */
 public interface FindDeliveries {
 
     /**

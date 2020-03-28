@@ -22,6 +22,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Implementation for Product use-cases.
+ */
 @RequiredArgsConstructor
 @Slf4j
 final class ProductsJdbc implements FindProducts {

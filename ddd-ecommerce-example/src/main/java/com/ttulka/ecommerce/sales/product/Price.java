@@ -3,6 +3,9 @@ package com.ttulka.ecommerce.sales.product;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/**
+ * Product Price domain primitive.
+ */
 @EqualsAndHashCode
 @ToString
 public final class Price {

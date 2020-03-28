@@ -11,6 +11,9 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
+/**
+ * JDBC implementation for Category entity.
+ */
 @EqualsAndHashCode(of = "id")
 @AllArgsConstructor
 final class CategoryJdbc implements Category {

@@ -3,6 +3,9 @@ package com.ttulka.ecommerce.shipping.delivery;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/**
+ * Delivery Item Quantity domain primitive.
+ */
 @EqualsAndHashCode
 @ToString
 public final class Quantity {

@@ -49,7 +49,7 @@ class FetchGoodsTest {
     @Test
     void fetched_goods_raises_an_event() {
         String productCode = productCodeInStock(1);
-        fetchGoods.fromOrder(new OrderId("TEST123"), List.of(
+        fetchGoods.fetchFromOrder(new OrderId("TEST123"), List.of(
                 new ToFetch(new ProductCode(productCode), new Amount(1))));
 
         verify(eventPublisher).raise(argThat(
@@ -67,7 +67,7 @@ class FetchGoodsTest {
     @Test
     void fetching_decrease_amount_in_the_stock() {
         String productCode = productCodeInStock(2);
-        fetchGoods.fromOrder(new OrderId(123), List.of(
+        fetchGoods.fetchFromOrder(new OrderId(123), List.of(
                 new ToFetch(new ProductCode(productCode), new Amount(1))));
 
         assertThat(warehouse.leftInStock(new ProductCode(productCode))).isEqualTo(new InStock(1));
@@ -76,7 +76,7 @@ class FetchGoodsTest {
     @Test
     void cannot_decrease_amount_under_zero() {
         String productCode = productCodeInStock(1);
-        fetchGoods.fromOrder(new OrderId(123), List.of(
+        fetchGoods.fetchFromOrder(new OrderId(123), List.of(
                 new ToFetch(new ProductCode(productCode), new Amount(2))));
 
         assertThat(warehouse.leftInStock(new ProductCode(productCode))).isEqualTo(new InStock(0));
@@ -85,7 +85,7 @@ class FetchGoodsTest {
     @Test
     void missed_goods_raises_an_event() {
         String productCode = productCodeInStock(1);
-        fetchGoods.fromOrder(new OrderId(123), List.of(
+        fetchGoods.fetchFromOrder(new OrderId(123), List.of(
                 new ToFetch(new ProductCode(productCode), new Amount(99))));
 
         verify(eventPublisher, atLeastOnce()).raise(eq(

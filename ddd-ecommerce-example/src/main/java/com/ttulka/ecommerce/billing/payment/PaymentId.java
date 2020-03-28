@@ -4,6 +4,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
 
+/**
+ * Payment ID domain primitive.
+ */
 @EqualsAndHashCode
 @ToString
 public final class PaymentId {

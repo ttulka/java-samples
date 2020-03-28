@@ -4,6 +4,11 @@ import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
 
+/**
+ * Reference ID domain primitive.
+ * <p>
+ * Refers typically to an order the payment is requested for.
+ */
 @EqualsAndHashCode
 @ToString
 public final class ReferenceId {

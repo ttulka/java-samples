@@ -7,6 +7,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+/**
+ * Configuration for JDBC implementation for Warehouse domain.
+ */
 @Configuration
 class WarehouseJdbcConfig {
 
@@ -16,12 +19,7 @@ class WarehouseJdbcConfig {
     }
 
     @Bean
-    FetchGoodsJdbc fetchProducts(Warehouse warehouse, JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {
-        return new FetchGoodsJdbc(warehouse, jdbcTemplate, eventPublisher);
-    }
-
-    @Bean
-    RemoveFetchedGoodsJdbc removeFetchedGoodsJdbc(JdbcTemplate jdbcTemplate) {
-        return new RemoveFetchedGoodsJdbc(jdbcTemplate);
+    FetchedGoodsJdbc fetchedGoodsJdbc(Warehouse warehouse, JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {
+        return new FetchedGoodsJdbc(warehouse, jdbcTemplate, eventPublisher);
     }
 }

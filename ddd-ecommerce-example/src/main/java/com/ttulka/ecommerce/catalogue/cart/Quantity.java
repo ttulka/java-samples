@@ -3,6 +3,9 @@ package com.ttulka.ecommerce.catalogue.cart;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/**
+ * Quantity domain primitive.
+ */
 @EqualsAndHashCode
 @ToString
 public final class Quantity {

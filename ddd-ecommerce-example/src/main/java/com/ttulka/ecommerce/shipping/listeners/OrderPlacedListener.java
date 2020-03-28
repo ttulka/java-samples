@@ -18,6 +18,9 @@ import org.springframework.transaction.event.TransactionalEventListener;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Listener for OrderPlaced event.
+ */
 @RequiredArgsConstructor
 class OrderPlacedListener {
 

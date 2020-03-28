@@ -12,6 +12,9 @@ import com.ttulka.ecommerce.sales.product.Product;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Default implementation for Cart use-cases.
+ */
 @RequiredArgsConstructor
 public final class CartItems implements ListCartItems, AddCartItem, RemoveCartItem {
 

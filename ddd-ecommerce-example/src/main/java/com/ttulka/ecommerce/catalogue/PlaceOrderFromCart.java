@@ -15,6 +15,9 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Place Order From Cart use-case.
+ */
 @RequiredArgsConstructor
 public class PlaceOrderFromCart {
 

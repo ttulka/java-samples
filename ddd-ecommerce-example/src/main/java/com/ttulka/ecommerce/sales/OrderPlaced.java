@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.Value;
 
+/**
+ * Order Placed domain event.
+ */
 @RequiredArgsConstructor
 @EqualsAndHashCode(of = "orderId")
 @ToString

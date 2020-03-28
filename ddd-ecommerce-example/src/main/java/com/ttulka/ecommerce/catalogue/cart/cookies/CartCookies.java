@@ -18,6 +18,9 @@ import com.ttulka.ecommerce.catalogue.cart.Quantity;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
+/**
+ * Cookies implementation for Cart entity.
+ */
 @EqualsAndHashCode(of = "cookie")
 public final class CartCookies implements Cart {
 

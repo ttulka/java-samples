@@ -10,6 +10,9 @@ import org.springframework.transaction.event.TransactionalEventListener;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Listener for DeliveryDispatched event.
+ */
 @RequiredArgsConstructor
 class DeliveryDispatchedListener {
 
@@ -18,6 +21,6 @@ class DeliveryDispatchedListener {
     @TransactionalEventListener
     @Async
     public void on(DeliveryDispatched event) {
-        removeFetchedGoods.forOrder(new OrderId(event.orderId));
+        removeFetchedGoods.removeForOrder(new OrderId(event.orderId));
     }
 }

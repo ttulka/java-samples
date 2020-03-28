@@ -6,6 +6,9 @@ import com.ttulka.ecommerce.sales.category.Uri;
 import com.ttulka.ecommerce.sales.product.Code;
 import com.ttulka.ecommerce.sales.product.Product;
 
+/**
+ * Find Products use-case.
+ */
 public interface FindProducts {
 
     /**

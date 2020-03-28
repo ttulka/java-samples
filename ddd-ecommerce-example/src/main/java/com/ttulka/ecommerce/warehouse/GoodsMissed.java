@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 /**
+ * Goods Missed domain event.
+ * <p>
  * Raised when a product is missed in the stock (sold out) and requested to be fetched.
  * <p>
  * Some other service could take care of it (eg. notify a supplier).

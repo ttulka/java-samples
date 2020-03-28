@@ -10,6 +10,8 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 /**
+ * Configuration for sample data.
+ * <p>
  * Some sample data to be filled into the database.
  */
 @Configuration

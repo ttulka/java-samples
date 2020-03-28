@@ -4,6 +4,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
 
+/**
+ * Delivery Item Product Code domain primitive.
+ */
 @EqualsAndHashCode
 @ToString
 public final class ProductCode {

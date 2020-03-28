@@ -1,5 +1,8 @@
 package com.ttulka.ecommerce.warehouse;
 
+/**
+ * Warehouse use-cases.
+ */
 public interface Warehouse {
 
     /**

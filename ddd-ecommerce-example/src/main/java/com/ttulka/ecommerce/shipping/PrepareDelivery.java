@@ -6,6 +6,9 @@ import com.ttulka.ecommerce.shipping.delivery.Address;
 import com.ttulka.ecommerce.shipping.delivery.DeliveryItem;
 import com.ttulka.ecommerce.shipping.delivery.OrderId;
 
+/**
+ * Prepare Delivery use-case.
+ */
 public interface PrepareDelivery {
 
     /**

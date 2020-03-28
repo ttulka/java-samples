@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * REST controller for Delivery use-cases.
+ */
 @RestController
 @RequestMapping("/delivery")
 @RequiredArgsConstructor

@@ -2,6 +2,9 @@ package com.ttulka.ecommerce.shipping.delivery;
 
 import java.util.List;
 
+/**
+ * Delivery entity.
+ */
 public interface Delivery {
 
     DeliveryId id();

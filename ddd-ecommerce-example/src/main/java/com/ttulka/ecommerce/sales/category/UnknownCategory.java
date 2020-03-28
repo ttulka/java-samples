@@ -2,6 +2,9 @@ package com.ttulka.ecommerce.sales.category;
 
 import lombok.ToString;
 
+/**
+ * Null object implementation for Category entity.
+ */
 @ToString
 public final class UnknownCategory implements Category {
 

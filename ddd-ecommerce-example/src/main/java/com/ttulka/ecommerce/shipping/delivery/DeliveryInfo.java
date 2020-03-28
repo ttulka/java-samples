@@ -5,6 +5,11 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Delivery Info entity.
+ * <p>
+ * Basic information about Delivery.
+ */
 @EqualsAndHashCode(of = "deliveryId")
 @RequiredArgsConstructor
 @ToString

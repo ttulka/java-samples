@@ -1,5 +1,8 @@
 package com.ttulka.ecommerce.sales.order;
 
+/**
+ * Placeable Order entity.
+ */
 public interface PlaceableOrder extends Order {
 
     /**
@@ -9,6 +12,9 @@ public interface PlaceableOrder extends Order {
      */
     void place();
 
+    /**
+     * OrderAlreadyPlacedException is thrown when an already placed Order is placed.
+     */
     final class OrderAlreadyPlacedException extends IllegalStateException {
     }
 }

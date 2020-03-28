@@ -15,6 +15,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
+/**
+ * Catalogue use-cases.
+ */
 @RequiredArgsConstructor
 public class Catalogue {
 

@@ -5,6 +5,9 @@ import java.util.List;
 import com.ttulka.ecommerce.catalogue.cart.Cart;
 import com.ttulka.ecommerce.catalogue.cart.CartItem;
 
+/**
+ * List Cart Items use-case.
+ */
 public interface ListCartItems {
 
     /**

@@ -10,6 +10,9 @@ import org.springframework.transaction.event.TransactionalEventListener;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Listener for GoodsFetched and PaymentCollected events.
+ */
 @RequiredArgsConstructor
 class DispatchingListener {
 

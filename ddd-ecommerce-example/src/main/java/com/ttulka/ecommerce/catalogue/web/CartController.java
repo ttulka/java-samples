@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Web controller for Cart use-cases.
+ */
 @Controller
 @RequestMapping("/cart")
 @RequiredArgsConstructor

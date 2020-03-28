@@ -14,6 +14,9 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
+/**
+ * JDBC implementation for Product entity.
+ */
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 final class ProductJdbc implements Product {

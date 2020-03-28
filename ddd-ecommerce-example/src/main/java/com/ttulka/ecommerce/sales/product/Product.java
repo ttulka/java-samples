@@ -2,6 +2,9 @@ package com.ttulka.ecommerce.sales.product;
 
 import com.ttulka.ecommerce.sales.category.CategoryId;
 
+/**
+ * Product entity.
+ */
 public interface Product {
 
     ProductId id();

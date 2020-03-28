@@ -3,6 +3,9 @@ package com.ttulka.ecommerce.warehouse;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/**
+ * Warehouse In Stock entity.
+ */
 @EqualsAndHashCode
 @ToString
 public final class InStock {

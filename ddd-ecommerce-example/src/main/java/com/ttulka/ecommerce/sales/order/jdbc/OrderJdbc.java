@@ -20,6 +20,9 @@ import lombok.NonNull;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * JDBC implementation for Order entity.
+ */
 @EqualsAndHashCode(of = "id")
 @ToString(of = {"id", "items", "customer"})
 @Slf4j

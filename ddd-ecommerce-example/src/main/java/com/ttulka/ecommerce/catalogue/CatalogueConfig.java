@@ -8,6 +8,9 @@ import com.ttulka.ecommerce.warehouse.Warehouse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Configuration for Catalogue.
+ */
 @Configuration
 class CatalogueConfig {
 

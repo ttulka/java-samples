@@ -4,6 +4,9 @@ import com.ttulka.ecommerce.sales.category.CategoryId;
 
 import lombok.ToString;
 
+/**
+ * Null object implementation for Product entity.
+ */
 @ToString
 public final class UnknownProduct implements Product {
 
@@ -24,7 +27,7 @@ public final class UnknownProduct implements Product {
 
     @Override
     public Description description() {
-        return new Description("This product is not to be found in the catalogue.");
+        return new Description("This product is not to be found.");
     }
 
     @Override

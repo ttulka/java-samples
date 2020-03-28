@@ -4,6 +4,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
 
+/**
+ * Customer Name domain primitive.
+ */
 @EqualsAndHashCode
 @ToString
 public final class Name {

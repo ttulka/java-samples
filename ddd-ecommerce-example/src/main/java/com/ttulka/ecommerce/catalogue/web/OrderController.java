@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Web controller for Order use-cases.
+ */
 @Controller
 @RequestMapping("/order")
 @RequiredArgsConstructor

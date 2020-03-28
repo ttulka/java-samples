@@ -1,5 +1,8 @@
 package com.ttulka.ecommerce.warehouse;
 
+/**
+ * Remove Fetched Goods use-case.
+ */
 public interface RemoveFetchedGoods {
 
     /**
@@ -7,5 +10,5 @@ public interface RemoveFetchedGoods {
      *
      * @param orderId the order ID
      */
-    void forOrder(OrderId orderId);
+    void removeForOrder(OrderId orderId);
 }

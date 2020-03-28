@@ -4,6 +4,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
 
+/**
+ * Delivery Person entity.
+ */
 @EqualsAndHashCode
 @ToString
 public final class Person {

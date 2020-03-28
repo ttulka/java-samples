@@ -5,6 +5,9 @@ import java.util.List;
 import com.ttulka.ecommerce.sales.order.OrderItem;
 import com.ttulka.ecommerce.sales.order.customer.Customer;
 
+/**
+ * Place Order use-case.
+ */
 public interface PlaceOrder {
 
     /**

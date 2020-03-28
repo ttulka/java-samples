@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Web controller for Catalogue use-cases.
+ */
 @Controller
 @RequiredArgsConstructor
 class CatalogueController {

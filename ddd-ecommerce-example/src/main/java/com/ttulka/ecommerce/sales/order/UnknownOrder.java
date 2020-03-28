@@ -9,6 +9,9 @@ import com.ttulka.ecommerce.sales.order.customer.Name;
 
 import lombok.ToString;
 
+/**
+ * Null object implementation for Order entity.
+ */
 @ToString
 public final class UnknownOrder implements Order {
 

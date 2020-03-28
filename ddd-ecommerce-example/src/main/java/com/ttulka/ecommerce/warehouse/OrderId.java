@@ -4,6 +4,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
 
+/**
+ * Warehouse To Fetch Order ID domain primitive.
+ */
 @EqualsAndHashCode
 @ToString
 public final class OrderId {

@@ -2,6 +2,9 @@ package com.ttulka.ecommerce.catalogue;
 
 import com.ttulka.ecommerce.catalogue.cart.Cart;
 
+/**
+ * Remove Cart Item use-case.
+ */
 public interface RemoveCartItem {
 
     /**

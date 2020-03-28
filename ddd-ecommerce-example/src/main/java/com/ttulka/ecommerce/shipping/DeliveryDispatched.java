@@ -7,6 +7,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Delivery Dispatched domain event.
+ */
 @RequiredArgsConstructor
 @EqualsAndHashCode(of = "orderId")
 @ToString

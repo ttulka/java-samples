@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @RequiredArgsConstructor
 @Slf4j
-class FetchedGoodsJdbc implements FetchGoods, RemoveFetchedGoods {
+class GoodsFetchingJdbc implements FetchGoods, RemoveFetchedGoods {
 
     private final @NonNull Warehouse warehouse;
     private final @NonNull JdbcTemplate jdbcTemplate;

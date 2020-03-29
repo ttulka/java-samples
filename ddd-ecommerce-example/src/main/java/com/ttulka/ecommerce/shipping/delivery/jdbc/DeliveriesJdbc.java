@@ -109,30 +109,30 @@ class DeliveriesJdbc implements FindDeliveries, PrepareDelivery {
                         new Person((String) delivery.get("person")),
                         new Place((String) delivery.get("place"))),
                 mergedStatus(
-                        Enum.valueOf(Delivery.Status.class, (String) delivery.get("status")),
+                        Enum.valueOf(DeliveryJdbc.Status.class, (String) delivery.get("status")),
                         fetched, paid),
                 jdbcTemplate, eventPublisher);
     }
 
-    private Delivery.Status mergedStatus(Delivery.Status status, boolean fetched, boolean paid) {
+    private DeliveryJdbc.Status mergedStatus(DeliveryJdbc.Status status, boolean fetched, boolean paid) {
         if (fetched || paid) {
             switch (status) {
                 case NEW:
                 case PREPARED:
                     if (fetched) {
-                        return Delivery.Status.FETCHED;
+                        return DeliveryJdbc.Status.FETCHED;
                     }
                     if (paid) {
-                        return Delivery.Status.PAID;
+                        return DeliveryJdbc.Status.PAID;
                     }
                 case FETCHED:
                     if (paid) {
-                        return Delivery.Status.READY;
+                        return DeliveryJdbc.Status.READY;
                     }
                     break;
                 case PAID:
                     if (fetched) {
-                        return Delivery.Status.READY;
+                        return DeliveryJdbc.Status.READY;
                     }
                     break;
             }

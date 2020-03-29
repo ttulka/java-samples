@@ -34,10 +34,6 @@ public interface Delivery {
 
     boolean isReadyToDispatch();
 
-    enum Status {
-        NEW, PREPARED, PAID, FETCHED, READY, DISPATCHED
-    }
-
     final class DeliveryAlreadyPreparedException extends IllegalStateException {
     }
 

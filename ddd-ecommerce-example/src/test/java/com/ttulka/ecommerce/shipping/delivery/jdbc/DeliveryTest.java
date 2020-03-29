@@ -72,7 +72,7 @@ class DeliveryTest {
         new DeliveryJdbc(new DeliveryId(randId), new OrderId(randId),
                          List.of(new DeliveryItem(new ProductCode("test"), new Quantity(123))),
                          new Address(new Person("test"), new Place("test")),
-                         Delivery.Status.NEW,
+                         DeliveryJdbc.Status.NEW,
                          jdbcTemplate, eventPublisher)
                 .prepare();
 

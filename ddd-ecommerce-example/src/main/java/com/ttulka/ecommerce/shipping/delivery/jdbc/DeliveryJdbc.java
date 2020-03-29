@@ -30,6 +30,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 final class DeliveryJdbc implements Delivery {
 
+    enum Status {
+        NEW, PREPARED, PAID, FETCHED, READY, DISPATCHED
+    }
+
     private final @NonNull DeliveryId id;
     private final @NonNull OrderId orderId;
     private final @NonNull List<DeliveryItem> items;

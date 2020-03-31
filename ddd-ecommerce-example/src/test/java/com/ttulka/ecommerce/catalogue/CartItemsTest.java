@@ -6,7 +6,7 @@ import com.ttulka.ecommerce.catalogue.cart.Cart;
 import com.ttulka.ecommerce.catalogue.cart.CartItem;
 import com.ttulka.ecommerce.catalogue.cart.Quantity;
 import com.ttulka.ecommerce.catalogue.cart.cookies.CartCookies;
-import com.ttulka.ecommerce.common.EventPublisher;
+import com.ttulka.ecommerce.common.events.EventPublisher;
 import com.ttulka.ecommerce.warehouse.Warehouse;
 
 import org.junit.jupiter.api.Test;

@@ -3,7 +3,7 @@ package com.ttulka.ecommerce.catalogue;
 import javax.servlet.http.Cookie;
 
 import com.ttulka.ecommerce.catalogue.cart.cookies.CartCookies;
-import com.ttulka.ecommerce.common.EventPublisher;
+import com.ttulka.ecommerce.common.events.EventPublisher;
 import com.ttulka.ecommerce.sales.order.customer.Address;
 import com.ttulka.ecommerce.sales.order.customer.Customer;
 import com.ttulka.ecommerce.sales.order.customer.Name;

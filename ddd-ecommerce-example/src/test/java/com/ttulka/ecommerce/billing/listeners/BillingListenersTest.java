@@ -7,7 +7,7 @@ import com.ttulka.ecommerce.billing.CollectPayment;
 import com.ttulka.ecommerce.billing.FindPayments;
 import com.ttulka.ecommerce.billing.payment.Money;
 import com.ttulka.ecommerce.billing.payment.ReferenceId;
-import com.ttulka.ecommerce.common.EventPublisher;
+import com.ttulka.ecommerce.common.events.EventPublisher;
 import com.ttulka.ecommerce.sales.OrderPlaced;
 
 import org.junit.jupiter.api.Test;

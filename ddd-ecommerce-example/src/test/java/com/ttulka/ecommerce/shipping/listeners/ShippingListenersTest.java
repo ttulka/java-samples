@@ -4,7 +4,7 @@ import java.time.Instant;
 import java.util.List;
 
 import com.ttulka.ecommerce.billing.PaymentCollected;
-import com.ttulka.ecommerce.common.EventPublisher;
+import com.ttulka.ecommerce.common.events.EventPublisher;
 import com.ttulka.ecommerce.sales.OrderPlaced;
 import com.ttulka.ecommerce.shipping.FindDeliveries;
 import com.ttulka.ecommerce.shipping.PrepareDelivery;

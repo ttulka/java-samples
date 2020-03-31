@@ -1,6 +1,6 @@
 package com.ttulka.ecommerce.warehouse.jdbc;
 
-import com.ttulka.ecommerce.common.EventPublisher;
+import com.ttulka.ecommerce.common.events.EventPublisher;
 import com.ttulka.ecommerce.warehouse.RemoveFetchedGoods;
 
 import org.springframework.beans.factory.annotation.Autowired;

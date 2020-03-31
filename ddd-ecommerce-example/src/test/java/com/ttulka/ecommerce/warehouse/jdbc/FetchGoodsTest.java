@@ -4,7 +4,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
-import com.ttulka.ecommerce.common.EventPublisher;
+import com.ttulka.ecommerce.common.events.EventPublisher;
 import com.ttulka.ecommerce.warehouse.Amount;
 import com.ttulka.ecommerce.warehouse.FetchGoods;
 import com.ttulka.ecommerce.warehouse.GoodsFetched;

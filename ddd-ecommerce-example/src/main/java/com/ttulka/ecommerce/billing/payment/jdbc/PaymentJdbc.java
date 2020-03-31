@@ -8,7 +8,7 @@ import com.ttulka.ecommerce.billing.payment.Money;
 import com.ttulka.ecommerce.billing.payment.Payment;
 import com.ttulka.ecommerce.billing.payment.PaymentId;
 import com.ttulka.ecommerce.billing.payment.ReferenceId;
-import com.ttulka.ecommerce.common.EventPublisher;
+import com.ttulka.ecommerce.common.events.EventPublisher;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 

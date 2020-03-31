@@ -3,7 +3,7 @@ package com.ttulka.ecommerce.warehouse.jdbc;
 import java.time.Instant;
 import java.util.Collection;
 
-import com.ttulka.ecommerce.common.EventPublisher;
+import com.ttulka.ecommerce.common.events.EventPublisher;
 import com.ttulka.ecommerce.warehouse.FetchGoods;
 import com.ttulka.ecommerce.warehouse.GoodsFetched;
 import com.ttulka.ecommerce.warehouse.GoodsMissed;

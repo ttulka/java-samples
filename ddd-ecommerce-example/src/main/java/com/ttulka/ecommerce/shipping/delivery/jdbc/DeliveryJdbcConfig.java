@@ -1,6 +1,6 @@
 package com.ttulka.ecommerce.shipping.delivery.jdbc;
 
-import com.ttulka.ecommerce.common.EventPublisher;
+import com.ttulka.ecommerce.common.events.EventPublisher;
 import com.ttulka.ecommerce.shipping.FindDeliveries;
 import com.ttulka.ecommerce.shipping.UpdateDelivery;
 

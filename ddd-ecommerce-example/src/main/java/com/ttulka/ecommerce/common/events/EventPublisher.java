@@ -1,4 +1,4 @@
-package com.ttulka.ecommerce.common;
+package com.ttulka.ecommerce.common.events;
 
 /**
  * Publisher for domain events.

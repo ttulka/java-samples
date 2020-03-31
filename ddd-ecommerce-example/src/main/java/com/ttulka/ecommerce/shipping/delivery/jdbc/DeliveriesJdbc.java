@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.ttulka.ecommerce.common.EventPublisher;
+import com.ttulka.ecommerce.common.events.EventPublisher;
 import com.ttulka.ecommerce.shipping.FindDeliveries;
 import com.ttulka.ecommerce.shipping.PrepareDelivery;
 import com.ttulka.ecommerce.shipping.delivery.Address;

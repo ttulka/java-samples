@@ -3,7 +3,7 @@ package com.ttulka.ecommerce.sales.order.jdbc;
 import java.util.Collections;
 import java.util.List;
 
-import com.ttulka.ecommerce.common.EventPublisher;
+import com.ttulka.ecommerce.common.events.EventPublisher;
 import com.ttulka.ecommerce.sales.OrderPlaced;
 import com.ttulka.ecommerce.sales.order.Order;
 import com.ttulka.ecommerce.sales.order.OrderItem;

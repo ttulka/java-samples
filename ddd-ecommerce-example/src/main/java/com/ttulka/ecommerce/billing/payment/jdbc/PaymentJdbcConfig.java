@@ -1,6 +1,6 @@
 package com.ttulka.ecommerce.billing.payment.jdbc;
 
-import com.ttulka.ecommerce.common.EventPublisher;
+import com.ttulka.ecommerce.common.events.EventPublisher;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

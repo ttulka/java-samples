@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import com.ttulka.ecommerce.common.EventPublisher;
+import com.ttulka.ecommerce.common.events.EventPublisher;
 import com.ttulka.ecommerce.sales.OrderPlaced;
 import com.ttulka.ecommerce.sales.order.OrderId;
 import com.ttulka.ecommerce.sales.order.OrderItem;

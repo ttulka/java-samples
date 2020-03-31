@@ -1,6 +1,6 @@
 package com.ttulka.ecommerce.sales.order.jdbc;
 
-import com.ttulka.ecommerce.common.EventPublisher;
+import com.ttulka.ecommerce.common.events.EventPublisher;
 import com.ttulka.ecommerce.sales.FindOrders;
 import com.ttulka.ecommerce.sales.order.Order;
 import com.ttulka.ecommerce.sales.order.OrderId;

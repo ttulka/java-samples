@@ -3,7 +3,7 @@ package com.ttulka.ecommerce.shipping.delivery.jdbc;
 import java.util.List;
 import java.util.UUID;
 
-import com.ttulka.ecommerce.common.EventPublisher;
+import com.ttulka.ecommerce.common.events.EventPublisher;
 import com.ttulka.ecommerce.shipping.FindDeliveries;
 import com.ttulka.ecommerce.shipping.PrepareDelivery;
 import com.ttulka.ecommerce.shipping.UpdateDelivery;

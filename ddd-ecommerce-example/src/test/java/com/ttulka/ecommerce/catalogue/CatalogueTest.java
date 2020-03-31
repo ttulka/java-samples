@@ -2,7 +2,7 @@ package com.ttulka.ecommerce.catalogue;
 
 import java.util.List;
 
-import com.ttulka.ecommerce.common.EventPublisher;
+import com.ttulka.ecommerce.common.events.EventPublisher;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.ttulka.ecommerce.common.EventPublisher;
+import com.ttulka.ecommerce.common.events.EventPublisher;
 import com.ttulka.ecommerce.sales.FindOrders;
 import com.ttulka.ecommerce.sales.PlaceOrder;
 import com.ttulka.ecommerce.sales.order.Order;

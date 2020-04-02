@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * Configuration for JDBC implementation for Order domain.
  */
 @Configuration
-class OrderJdbcConfig {
+class OrdersJdbcConfig {
 
     @Bean
     OrdersJdbc ordersJdbc(JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {

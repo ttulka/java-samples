@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * Configuration for JDBC implementation for Payment domain.
  */
 @Configuration
-class PaymentJdbcConfig {
+class PaymentsJdbcConfig {
 
     @Bean
     PaymentsJdbc payments(JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {

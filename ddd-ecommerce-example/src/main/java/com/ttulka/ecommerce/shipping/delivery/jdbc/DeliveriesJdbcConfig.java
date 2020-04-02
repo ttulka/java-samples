@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * Configuration for JDBC implementation for Delivery domain.
  */
 @Configuration
-class DeliveryJdbcConfig {
+class DeliveriesJdbcConfig {
 
     @Bean
     DeliveriesJdbc deliveries(JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {

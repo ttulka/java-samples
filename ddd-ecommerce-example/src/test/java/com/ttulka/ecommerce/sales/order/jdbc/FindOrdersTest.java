@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @JdbcTest
-@ContextConfiguration(classes = OrderJdbcConfig.class)
+@ContextConfiguration(classes = OrdersJdbcConfig.class)
 @Sql("/test-data-sales-find-orders.sql")
 class FindOrdersTest {
 

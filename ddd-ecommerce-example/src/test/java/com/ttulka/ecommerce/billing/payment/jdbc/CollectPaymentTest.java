@@ -18,7 +18,7 @@ import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.verify;
 
 @JdbcTest
-@ContextConfiguration(classes = PaymentJdbcConfig.class)
+@ContextConfiguration(classes = PaymentsJdbcConfig.class)
 class CollectPaymentTest {
 
     @Autowired

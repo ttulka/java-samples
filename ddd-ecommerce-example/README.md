@@ -99,6 +99,8 @@ For communication across Services an Event Publisher abstraction is used, locate
 ## Architectural Overview
 
 While no popular architecture ([Onion][onion], [Clean][clean], [Hexagonal][hexagonal], [Trinity][trinity]) was strictly implemented, the used architectural style follows principles and good practices found over all of them.
+- Low coupling, high cohesion
+- Rich domain model
 - Separation of concerns
 - The Dependency Rule
 

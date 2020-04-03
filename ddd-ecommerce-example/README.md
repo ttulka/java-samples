@@ -86,9 +86,7 @@ There is only the basic "happy path" workflow implemented with a big room for im
 
 ### Services Dependencies
 
-Services cooperate together to work out the Business Capabilities: products sale and delivery.
-
-![Service Dependencies](doc/services-dependencies.png)
+Services cooperate together to work out the Business Capabilities: sale and deliver goods.
 
 The actual dependencies come only from Listeners which fulfill the role of the Anti-Corruption Layer and depend only on Domain Events.
 

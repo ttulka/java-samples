@@ -1,81 +1,83 @@
 package com.ttulka.ecommerce.sales.product.jdbc;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import com.ttulka.ecommerce.sales.FindProducts;
-import com.ttulka.ecommerce.sales.category.Uri;
-import com.ttulka.ecommerce.sales.product.Code;
-import com.ttulka.ecommerce.sales.product.Description;
-import com.ttulka.ecommerce.sales.product.Price;
+import com.ttulka.ecommerce.common.jdbc.JdbcEntries;
 import com.ttulka.ecommerce.sales.product.Product;
-import com.ttulka.ecommerce.sales.product.ProductId;
-import com.ttulka.ecommerce.sales.product.Title;
-import com.ttulka.ecommerce.sales.product.UnknownProduct;
+import com.ttulka.ecommerce.sales.product.Products;
 
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
- * Implementation for Product use-cases.
+ * JDBC implementation of the products collection.
  */
-@RequiredArgsConstructor
-@Slf4j
-final class ProductsJdbc implements FindProducts {
+@Builder(access = AccessLevel.PRIVATE, toBuilder = true)
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+final class ProductsJdbc implements Products {
+
+    private static final int UNLIMITED = 1000;
+
+    private final @NonNull JdbcEntries entries;
 
     private final @NonNull JdbcTemplate jdbcTemplate;
 
-    @Override
-    public List<Product> all() {
-        return jdbcTemplate.queryForList(
-                "SELECT id, code, title, description, price FROM products " +
-                "ORDER BY id ASC").stream()
-                .map(this::toProduct)
-                .collect(Collectors.toList());
+    private final SortBy sortBy;
+    private final int start;
+    private final int limit;
+
+    public ProductsJdbc(@NonNull String query, @NonNull List<Object> queryParams, @NonNull JdbcTemplate jdbcTemplate) {
+        this.entries = new JdbcEntries(query, queryParams, jdbcTemplate);
+        this.jdbcTemplate = jdbcTemplate;
+        this.sortBy = SortBy.DEFAULT;
+        this.start = 0;
+        this.limit = UNLIMITED;
+    }
+
+    public ProductsJdbc(@NonNull String query, @NonNull Object queryParam, @NonNull JdbcTemplate jdbcTemplate) {
+        this(query, List.of(queryParam), jdbcTemplate);
     }
 
     @Override
-    public List<Product> fromCategory(@NonNull Uri categoryUri) {
-        return jdbcTemplate.queryForList(
-                "SELECT p.id, p.code, p.title, p.description, p.price FROM products AS p " +
-                "JOIN products_in_categories AS pc ON pc.product_id = p.id " +
-                "JOIN categories AS c ON c.id = pc.category_id " +
-                "WHERE c.uri = ? " +
-                "ORDER BY p.id ASC",
-                categoryUri.value()).stream()
-                .map(this::toProduct)
-                .collect(Collectors.toList());
+    public Products sorted(SortBy by) {
+        return toBuilder().sortBy(by).build();
     }
 
     @Override
-    public Product byCode(@NonNull Code code) {
-        try {
-            Map<String, Object> entry = jdbcTemplate.queryForMap(
-                    "SELECT id, code, title, description, price FROM products WHERE code = ?",
-                    code.value());
-            if (entry != null) {
-                return toProduct(entry);
-            }
-        } catch (DataAccessException ignore) {
-            log.warn("Product by code {} was not found.", code);
+    public Products limited(int start, int limit) {
+        if (start < 0 || limit <= 0 || limit - start > UNLIMITED) {
+            throw new IllegalArgumentException("Start must be greater than zero, " +
+                    "items count must be greater than zero and less or equal than " + UNLIMITED);
         }
-        return new UnknownProduct();
+        return isLimited()
+                ? new FetchedProductsJdbc(fetched(), jdbcTemplate)
+                : toBuilder().start(start).limit(limit).build();
     }
 
-    private Product toProduct(Map<String, Object> entry) {
-        return new ProductJdbc(
-                new ProductId(entry.get("id")),
-                new Code((String) entry.get("code")),
-                new Title((String) entry.get("title")),
-                new Description((String) entry.get("description")),
-                new Price(((BigDecimal) entry.get("price")).floatValue()),
-                jdbcTemplate
-        );
+    @Override
+    public Products limited(int limit) {
+        return limited(0, limit);
+    }
+
+    private List<Map<String, Object>> fetched() {
+        return entries
+                .sorted(new SortByJdbc(sortBy).value())
+                .limited(start, limit)
+                .list();
+    }
+
+    private boolean isLimited() {
+        return start > 0 || limit != UNLIMITED;
+    }
+
+    @Override
+    public Stream<Product> stream() {
+        return new FetchedProductsJdbc(fetched(), jdbcTemplate).stream();
     }
 }

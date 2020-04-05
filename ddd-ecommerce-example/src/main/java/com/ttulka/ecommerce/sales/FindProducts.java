@@ -1,10 +1,9 @@
 package com.ttulka.ecommerce.sales;
 
-import java.util.List;
-
 import com.ttulka.ecommerce.sales.category.Uri;
 import com.ttulka.ecommerce.sales.product.Code;
 import com.ttulka.ecommerce.sales.product.Product;
+import com.ttulka.ecommerce.sales.product.Products;
 
 /**
  * Find Products use-case.
@@ -16,7 +15,7 @@ public interface FindProducts {
      *
      * @return all products
      */
-    List<Product> all();
+    Products all();
 
     /**
      * Lists products from the category
@@ -24,7 +23,7 @@ public interface FindProducts {
      * @param categoryUri the URI of the category
      * @return the products from the category
      */
-    List<Product> fromCategory(Uri categoryUri);
+    Products fromCategory(Uri categoryUri);
 
     /**
      * Finds a product by the code.

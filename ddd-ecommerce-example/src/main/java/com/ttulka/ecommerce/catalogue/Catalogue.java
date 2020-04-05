@@ -21,18 +21,22 @@ import lombok.Value;
 @RequiredArgsConstructor
 public class Catalogue {
 
+    private static final int MAX_RESULTS = 10;
+
     private final @NonNull FindCategories findCategories;
     private final @NonNull FindProducts findProducts;
     private final @NonNull Warehouse warehouse;
 
     public List<CatalogueProductData> allProducts() {
-        return findProducts.all().stream()
+        return findProducts.all()
+                .limited(MAX_RESULTS).stream()
                 .map(this::toData)
                 .collect(Collectors.toList());
     }
 
     public List<CatalogueProductData> productsInCategory(@NonNull String categoryUri) {
-        return findProducts.fromCategory(new Uri(categoryUri)).stream()
+        return findProducts.fromCategory(new Uri(categoryUri))
+                .limited(MAX_RESULTS).stream()
                 .map(this::toData)
                 .collect(Collectors.toList());
     }

@@ -1,6 +1,7 @@
 package com.ttulka.ecommerce.sales.product.jdbc;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.ttulka.ecommerce.sales.FindProducts;
 import com.ttulka.ecommerce.sales.category.CategoryId;
@@ -46,7 +47,8 @@ class CategorizeProductTest {
 
         product.categorize(new CategoryId(123));
 
-        List<Product> productsFound = findProducts.fromCategory(new Uri("test-category"));
+        List<Product> productsFound = findProducts.fromCategory(new Uri("test-category"))
+                .stream().collect(Collectors.toList());
         assertAll(
                 () -> assertThat(productsFound).hasSize(1),
                 () -> assertThat(productsFound.get(0).id()).isEqualTo(new ProductId(456))

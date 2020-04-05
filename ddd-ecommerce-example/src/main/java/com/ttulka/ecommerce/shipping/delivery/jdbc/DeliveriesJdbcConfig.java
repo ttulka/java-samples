@@ -15,8 +15,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 class DeliveriesJdbcConfig {
 
     @Bean
-    DeliveriesJdbc deliveries(JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {
-        return new DeliveriesJdbc(jdbcTemplate, eventPublisher);
+    FindDeliveriesJdbc findDeliveries(JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {
+        return new FindDeliveriesJdbc(jdbcTemplate, eventPublisher);
+    }
+
+    @Bean
+    PrepareDeliveryJdbc prepareDelivery(JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {
+        return new PrepareDeliveryJdbc(jdbcTemplate, eventPublisher);
     }
 
     @Bean

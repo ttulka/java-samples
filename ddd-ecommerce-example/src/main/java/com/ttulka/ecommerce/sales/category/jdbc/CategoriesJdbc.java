@@ -2,52 +2,50 @@ package com.ttulka.ecommerce.sales.category.jdbc;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import com.ttulka.ecommerce.sales.FindCategories;
+import com.ttulka.ecommerce.sales.category.Categories;
 import com.ttulka.ecommerce.sales.category.Category;
 import com.ttulka.ecommerce.sales.category.CategoryId;
 import com.ttulka.ecommerce.sales.category.Title;
-import com.ttulka.ecommerce.sales.category.UnknownCategory;
 import com.ttulka.ecommerce.sales.category.Uri;
 
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
- * Implementation for Category use-cases.
+ * JDBC implementation of Categories collection.
  */
-@RequiredArgsConstructor
-@Slf4j
-final class CategoriesJdbc implements FindCategories {
+@Builder(access = AccessLevel.PRIVATE, toBuilder = true)
+final class CategoriesJdbc implements Categories {
+
+    private final @NonNull String query;
+    private final @NonNull List<Object> queryParams;
 
     private final @NonNull JdbcTemplate jdbcTemplate;
 
-    @Override
-    public List<Category> all() {
-        return jdbcTemplate.queryForList(
-                "SELECT id, uri, title FROM categories").stream()
-                .map(this::toCategory)
-                .collect(Collectors.toList());
+    public CategoriesJdbc(@NonNull String query, @NonNull List<Object> queryParams, @NonNull JdbcTemplate jdbcTemplate) {
+        this.query = query;
+        this.queryParams = queryParams;
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    public CategoriesJdbc(@NonNull String query, @NonNull Object queryParam, @NonNull JdbcTemplate jdbcTemplate) {
+        this(query, List.of(queryParam), jdbcTemplate);
+    }
+
+    public CategoriesJdbc(@NonNull String query, @NonNull JdbcTemplate jdbcTemplate) {
+        this(query, List.of(), jdbcTemplate);
     }
 
     @Override
-    public Category byId(CategoryId id) {
-        try {
-            Map<String, Object> entry = jdbcTemplate.queryForMap(
-                    "SELECT id, uri, title FROM categories " +
-                    "WHERE id = ?", id.value());
-            if (entry != null) {
-                return toCategory(entry);
-            }
-        } catch (DataAccessException ignore) {
-            log.warn("Category by ID {} was not found.", id);
-        }
-        return new UnknownCategory();
+    public Stream<Category> stream() {
+        return jdbcTemplate.queryForList(query.concat(" ORDER BY 1"), queryParams.toArray())
+                .stream()
+                .map(this::toCategory);
     }
 
     private Category toCategory(Map<String, Object> entry) {
@@ -55,7 +53,6 @@ final class CategoriesJdbc implements FindCategories {
                 new CategoryId(entry.get("id")),
                 new Uri((String) entry.get("uri")),
                 new Title((String) entry.get("title")),
-                jdbcTemplate
-        );
+                jdbcTemplate);
     }
 }

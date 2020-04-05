@@ -1,7 +1,6 @@
 package com.ttulka.ecommerce.sales;
 
-import java.util.List;
-
+import com.ttulka.ecommerce.sales.category.Categories;
 import com.ttulka.ecommerce.sales.category.Category;
 import com.ttulka.ecommerce.sales.category.CategoryId;
 
@@ -15,7 +14,7 @@ public interface FindCategories {
      *
      * @return all categories
      */
-    List<Category> all();
+    Categories all();
 
     /**
      * Finds a category by the category ID.

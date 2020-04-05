@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 class ProductsJdbcConfig {
 
     @Bean
-    FindProductsJdbc findProductsJdbc(JdbcTemplate jdbcTemplate) {
+    FindProductsJdbc findProducts(JdbcTemplate jdbcTemplate) {
         return new FindProductsJdbc(jdbcTemplate);
     }
 }

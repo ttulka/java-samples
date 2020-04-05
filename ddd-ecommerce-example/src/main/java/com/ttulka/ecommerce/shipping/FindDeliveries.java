@@ -1,9 +1,7 @@
 package com.ttulka.ecommerce.shipping;
 
-import java.util.List;
-
 import com.ttulka.ecommerce.shipping.delivery.Delivery;
-import com.ttulka.ecommerce.shipping.delivery.DeliveryInfo;
+import com.ttulka.ecommerce.shipping.delivery.DeliveryInfos;
 import com.ttulka.ecommerce.shipping.delivery.OrderId;
 
 /**
@@ -12,11 +10,11 @@ import com.ttulka.ecommerce.shipping.delivery.OrderId;
 public interface FindDeliveries {
 
     /**
-     * Lists all deliveries.
+     * Finds all deliveries.
      *
      * @return all deliveries
      */
-    List<DeliveryInfo> all();
+    DeliveryInfos all();
 
     /**
      * Finds a delivery by the order ID.

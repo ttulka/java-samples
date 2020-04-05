@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 class CategoriesJdbcConfig {
 
     @Bean
-    CategoriesJdbc categories(JdbcTemplate jdbcTemplate) {
-        return new CategoriesJdbc(jdbcTemplate);
+    FindCategoriesJdbc findCategories(JdbcTemplate jdbcTemplate) {
+        return new FindCategoriesJdbc(jdbcTemplate);
     }
 }

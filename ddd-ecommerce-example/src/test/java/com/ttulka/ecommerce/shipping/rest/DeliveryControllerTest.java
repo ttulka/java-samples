@@ -1,6 +1,7 @@
 package com.ttulka.ecommerce.shipping.rest;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import com.ttulka.ecommerce.catalogue.Catalogue;
 import com.ttulka.ecommerce.shipping.FindDeliveries;
@@ -8,6 +9,7 @@ import com.ttulka.ecommerce.shipping.delivery.Address;
 import com.ttulka.ecommerce.shipping.delivery.Delivery;
 import com.ttulka.ecommerce.shipping.delivery.DeliveryId;
 import com.ttulka.ecommerce.shipping.delivery.DeliveryInfo;
+import com.ttulka.ecommerce.shipping.delivery.DeliveryInfos;
 import com.ttulka.ecommerce.shipping.delivery.DeliveryItem;
 import com.ttulka.ecommerce.shipping.delivery.OrderId;
 import com.ttulka.ecommerce.shipping.delivery.Person;
@@ -42,8 +44,7 @@ class DeliveryControllerTest {
 
     @Test
     void all_deliveries() throws Exception {
-        when(findDeliveries.all()).thenReturn(List.of(
-                new DeliveryInfo(new DeliveryId("TEST123"), new OrderId("TEST-ORDER1"))));
+        when(findDeliveries.all()).thenReturn(testDeliveryInfos(new DeliveryId("TEST123"), new OrderId("TEST-ORDER1")));
 
         mockMvc.perform(get("/delivery"))
                 .andExpect(status().isOk())
@@ -66,6 +67,15 @@ class DeliveryControllerTest {
                 .andExpect(jsonPath("$.items[0].code", is("test-1")))
                 .andExpect(jsonPath("$.items[0].quantity", is(25)))
                 .andExpect(jsonPath("$.dispatched", is(false)));
+    }
+
+    private DeliveryInfos testDeliveryInfos(DeliveryId deliveryId, OrderId orderId) {
+        return new DeliveryInfos() {
+            @Override
+            public Stream<DeliveryInfo> stream() {
+                return Stream.of(new DeliveryInfo(deliveryId, orderId));
+            }
+        };
     }
 
     private Delivery testDelivery(DeliveryId deliveryId, OrderId orderId,

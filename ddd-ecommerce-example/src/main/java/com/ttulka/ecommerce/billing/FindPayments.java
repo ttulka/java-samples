@@ -1,8 +1,6 @@
 package com.ttulka.ecommerce.billing;
 
-import java.util.List;
-
-import com.ttulka.ecommerce.billing.payment.Payment;
+import com.ttulka.ecommerce.billing.payment.Payments;
 
 /**
  * Find Payments use-case.
@@ -14,5 +12,5 @@ public interface FindPayments {
      *
      * @return all payments
      */
-    List<Payment> all();
+    Payments all();
 }

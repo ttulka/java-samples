@@ -21,11 +21,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 class PaymentController {
 
+    private static final int MAX_RESULTS = 10;
+
     private final @NonNull FindPayments findPayments;
 
     @GetMapping
     public List<Map<String, ?>> all() {
-        return findPayments.all().stream()
+        return findPayments.all().range(MAX_RESULTS).stream()
                 .map(payment -> Map.of(
                         "id", payment.id().value(),
                         "referenceId", payment.referenceId().value(),

@@ -1,11 +1,12 @@
 package com.ttulka.ecommerce.billing.rest;
 
-import java.util.List;
+import java.util.stream.Stream;
 
 import com.ttulka.ecommerce.billing.FindPayments;
 import com.ttulka.ecommerce.billing.payment.Money;
 import com.ttulka.ecommerce.billing.payment.Payment;
 import com.ttulka.ecommerce.billing.payment.PaymentId;
+import com.ttulka.ecommerce.billing.payment.Payments;
 import com.ttulka.ecommerce.billing.payment.ReferenceId;
 import com.ttulka.ecommerce.catalogue.Catalogue;
 
@@ -35,8 +36,8 @@ class PaymentControllerTest {
 
     @Test
     void all_payments() throws Exception {
-        when(findPayments.all()).thenReturn(List.of(
-                testPayment(new PaymentId("TEST123"), new ReferenceId("TEST-REF1"), new Money(456.5))));
+        when(findPayments.all()).thenReturn(
+                testPayments(new PaymentId("TEST123"), new ReferenceId("TEST-REF1"), new Money(456.5)));
 
         mockMvc.perform(get("/payment"))
                 .andExpect(status().isOk())
@@ -46,41 +47,56 @@ class PaymentControllerTest {
                 .andExpect(jsonPath("$[0].total", is(456.5)));
     }
 
-    private Payment testPayment(PaymentId id, ReferenceId referenceId, Money total) {
-        return new Payment() {
+    private Payments testPayments(PaymentId id, ReferenceId referenceId, Money total) {
+        return new Payments() {
             @Override
-            public PaymentId id() {
-                return id;
+            public Payments range(int start, int limit) {
+                return this;
             }
 
             @Override
-            public ReferenceId referenceId() {
-                return referenceId;
+            public Payments range(int limit) {
+                return this;
             }
 
             @Override
-            public Money total() {
-                return total;
-            }
+            public Stream<Payment> stream() {
+                return Stream.of(new Payment() {
+                    @Override
+                    public PaymentId id() {
+                        return id;
+                    }
 
-            @Override
-            public void request() {
+                    @Override
+                    public ReferenceId referenceId() {
+                        return referenceId;
+                    }
 
-            }
+                    @Override
+                    public Money total() {
+                        return total;
+                    }
 
-            @Override
-            public void collect() {
+                    @Override
+                    public void request() {
 
-            }
+                    }
 
-            @Override
-            public boolean isRequested() {
-                return false;
-            }
+                    @Override
+                    public void collect() {
 
-            @Override
-            public boolean isCollected() {
-                return false;
+                    }
+
+                    @Override
+                    public boolean isRequested() {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean isCollected() {
+                        return false;
+                    }
+                });
             }
         };
     }

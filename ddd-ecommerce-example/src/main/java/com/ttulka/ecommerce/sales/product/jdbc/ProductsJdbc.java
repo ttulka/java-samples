@@ -22,7 +22,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 /**
- * JDBC implementation of the products collection.
+ * JDBC implementation of Products collection.
  */
 @Builder(access = AccessLevel.PRIVATE, toBuilder = true)
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -48,6 +48,10 @@ final class ProductsJdbc implements Products {
 
     public ProductsJdbc(@NonNull String query, @NonNull Object queryParam, @NonNull JdbcTemplate jdbcTemplate) {
         this(query, List.of(queryParam), jdbcTemplate);
+    }
+
+    public ProductsJdbc(@NonNull String query, @NonNull JdbcTemplate jdbcTemplate) {
+        this(query, List.of(), jdbcTemplate);
     }
 
     @Override

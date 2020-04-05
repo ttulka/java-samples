@@ -13,7 +13,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 class PaymentsJdbcConfig {
 
     @Bean
-    PaymentsJdbc payments(JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {
-        return new PaymentsJdbc(jdbcTemplate, eventPublisher);
+    FindPaymentsJdbc findPayments(JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {
+        return new FindPaymentsJdbc(jdbcTemplate, eventPublisher);
+    }
+
+    @Bean
+    CollectPaymentsJdbc collectPayments(JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {
+        return new CollectPaymentsJdbc(jdbcTemplate, eventPublisher);
     }
 }

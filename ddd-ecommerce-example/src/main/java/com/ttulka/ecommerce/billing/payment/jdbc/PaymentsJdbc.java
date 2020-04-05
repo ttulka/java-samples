@@ -1,53 +1,88 @@
 package com.ttulka.ecommerce.billing.payment.jdbc;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import com.ttulka.ecommerce.billing.CollectPayment;
-import com.ttulka.ecommerce.billing.FindPayments;
 import com.ttulka.ecommerce.billing.payment.Money;
 import com.ttulka.ecommerce.billing.payment.Payment;
 import com.ttulka.ecommerce.billing.payment.PaymentId;
+import com.ttulka.ecommerce.billing.payment.Payments;
 import com.ttulka.ecommerce.billing.payment.ReferenceId;
 import com.ttulka.ecommerce.common.events.EventPublisher;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Implementation for Payment use-cases.
+ * JDBC implementation of Payments collection.
  */
-@RequiredArgsConstructor
-class PaymentsJdbc implements FindPayments, CollectPayment {
+@Builder(access = AccessLevel.PRIVATE, toBuilder = true)
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+final class PaymentsJdbc implements Payments {
+
+    private static final int UNLIMITED = 1000;
+
+    private final @NonNull String query;
+    private final @NonNull List<Object> queryParams;
 
     private final @NonNull JdbcTemplate jdbcTemplate;
     private final @NonNull EventPublisher eventPublisher;
 
-    @Override
-    public List<Payment> all() {
-        List<Map<String, Object>> deliveries = jdbcTemplate.queryForList(
-                "SELECT id, reference_id referenceId, total, status FROM payments");
-        return deliveries.stream()
-                .map(payment -> new PaymentJdbc(
-                        new PaymentId(payment.get("id")),
-                        new ReferenceId(payment.get("referenceId")),
-                        new Money(((BigDecimal) payment.get("total")).doubleValue()),
-                        Enum.valueOf(PaymentJdbc.Status.class, (String) payment.get("status")),
-                        jdbcTemplate, eventPublisher))
-                .collect(Collectors.toList());
+    private final int start;
+    private final int limit;
+
+    public PaymentsJdbc(@NonNull String query, @NonNull List<Object> queryParams,
+                        @NonNull JdbcTemplate jdbcTemplate, @NonNull EventPublisher eventPublisher) {
+        this.query = query;
+        this.queryParams = queryParams;
+        this.jdbcTemplate = jdbcTemplate;
+        this.eventPublisher = eventPublisher;
+        this.start = 0;
+        this.limit = UNLIMITED;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public PaymentsJdbc(@NonNull String query,
+                        @NonNull JdbcTemplate jdbcTemplate, @NonNull EventPublisher eventPublisher) {
+        this(query, List.of(), jdbcTemplate, eventPublisher);
+    }
+
     @Override
-    public void collect(ReferenceId referenceId, Money total) {
-        Payment payment = new PaymentJdbc(referenceId, total, jdbcTemplate, eventPublisher);
-        payment.request();
-        payment.collect();
+    public Payments range(int start, int limit) {
+        if (start < 0 || limit <= 0 || limit - start > UNLIMITED) {
+            throw new IllegalArgumentException("Start must be greater than zero, " +
+                                               "items count must be greater than zero and less or equal than " + UNLIMITED);
+        }
+        return toBuilder().start(start).limit(limit).build();
+    }
+
+    @Override
+    public Payments range(int limit) {
+        return range(0, limit);
+    }
+
+    @Override
+    public Stream<Payment> stream() {
+        List<Object> params = new ArrayList<>(queryParams);
+        params.add(start);
+        params.add(limit);
+        return jdbcTemplate.queryForList(query.concat(" ORDER BY 1 LIMIT ?,?"), params.toArray())
+                .stream()
+                .map(this::toPayment);
+    }
+
+    private Payment toPayment(Map<String, Object> entry) {
+        return new PaymentJdbc(
+                new PaymentId(entry.get("id")),
+                new ReferenceId(entry.get("referenceId")),
+                new Money(((BigDecimal) entry.get("total")).doubleValue()),
+                Enum.valueOf(PaymentJdbc.Status.class, (String) entry.get("status")),
+                jdbcTemplate, eventPublisher);
     }
 }

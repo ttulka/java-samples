@@ -1,6 +1,7 @@
 package com.ttulka.ecommerce.shipping.delivery.jdbc;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.ttulka.ecommerce.common.events.EventPublisher;
 import com.ttulka.ecommerce.shipping.FindDeliveries;
@@ -38,7 +39,7 @@ class FindDeliveriesTest {
 
     @Test
     void all_deliveries_are_found() {
-        List<DeliveryInfo> deliveries = findDeliveries.all();
+        List<DeliveryInfo> deliveries = findDeliveries.all().stream().collect(Collectors.toList());
         assertAll(
                 () -> assertThat(deliveries).hasSize(2),
                 () -> assertThat(deliveries.get(0).id()).isEqualTo(new DeliveryId(301)),

@@ -1,6 +1,7 @@
 package com.ttulka.ecommerce.billing.payment.jdbc;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.ttulka.ecommerce.billing.FindPayments;
 import com.ttulka.ecommerce.billing.payment.Money;
@@ -32,7 +33,7 @@ class FindPaymentsTest {
 
     @Test
     void all_payments_are_found() {
-        List<Payment> payments = findPayments.all();
+        List<Payment> payments = findPayments.all().stream().collect(Collectors.toList());
         assertAll(
                 () -> assertThat(payments).hasSize(2),
                 () -> assertThat(payments.get(0).id()).isEqualTo(new PaymentId(101)),

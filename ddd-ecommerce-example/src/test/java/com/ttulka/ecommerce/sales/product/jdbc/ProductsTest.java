@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
         "('000', 'code0', 'A', 'desc0', 1.0), " +
         "('001', 'code1', 'B', 'desc1', 2.0), " +
         "('002', 'code2', 'C', 'desc2', 3.0)")
-class ProductsTests {
+class ProductsTest {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -45,7 +45,6 @@ class ProductsTests {
 
     @Test
     void products_are_limited() {
-        String query = "SELECT id, code, title, description, price FROM products";
         Products products = new ProductsJdbc(
                 "SELECT id, code, title, description, price FROM products", List.of(), jdbcTemplate)
                 .range(2, 1);

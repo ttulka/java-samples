@@ -6,11 +6,10 @@ import java.util.stream.Collectors;
 
 import com.ttulka.ecommerce.common.events.EventPublisher;
 import com.ttulka.ecommerce.shipping.FindDeliveries;
-import com.ttulka.ecommerce.shipping.PrepareDelivery;
 import com.ttulka.ecommerce.shipping.delivery.Address;
 import com.ttulka.ecommerce.shipping.delivery.Delivery;
 import com.ttulka.ecommerce.shipping.delivery.DeliveryId;
-import com.ttulka.ecommerce.shipping.delivery.DeliveryInfo;
+import com.ttulka.ecommerce.shipping.delivery.DeliveryInfos;
 import com.ttulka.ecommerce.shipping.delivery.DeliveryItem;
 import com.ttulka.ecommerce.shipping.delivery.OrderId;
 import com.ttulka.ecommerce.shipping.delivery.Person;
@@ -20,7 +19,6 @@ import com.ttulka.ecommerce.shipping.delivery.Quantity;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.NonNull;
@@ -32,20 +30,15 @@ import lombok.extern.slf4j.Slf4j;
  */
 @RequiredArgsConstructor
 @Slf4j
-class DeliveriesJdbc implements FindDeliveries, PrepareDelivery {
+class FindDeliveriesJdbc implements FindDeliveries {
 
     private final @NonNull JdbcTemplate jdbcTemplate;
     private final @NonNull EventPublisher eventPublisher;
 
     @Override
-    public List<DeliveryInfo> all() {
-        List<Map<String, Object>> deliveries = jdbcTemplate.queryForList(
-                "SELECT id, order_id orderId FROM deliveries");
-        return deliveries.stream()
-                .map(delivery -> new DeliveryInfo(
-                        new DeliveryId(delivery.get("id")),
-                        new OrderId(delivery.get("orderId"))))
-                .collect(Collectors.toList());
+    public DeliveryInfos all() {
+        return new DeliveryInfosJdbc(
+                "SELECT id, order_id orderId FROM deliveries", jdbcTemplate);
     }
 
     @Transactional
@@ -67,19 +60,6 @@ class DeliveriesJdbc implements FindDeliveries, PrepareDelivery {
             log.debug("Delivery by order ID {} was not found.", orderId);
         }
         return new UnknownDeliveryJdbc(orderId, jdbcTemplate);
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void prepare(@NonNull OrderId orderId, @NonNull List<DeliveryItem> items, @NonNull Address address) {
-        Delivery delivery = new DeliveryJdbc(orderId, items, address, jdbcTemplate, eventPublisher);
-        delivery.prepare();
-
-        if (isFetched(orderId)) {
-            delivery.markAsFetched();
-        }
-        if (isPaid(orderId)) {
-            delivery.markAsPaid();
-        }
     }
 
     private boolean isFetched(OrderId orderId) {

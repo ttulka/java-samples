@@ -7,15 +7,9 @@ import java.util.stream.Stream;
  */
 public interface Products {
 
-    enum SortBy {
-        DEFAULT, TITLE, PRICE
-    }
+    Products range(int start, int limit);
 
-    Products sorted(SortBy by);
-
-    Products limited(int start, int limit);
-
-    Products limited(int limit);
+    Products range(int limit);
 
     Stream<Product> stream();
 }

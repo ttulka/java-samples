@@ -29,14 +29,14 @@ public class Catalogue {
 
     public List<CatalogueProductData> allProducts() {
         return findProducts.all()
-                .limited(MAX_RESULTS).stream()
+                .range(MAX_RESULTS).stream()
                 .map(this::toData)
                 .collect(Collectors.toList());
     }
 
     public List<CatalogueProductData> productsInCategory(@NonNull String categoryUri) {
         return findProducts.fromCategory(new Uri(categoryUri))
-                .limited(MAX_RESULTS).stream()
+                .range(MAX_RESULTS).stream()
                 .map(this::toData)
                 .collect(Collectors.toList());
     }

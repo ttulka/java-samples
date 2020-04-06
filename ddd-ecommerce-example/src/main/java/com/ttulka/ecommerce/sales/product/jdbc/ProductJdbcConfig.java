@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * Configuration for JDBC implementation for Product domain.
  */
 @Configuration
-class ProductsJdbcConfig {
+class ProductJdbcConfig {
 
     @Bean
     FindProductsJdbc findProducts(JdbcTemplate jdbcTemplate) {

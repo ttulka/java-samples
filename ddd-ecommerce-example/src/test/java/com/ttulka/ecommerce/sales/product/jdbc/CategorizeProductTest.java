@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @JdbcTest
-@ContextConfiguration(classes = ProductsJdbcConfig.class)
+@ContextConfiguration(classes = ProductJdbcConfig.class)
 @Sql(statements = "INSERT INTO categories VALUES ('123', 'test-category', 'Test Category')")
 class CategorizeProductTest {
 

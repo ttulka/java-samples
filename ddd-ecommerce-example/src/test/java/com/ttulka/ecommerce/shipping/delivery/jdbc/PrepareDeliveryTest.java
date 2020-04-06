@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @JdbcTest
-@ContextConfiguration(classes = DeliveriesJdbcConfig.class)
+@ContextConfiguration(classes = DeliveryJdbcConfig.class)
 class PrepareDeliveryTest {
 
     @Autowired

@@ -14,7 +14,7 @@ import org.springframework.test.context.jdbc.Sql;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @JdbcTest
-@ContextConfiguration(classes = CategoriesJdbcConfig.class)
+@ContextConfiguration(classes = CategoryJdbcConfig.class)
 @Sql(statements = "INSERT INTO categories VALUES ('1', 'test', 'Test');")
 class ChangeCategoryTest {
 

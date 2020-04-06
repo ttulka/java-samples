@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * Configuration for JDBC implementation for Category domain.
  */
 @Configuration
-class CategoriesJdbcConfig {
+class CategoryJdbcConfig {
 
     @Bean
     FindCategoriesJdbc findCategories(JdbcTemplate jdbcTemplate) {

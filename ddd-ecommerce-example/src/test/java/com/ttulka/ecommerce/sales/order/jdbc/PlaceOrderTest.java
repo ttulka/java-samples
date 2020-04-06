@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.verify;
 
 @JdbcTest
-@ContextConfiguration(classes = OrdersJdbcConfig.class)
+@ContextConfiguration(classes = OrderJdbcConfig.class)
 class PlaceOrderTest {
 
     @Autowired

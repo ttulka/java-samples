@@ -31,7 +31,7 @@ import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.verify;
 
 @JdbcTest
-@ContextConfiguration(classes = DeliveriesJdbcConfig.class)
+@ContextConfiguration(classes = DeliveryJdbcConfig.class)
 @Sql(statements = "INSERT INTO deliveries VALUES " +
                   "('101', '1001', 'Test Person 1', 'Test Place 1', 'NEW'), " +
                   "('102', '1002', 'Test Person 2', 'Test Place 2', 'PREPARED'), " +

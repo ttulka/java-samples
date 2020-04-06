@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @JdbcTest
-@ContextConfiguration(classes = ProductsJdbcConfig.class)
+@ContextConfiguration(classes = ProductJdbcConfig.class)
 @Sql(statements = "INSERT INTO products VALUES " +
         "('000', 'code0', 'A', 'desc0', 1.0), " +
         "('001', 'code1', 'B', 'desc1', 2.0), " +

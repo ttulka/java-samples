@@ -16,7 +16,7 @@ import org.springframework.test.context.jdbc.Sql;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @JdbcTest
-@ContextConfiguration(classes = ProductsJdbcConfig.class)
+@ContextConfiguration(classes = ProductJdbcConfig.class)
 @Sql(statements = "INSERT INTO products VALUES ('1', 'test-1', 'Test', 'Test', 1.00);")
 class ChangeProductTest {
 

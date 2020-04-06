@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @JdbcTest
-@ContextConfiguration(classes = DeliveriesJdbcConfig.class)
+@ContextConfiguration(classes = DeliveryJdbcConfig.class)
 @Sql(statements = "INSERT INTO deliveries VALUES " +
                   "('201', '2001', 'Test Person 1', 'Test Place 1', 'FETCHED')," +
                   "('202', '2002', 'Test Person 2', 'Test Place 2', 'PAID')")

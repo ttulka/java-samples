@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
  * JDBC implementation for Collect Payment use-cases.
  */
 @RequiredArgsConstructor
-class CollectPaymentsJdbc implements CollectPayment {
+class CollectPaymentJdbc implements CollectPayment {
 
     private final @NonNull JdbcTemplate jdbcTemplate;
     private final @NonNull EventPublisher eventPublisher;

@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @JdbcTest
-@ContextConfiguration(classes = ProductsJdbcConfig.class)
+@ContextConfiguration(classes = ProductJdbcConfig.class)
 @Sql("/test-data-sales-find-products.sql")
 class FindProductsTest {
 

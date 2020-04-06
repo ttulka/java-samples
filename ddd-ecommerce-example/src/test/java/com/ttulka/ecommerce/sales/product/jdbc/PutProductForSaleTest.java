@@ -19,7 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @JdbcTest
-@ContextConfiguration(classes = ProductsJdbcConfig.class)
+@ContextConfiguration(classes = ProductJdbcConfig.class)
 class PutProductForSaleTest {
 
     @Autowired

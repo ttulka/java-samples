@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @JdbcTest
-@ContextConfiguration(classes = PaymentsJdbcConfig.class)
+@ContextConfiguration(classes = PaymentJdbcConfig.class)
 @Sql(statements = "INSERT INTO payments VALUES " +
         "('000', 'REF01', 1.0, 'NEW'), " +
         "('001', 'REF02', 2.0, 'NEW'), " +

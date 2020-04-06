@@ -61,7 +61,7 @@ class FindDeliveriesJdbc implements FindDeliveries {
         } catch (DataAccessException ignore) {
             log.debug("Delivery by order ID {} was not found.", orderId);
         }
-        return new UnknownDeliveryJdbc(orderId, statusTracking);
+        return new UntrackedDelivery(orderId, statusTracking);
     }
 
     private DeliveryJdbc toDelivery(

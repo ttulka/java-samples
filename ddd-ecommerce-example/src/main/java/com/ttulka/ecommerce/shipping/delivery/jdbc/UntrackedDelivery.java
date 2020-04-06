@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @RequiredArgsConstructor
 @Slf4j
-final class UnknownDeliveryJdbc implements Delivery {
+final class UntrackedDelivery implements Delivery {
 
     private final @NonNull OrderId orderId;
 

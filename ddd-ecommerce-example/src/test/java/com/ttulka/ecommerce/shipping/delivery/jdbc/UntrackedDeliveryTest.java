@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @Sql(statements = "INSERT INTO deliveries VALUES " +
                   "('201', '2001', 'Test Person 1', 'Test Place 1', 'FETCHED')," +
                   "('202', '2002', 'Test Person 2', 'Test Place 2', 'PAID')")
-class UnknownDeliveryTest {
+class UntrackedDeliveryTest {
 
     @Autowired
     private FindDeliveries findDeliveries;
@@ -34,7 +34,7 @@ class UnknownDeliveryTest {
 
     @Test
     void unknown_delivery_has_values() {
-        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(123), statusTracking);
+        Delivery unknownDelivery = new UntrackedDelivery(new OrderId(123), statusTracking);
         assertAll(
                 () -> assertThat(unknownDelivery.id()).isEqualTo(new DeliveryId(0)),
                 () -> assertThat(unknownDelivery.orderId()).isEqualTo(new OrderId(123)),
@@ -47,13 +47,13 @@ class UnknownDeliveryTest {
 
     @Test
     void prepare_noop() {
-        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(123), statusTracking);
+        Delivery unknownDelivery = new UntrackedDelivery(new OrderId(123), statusTracking);
         unknownDelivery.prepare();
     }
 
     @Test
     void marked_as_fetched() {
-        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(2002), statusTracking);
+        Delivery unknownDelivery = new UntrackedDelivery(new OrderId(2002), statusTracking);
         unknownDelivery.markAsFetched();
 
         Delivery delivery = findDeliveries.byOrderId(new OrderId(2002));
@@ -63,7 +63,7 @@ class UnknownDeliveryTest {
 
     @Test
     void marked_as_paid() {
-        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(2001), statusTracking);
+        Delivery unknownDelivery = new UntrackedDelivery(new OrderId(2001), statusTracking);
         unknownDelivery.markAsPaid();
 
         Delivery delivery = findDeliveries.byOrderId(new OrderId(2001));
@@ -73,7 +73,7 @@ class UnknownDeliveryTest {
 
     @Test
     void dispatch_throws_an_error() {
-        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(123), statusTracking);
+        Delivery unknownDelivery = new UntrackedDelivery(new OrderId(123), statusTracking);
 
         assertThrows(Delivery.DeliveryNotReadyToBeDispatchedException.class,
                      () -> unknownDelivery.dispatch());

@@ -15,16 +15,13 @@ import com.ttulka.ecommerce.common.events.EventPublisher;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 /**
  * JDBC implementation of Payments collection.
  */
-@Builder(access = AccessLevel.PRIVATE, toBuilder = true)
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@RequiredArgsConstructor
 final class PaymentsJdbc implements Payments {
 
     private static final int UNLIMITED = 1000;
@@ -35,18 +32,8 @@ final class PaymentsJdbc implements Payments {
     private final @NonNull JdbcTemplate jdbcTemplate;
     private final @NonNull EventPublisher eventPublisher;
 
-    private final int start;
-    private final int limit;
-
-    public PaymentsJdbc(@NonNull String query, @NonNull List<Object> queryParams,
-                        @NonNull JdbcTemplate jdbcTemplate, @NonNull EventPublisher eventPublisher) {
-        this.query = query;
-        this.queryParams = queryParams;
-        this.jdbcTemplate = jdbcTemplate;
-        this.eventPublisher = eventPublisher;
-        this.start = 0;
-        this.limit = UNLIMITED;
-    }
+    private int start = 0;
+    private int limit = UNLIMITED;
 
     public PaymentsJdbc(@NonNull String query,
                         @NonNull JdbcTemplate jdbcTemplate, @NonNull EventPublisher eventPublisher) {
@@ -59,7 +46,9 @@ final class PaymentsJdbc implements Payments {
             throw new IllegalArgumentException("Start must be greater than zero, " +
                                                "items count must be greater than zero and less or equal than " + UNLIMITED);
         }
-        return toBuilder().start(start).limit(limit).build();
+        this.start = start;
+        this.limit = limit;
+        return this;
     }
 
     @Override

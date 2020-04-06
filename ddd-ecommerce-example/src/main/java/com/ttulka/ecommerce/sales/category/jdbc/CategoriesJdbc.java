@@ -12,26 +12,19 @@ import com.ttulka.ecommerce.sales.category.Uri;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 /**
  * JDBC implementation of Categories collection.
  */
-@Builder(access = AccessLevel.PRIVATE, toBuilder = true)
+@RequiredArgsConstructor
 final class CategoriesJdbc implements Categories {
 
     private final @NonNull String query;
     private final @NonNull List<Object> queryParams;
 
     private final @NonNull JdbcTemplate jdbcTemplate;
-
-    public CategoriesJdbc(@NonNull String query, @NonNull List<Object> queryParams, @NonNull JdbcTemplate jdbcTemplate) {
-        this.query = query;
-        this.queryParams = queryParams;
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     public CategoriesJdbc(@NonNull String query, @NonNull Object queryParam, @NonNull JdbcTemplate jdbcTemplate) {
         this(query, List.of(queryParam), jdbcTemplate);

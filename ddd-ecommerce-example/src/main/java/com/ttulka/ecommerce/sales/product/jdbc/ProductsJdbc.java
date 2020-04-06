@@ -16,16 +16,13 @@ import com.ttulka.ecommerce.sales.product.Title;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 /**
  * JDBC implementation of Products collection.
  */
-@Builder(access = AccessLevel.PRIVATE, toBuilder = true)
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@RequiredArgsConstructor
 final class ProductsJdbc implements Products {
 
     private static final int UNLIMITED = 1000;
@@ -35,16 +32,8 @@ final class ProductsJdbc implements Products {
 
     private final @NonNull JdbcTemplate jdbcTemplate;
 
-    private final int start;
-    private final int limit;
-
-    public ProductsJdbc(@NonNull String query, @NonNull List<Object> queryParams, @NonNull JdbcTemplate jdbcTemplate) {
-        this.query = query;
-        this.queryParams = queryParams;
-        this.jdbcTemplate = jdbcTemplate;
-        this.start = 0;
-        this.limit = UNLIMITED;
-    }
+    private int start = 0;
+    private int limit = UNLIMITED;
 
     public ProductsJdbc(@NonNull String query, @NonNull Object queryParam, @NonNull JdbcTemplate jdbcTemplate) {
         this(query, List.of(queryParam), jdbcTemplate);
@@ -58,9 +47,11 @@ final class ProductsJdbc implements Products {
     public Products range(int start, int limit) {
         if (start < 0 || limit <= 0 || limit - start > UNLIMITED) {
             throw new IllegalArgumentException("Start must be greater than zero, " +
-                    "items count must be greater than zero and less or equal than " + UNLIMITED);
+                                               "items count must be greater than zero and less or equal than " + UNLIMITED);
         }
-        return toBuilder().start(start).limit(limit).build();
+        this.start = start;
+        this.limit = limit;
+        return this;
     }
 
     @Override

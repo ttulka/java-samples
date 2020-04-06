@@ -53,6 +53,9 @@ public class PlaceOrderFromCart {
                 .price().value();
     }
 
+    /**
+     * NoItemsToOrderException is thrown when there are no items in the cart to be ordered.
+     */
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class NoItemsToOrderException extends RuntimeException {
     }

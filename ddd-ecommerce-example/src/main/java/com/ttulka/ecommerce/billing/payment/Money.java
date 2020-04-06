@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Money entity.
+ * Money domain primitive.
  */
 @EqualsAndHashCode
 @ToString

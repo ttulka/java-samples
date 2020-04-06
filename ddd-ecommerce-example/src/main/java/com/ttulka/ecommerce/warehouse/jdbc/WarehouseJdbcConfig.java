@@ -19,7 +19,7 @@ class WarehouseJdbcConfig {
     }
 
     @Bean
-    GoodsFetchingJdbc goodsFetchingJdbc(Warehouse warehouse, JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {
+    GoodsFetchingJdbc goodsFetching(Warehouse warehouse, JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {
         return new GoodsFetchingJdbc(warehouse, jdbcTemplate, eventPublisher);
     }
 }

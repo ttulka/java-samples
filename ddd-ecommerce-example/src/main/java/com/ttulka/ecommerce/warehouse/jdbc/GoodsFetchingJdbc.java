@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Implementation for Fetched Goods use-case.
+ * JDBC implementation for Fetching Goods use-cases.
  */
 @RequiredArgsConstructor
 @Slf4j

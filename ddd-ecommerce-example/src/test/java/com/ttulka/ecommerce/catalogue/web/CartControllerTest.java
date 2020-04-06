@@ -44,7 +44,7 @@ class CartControllerTest {
 
     @Test
     void index_shows_the_cart_items() throws Exception {
-        when(listCartItems.ofCart(any())).thenReturn(List.of(new CartItem("test-1", "Test 1", new Quantity(123))));
+        when(listCartItems.listCart(any())).thenReturn(List.of(new CartItem("test-1", "Test 1", new Quantity(123))));
         mockMvc.perform(
                 get("/cart"))
                 .andExpect(status().isOk())

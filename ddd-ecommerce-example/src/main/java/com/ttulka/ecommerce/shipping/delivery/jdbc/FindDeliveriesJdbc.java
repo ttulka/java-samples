@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Implementation for Delivery use-cases.
+ * JDBC implementation for Delivery use-cases.
  */
 @RequiredArgsConstructor
 @Slf4j

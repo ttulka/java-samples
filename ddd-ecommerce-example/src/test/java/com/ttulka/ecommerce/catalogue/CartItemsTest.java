@@ -39,7 +39,7 @@ class CartItemsTest {
     void item_is_listed() {
         Cart cart = new CartCookies(new MockHttpServletRequest(), new MockHttpServletResponse());
         cart.add(new CartItem("test-1", "Test 1", new Quantity(123)));
-        List<CartItem> items = listCartItems.ofCart(cart);
+        List<CartItem> items = listCartItems.listCart(cart);
         assertAll(
                 () -> assertThat(items).hasSize(1),
                 () -> assertThat(items.get(0).productCode()).isEqualTo("test-1"),
@@ -53,7 +53,7 @@ class CartItemsTest {
         Cart cart = new CartCookies(new MockHttpServletRequest(), new MockHttpServletResponse());
         cart.add(new CartItem("test-1", "Test 1", new Quantity(123)));
         cart.add(new CartItem("test-2", "Test 2", new Quantity(321)));
-        List<CartItem> items = listCartItems.ofCart(cart);
+        List<CartItem> items = listCartItems.listCart(cart);
         assertAll(
                 () -> assertThat(items).hasSize(2),
                 () -> assertThat(items.get(0).productCode()).isEqualTo("test-1"),

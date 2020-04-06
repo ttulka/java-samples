@@ -112,6 +112,6 @@ class PaymentTest {
         payment.request();
         payment.collect();
 
-        assertThrows(Payment.PaymentAlreadyReceivedException.class, () -> payment.collect());
+        assertThrows(Payment.PaymentAlreadyCollectedException.class, () -> payment.collect());
     }
 }

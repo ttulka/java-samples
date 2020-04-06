@@ -13,12 +13,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
+import lombok.ToString;
 
 /**
  * JDBC implementation for Product entity.
  */
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@ToString(of = {"id", "code", "title", "price"})
 final class ProductJdbc implements Product {
 
     private final @NonNull ProductId id;

@@ -15,6 +15,9 @@ public interface Order {
 
     Customer customer();
 
-    final class OrderHasNoItemsException extends IllegalArgumentException {
+    /**
+     * OrderHasNoItemsException is thrown when the Order has no items.
+     */
+    final class OrderHasNoItemsException extends IllegalStateException {
     }
 }

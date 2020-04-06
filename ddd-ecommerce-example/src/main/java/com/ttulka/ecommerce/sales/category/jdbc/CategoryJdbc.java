@@ -10,11 +10,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
+import lombok.ToString;
 
 /**
  * JDBC implementation for Category entity.
  */
 @EqualsAndHashCode(of = "id")
+@ToString(of = {"id", "uri", "title"})
 @AllArgsConstructor
 final class CategoryJdbc implements Category {
 

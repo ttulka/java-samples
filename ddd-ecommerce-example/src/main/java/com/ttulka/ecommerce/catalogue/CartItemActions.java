@@ -16,12 +16,12 @@ import lombok.RequiredArgsConstructor;
  * Default implementation for Cart use-cases.
  */
 @RequiredArgsConstructor
-public final class CartItems implements ListCartItems, AddCartItem, RemoveCartItem {
+final class CartItemActions implements ListCartItems, AddCartItem, RemoveCartItem {
 
     private final @NonNull FindProducts findProducts;
 
     @Override
-    public List<CartItem> ofCart(@NonNull Cart cart) {
+    public List<CartItem> listCart(@NonNull Cart cart) {
         return cart.items();
     }
 

@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Implementation for Find Products use-cases.
+ * JDBC implementation for Find Products use-cases.
  */
 @RequiredArgsConstructor
 @Slf4j

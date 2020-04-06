@@ -12,7 +12,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Implementation for Warehouse use-cases.
+ * JDBC implementation for Warehouse use-cases.
  */
 @RequiredArgsConstructor
 final class WarehouseJdbc implements Warehouse {

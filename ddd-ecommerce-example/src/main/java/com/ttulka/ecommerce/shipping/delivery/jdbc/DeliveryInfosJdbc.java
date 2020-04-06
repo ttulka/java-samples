@@ -14,7 +14,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 /**
- * JDBC implementation of Categories collection.
+ * JDBC implementation of Delivery Infos collection.
  */
 @RequiredArgsConstructor
 final class DeliveryInfosJdbc implements DeliveryInfos {

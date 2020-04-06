@@ -21,5 +21,4 @@ class WarehouseListenersConfig {
     DeliveryDispatchedListener deliveryDispatchedListener(RemoveFetchedGoods removeFetchedGoods) {
         return new DeliveryDispatchedListener(removeFetchedGoods);
     }
-
 }

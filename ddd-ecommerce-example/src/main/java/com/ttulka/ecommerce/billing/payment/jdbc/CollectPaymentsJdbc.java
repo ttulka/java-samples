@@ -14,7 +14,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Implementation for Collect Payment use-cases.
+ * JDBC implementation for Collect Payment use-cases.
  */
 @RequiredArgsConstructor
 class CollectPaymentsJdbc implements CollectPayment {

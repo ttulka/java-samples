@@ -10,7 +10,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Implementation for Find Payment use-cases.
+ * JDBC implementation for Find Payments use-cases.
  */
 @RequiredArgsConstructor
 final class FindPaymentsJdbc implements FindPayments {

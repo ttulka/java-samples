@@ -84,7 +84,7 @@ final class PaymentJdbc implements Payment {
     @Override
     public void collect() {
         if (isCollected()) {
-            throw new PaymentAlreadyReceivedException();
+            throw new PaymentAlreadyCollectedException();
         }
         if (!isRequested()) {
             throw new PaymentNotRequestedYetException();

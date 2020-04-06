@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Implementation for Find Categories use-cases.
+ * JDBC implementation for Find Categories use-cases.
  */
 @RequiredArgsConstructor
 @Slf4j

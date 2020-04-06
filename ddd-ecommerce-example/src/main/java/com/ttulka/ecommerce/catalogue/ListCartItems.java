@@ -11,10 +11,10 @@ import com.ttulka.ecommerce.catalogue.cart.CartItem;
 public interface ListCartItems {
 
     /**
-     * Lists items of the cart.
+     * Lists items in the cart.
      *
      * @param cart the cart
-     * @return items of the cart
+     * @return items in the cart
      */
-    List<CartItem> ofCart(Cart cart);
+    List<CartItem> listCart(Cart cart);
 }

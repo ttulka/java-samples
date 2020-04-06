@@ -20,8 +20,8 @@ class CatalogueConfig {
     }
 
     @Bean
-    CartItems cartItems(FindProducts findProducts) {
-        return new CartItems(findProducts);
+    CartItemActions cartItemActions(FindProducts findProducts) {
+        return new CartItemActions(findProducts);
     }
 
     @Bean

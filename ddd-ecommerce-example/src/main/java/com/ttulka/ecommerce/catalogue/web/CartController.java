@@ -64,7 +64,7 @@ class CartController {
 
     private void cartIntoModel(Cart cart, Model model) {
         model.addAttribute("items",
-                           listCartItems.ofCart(cart).stream()
+                           listCartItems.listCart(cart).stream()
                                    .map(this::toData)
                                    .toArray());
     }

@@ -13,7 +13,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 class OrdersJdbcConfig {
 
     @Bean
-    OrdersJdbc ordersJdbc(JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {
-        return new OrdersJdbc(jdbcTemplate, eventPublisher);
+    FindOrdersJdbc findOrders(JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {
+        return new FindOrdersJdbc(jdbcTemplate, eventPublisher);
+    }
+
+    @Bean
+    PlaceOrderJdbc placeOrder(JdbcTemplate jdbcTemplate, EventPublisher eventPublisher) {
+        return new PlaceOrderJdbc(jdbcTemplate, eventPublisher);
     }
 }

@@ -35,7 +35,7 @@ final class OrderJdbc implements PlaceableOrder {
     private final @NonNull JdbcTemplate jdbcTemplate;
     private final @NonNull EventPublisher eventPublisher;
 
-    private volatile boolean placed = false;
+    private boolean placed = false;
 
     public OrderJdbc(@NonNull OrderId id, @NonNull List<OrderItem> items, @NonNull Customer customer,
                      @NonNull JdbcTemplate jdbcTemplate, @NonNull EventPublisher eventPublisher) {
@@ -90,7 +90,6 @@ final class OrderJdbc implements PlaceableOrder {
                                              new OrderPlaced.CustomerData(
                                                      customer.name().value(),
                                                      customer.address().value())));
-
         log.info("Order placed: {}", this);
     }
 }

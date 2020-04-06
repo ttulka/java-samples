@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import com.ttulka.ecommerce.common.events.EventPublisher;
 import com.ttulka.ecommerce.sales.FindOrders;
-import com.ttulka.ecommerce.sales.PlaceOrder;
 import com.ttulka.ecommerce.sales.order.Order;
 import com.ttulka.ecommerce.sales.order.OrderId;
 import com.ttulka.ecommerce.sales.order.OrderItem;
@@ -18,19 +17,17 @@ import com.ttulka.ecommerce.sales.order.customer.Name;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Implementation for Order use-cases.
+ * JDBC implementation for Find Orders use-cases.
  */
 @RequiredArgsConstructor
 @Slf4j
-class OrdersJdbc implements FindOrders, PlaceOrder {
+final class FindOrdersJdbc implements FindOrders {
 
     private final @NonNull JdbcTemplate jdbcTemplate;
     private final @NonNull EventPublisher eventPublisher;
@@ -74,12 +71,5 @@ class OrdersJdbc implements FindOrders, PlaceOrder {
                 (String) item.get("title"),
                 ((BigDecimal) item.get("price")).floatValue(),
                 (Integer) item.get("quantity"));
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    @Override
-    public void place(@NonNull List<OrderItem> items, @NonNull Customer customer) {
-        new OrderJdbc(items, customer, jdbcTemplate, eventPublisher)
-                .place();
     }
 }

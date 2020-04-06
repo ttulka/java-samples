@@ -32,6 +32,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 class FindDeliveriesJdbc implements FindDeliveries {
 
+    private final @NonNull StatusTracking statusTracking;
+
     private final @NonNull JdbcTemplate jdbcTemplate;
     private final @NonNull EventPublisher eventPublisher;
 
@@ -54,24 +56,12 @@ class FindDeliveriesJdbc implements FindDeliveries {
                     "WHERE delivery_id = ?", delivery.get("id"));
 
             if (delivery != null && items != null) {
-                return toDelivery(delivery, items, isFetched(orderId), isPaid(orderId));
+                return toDelivery(delivery, items, statusTracking.isFetched(orderId), statusTracking.isPaid(orderId));
             }
         } catch (DataAccessException ignore) {
             log.debug("Delivery by order ID {} was not found.", orderId);
         }
-        return new UnknownDeliveryJdbc(orderId, jdbcTemplate);
-    }
-
-    private boolean isFetched(OrderId orderId) {
-        return jdbcTemplate.queryForObject(
-                "SELECT COUNT(order_id) FROM delivery_fetched " +
-                "WHERE order_id = ?", Integer.class, orderId.value()) > 0;
-    }
-
-    private boolean isPaid(OrderId orderId) {
-        return jdbcTemplate.queryForObject(
-                "SELECT COUNT(order_id) FROM delivery_paid " +
-                "WHERE order_id = ?", Integer.class, orderId.value()) > 0;
+        return new UnknownDeliveryJdbc(orderId, statusTracking);
     }
 
     private DeliveryJdbc toDelivery(

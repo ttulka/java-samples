@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 
@@ -28,14 +27,14 @@ class UnknownDeliveryTest {
     @Autowired
     private FindDeliveries findDeliveries;
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private StatusTracking statusTracking;
 
     @MockBean
     private EventPublisher eventPublisher;
 
     @Test
     void unknown_delivery_has_values() {
-        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(123), jdbcTemplate);
+        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(123), statusTracking);
         assertAll(
                 () -> assertThat(unknownDelivery.id()).isEqualTo(new DeliveryId(0)),
                 () -> assertThat(unknownDelivery.orderId()).isEqualTo(new OrderId(123)),
@@ -48,13 +47,13 @@ class UnknownDeliveryTest {
 
     @Test
     void prepare_noop() {
-        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(123), jdbcTemplate);
+        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(123), statusTracking);
         unknownDelivery.prepare();
     }
 
     @Test
     void marked_as_fetched() {
-        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(2002), jdbcTemplate);
+        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(2002), statusTracking);
         unknownDelivery.markAsFetched();
 
         Delivery delivery = findDeliveries.byOrderId(new OrderId(2002));
@@ -64,7 +63,7 @@ class UnknownDeliveryTest {
 
     @Test
     void marked_as_paid() {
-        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(2001), jdbcTemplate);
+        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(2001), statusTracking);
         unknownDelivery.markAsPaid();
 
         Delivery delivery = findDeliveries.byOrderId(new OrderId(2001));
@@ -74,7 +73,7 @@ class UnknownDeliveryTest {
 
     @Test
     void dispatch_throws_an_error() {
-        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(123), jdbcTemplate);
+        Delivery unknownDelivery = new UnknownDeliveryJdbc(new OrderId(123), statusTracking);
 
         assertThrows(Delivery.DeliveryNotReadyToBeDispatchedException.class,
                      () -> unknownDelivery.dispatch());

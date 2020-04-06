@@ -11,8 +11,6 @@ import com.ttulka.ecommerce.shipping.delivery.OrderId;
 import com.ttulka.ecommerce.shipping.delivery.Person;
 import com.ttulka.ecommerce.shipping.delivery.Place;
 
-import org.springframework.jdbc.core.JdbcTemplate;
-
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +26,7 @@ final class UnknownDeliveryJdbc implements Delivery {
 
     private final @NonNull OrderId orderId;
 
-    private final @NonNull JdbcTemplate jdbcTemplate;
+    private final @NonNull StatusTracking statusTracking;
 
     @Override
     public DeliveryId id() {
@@ -59,20 +57,12 @@ final class UnknownDeliveryJdbc implements Delivery {
 
     @Override
     public void markAsFetched() {
-        try {
-            jdbcTemplate.update("INSERT INTO delivery_fetched VALUES (?)", orderId.value());
-        } catch (Exception ignore) {
-            log.warn("Cannot mark a delivery as fetched for the order " + orderId, ignore);
-        }
+        statusTracking.markAsFetched(orderId);
     }
 
     @Override
     public void markAsPaid() {
-        try {
-            jdbcTemplate.update("INSERT INTO delivery_paid VALUES (?)", orderId.value());
-        } catch (Exception ignore) {
-            log.warn("Cannot mark a delivery as paid for the order " + orderId, ignore);
-        }
+        statusTracking.markAsPaid(orderId);
     }
 
     @Override

@@ -24,6 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 class PrepareDeliveryJdbc implements PrepareDelivery {
 
+    private final @NonNull StatusTracking statusTracking;
+
     private final @NonNull JdbcTemplate jdbcTemplate;
     private final @NonNull EventPublisher eventPublisher;
 
@@ -33,23 +35,11 @@ class PrepareDeliveryJdbc implements PrepareDelivery {
         Delivery delivery = new DeliveryJdbc(orderId, items, address, jdbcTemplate, eventPublisher);
         delivery.prepare();
 
-        if (isFetched(orderId)) {
+        if (statusTracking.isFetched(orderId)) {
             delivery.markAsFetched();
         }
-        if (isPaid(orderId)) {
+        if (statusTracking.isPaid(orderId)) {
             delivery.markAsPaid();
         }
-    }
-
-    private boolean isFetched(OrderId orderId) {
-        return jdbcTemplate.queryForObject(
-                "SELECT COUNT(order_id) FROM delivery_fetched " +
-                "WHERE order_id = ?", Integer.class, orderId.value()) > 0;
-    }
-
-    private boolean isPaid(OrderId orderId) {
-        return jdbcTemplate.queryForObject(
-                "SELECT COUNT(order_id) FROM delivery_paid " +
-                "WHERE order_id = ?", Integer.class, orderId.value()) > 0;
     }
 }

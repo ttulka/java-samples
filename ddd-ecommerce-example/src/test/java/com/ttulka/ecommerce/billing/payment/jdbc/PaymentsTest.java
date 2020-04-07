@@ -3,6 +3,7 @@ package com.ttulka.ecommerce.billing.payment.jdbc;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.ttulka.ecommerce.billing.FindPayments;
 import com.ttulka.ecommerce.billing.payment.Payment;
 import com.ttulka.ecommerce.billing.payment.PaymentId;
 import com.ttulka.ecommerce.billing.payment.Payments;
@@ -12,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 
@@ -29,15 +29,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class PaymentsTest {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private FindPayments findPayments;
     @MockBean
     private EventPublisher eventPublisher;
 
     @Test
     void payments_are_streamed() {
-        Payments payments = new PaymentsJdbc(
-                "SELECT id, reference_id referenceId, total, status FROM payments", jdbcTemplate, eventPublisher);
-
+        Payments payments = findPayments.all();
         List<Payment> list = payments.stream().collect(Collectors.toList());
         assertAll(
                 () -> assertThat(list.size()).isEqualTo(3),
@@ -49,8 +47,7 @@ class PaymentsTest {
 
     @Test
     void payments_are_limited() {
-        Payments payments = new PaymentsJdbc(
-                "SELECT id, reference_id referenceId, total, status FROM payments", jdbcTemplate, eventPublisher)
+        Payments payments = findPayments.all()
                 .range(2, 1);
 
         List<Payment> list = payments.stream().collect(Collectors.toList());
@@ -62,8 +59,7 @@ class PaymentsTest {
 
     @Test
     void limited_start_is_greater_than_zero() {
-        Payments payments = new PaymentsJdbc(
-                "SELECT id, reference_id referenceId, total, status FROM payments", jdbcTemplate, eventPublisher);
+        Payments payments = findPayments.all();
         assertAll(
                 () -> assertThrows(IllegalArgumentException.class,
                         () -> payments.range(-1, 1)),
@@ -74,8 +70,7 @@ class PaymentsTest {
 
     @Test
     void limited_limit_is_greater_than_zero() {
-        Payments payments = new PaymentsJdbc(
-                "SELECT id, reference_id referenceId, total, status FROM payments", jdbcTemplate, eventPublisher);
+        Payments payments = findPayments.all();
         assertAll(
                 () -> assertThrows(IllegalArgumentException.class,
                         () -> payments.range(0)),

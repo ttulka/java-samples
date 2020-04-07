@@ -3,6 +3,7 @@ package com.ttulka.ecommerce.sales.product.jdbc;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.ttulka.ecommerce.sales.FindProducts;
 import com.ttulka.ecommerce.sales.product.Product;
 import com.ttulka.ecommerce.sales.product.ProductId;
 import com.ttulka.ecommerce.sales.product.Products;
@@ -10,7 +11,6 @@ import com.ttulka.ecommerce.sales.product.Products;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 
@@ -27,13 +27,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class ProductsTest {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private FindProducts findProducts;
 
     @Test
     void products_are_streamed() {
-        Products products = new ProductsJdbc(
-                "SELECT id, code, title, description, price FROM products", List.of(), jdbcTemplate);
-
+        Products products = findProducts.all();
         List<Product> list = products.stream().collect(Collectors.toList());
         assertAll(
                 () -> assertThat(list.size()).isEqualTo(3),
@@ -45,10 +43,8 @@ class ProductsTest {
 
     @Test
     void products_are_limited() {
-        Products products = new ProductsJdbc(
-                "SELECT id, code, title, description, price FROM products", List.of(), jdbcTemplate)
+        Products products = findProducts.all()
                 .range(2, 1);
-
         List<Product> list = products.stream().collect(Collectors.toList());
         assertAll(
                 () -> assertThat(list.size()).isEqualTo(1),
@@ -58,8 +54,7 @@ class ProductsTest {
 
     @Test
     void limited_start_is_greater_than_zero() {
-        Products products = new ProductsJdbc(
-                "SELECT id, code, title, description, price FROM products", List.of(), jdbcTemplate);
+        Products products = findProducts.all();
         assertAll(
                 () -> assertThrows(IllegalArgumentException.class,
                         () -> products.range(-1, 1)),
@@ -70,8 +65,7 @@ class ProductsTest {
 
     @Test
     void limited_limit_is_greater_than_zero() {
-        Products products = new ProductsJdbc(
-                "SELECT id, code, title, description, price FROM products", List.of(), jdbcTemplate);
+        Products products = findProducts.all();
         assertAll(
                 () -> assertThrows(IllegalArgumentException.class,
                         () -> products.range(0)),

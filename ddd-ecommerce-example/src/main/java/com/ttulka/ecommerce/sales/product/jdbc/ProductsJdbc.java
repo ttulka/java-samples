@@ -61,7 +61,7 @@ final class ProductsJdbc implements Products {
 
     @Override
     public Stream<Product> stream() {
-        List<Object> params = new ArrayList<>(queryParams);
+        var params = new ArrayList<>(queryParams);
         params.add(start);
         params.add(limit);
         return jdbcTemplate.queryForList(query.concat(" ORDER BY 1 LIMIT ?,?"), params.toArray())

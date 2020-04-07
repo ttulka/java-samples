@@ -52,14 +52,14 @@ public final class CartCookies implements Cart {
 
     @Override
     public void add(@NonNull CartItem toAdd) {
-        List<CartItem> currentItems = parsedItems(cookie);
+        var currentItems = parsedItems(cookie);
 
         Quantity alreadyInCart = currentItems.stream()
                 .filter(toAdd::equals)
                 .map(CartItem::quantity)
                 .findAny().orElse(new Quantity(0));
 
-        List<CartItem> items = new ArrayList<>(
+        var items = new ArrayList<>(
                 currentItems.stream()
                         .filter(Predicate.not(toAdd::equals))
                         .collect(Collectors.toList()));
@@ -103,7 +103,7 @@ public final class CartCookies implements Cart {
     }
 
     private Cookie cartCookie(String value) {
-        Cookie cookie = new Cookie("cart", value);
+        var cookie = new Cookie("cart", value);
         cookie.setPath("/");
         return cookie;
     }

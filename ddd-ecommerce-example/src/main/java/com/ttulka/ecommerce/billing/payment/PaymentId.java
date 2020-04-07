@@ -14,7 +14,7 @@ public final class PaymentId {
     private final @NonNull String id;
 
     public PaymentId(@NonNull Object id) {
-        String idVal = id.toString().strip();
+        var idVal = id.toString().strip();
         if (idVal.isBlank()) {
             throw new IllegalArgumentException("ID cannot be empty!");
         }

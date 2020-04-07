@@ -14,13 +14,14 @@ public final class Name {
     private final @NonNull String name;
 
     public Name(@NonNull String name) {
-        if (name.isBlank()) {
+        var nameVal = name.strip();
+        if (nameVal.isBlank()) {
             throw new IllegalArgumentException("Name cannot be empty!");
         }
-        if (name.trim().length() > 50) {
+        if (nameVal.length() > 50) {
             throw new IllegalArgumentException("Name cannot be longer than 50 characters!");
         }
-        this.name = name.trim();
+        this.name = nameVal;
     }
 
     public String value() {

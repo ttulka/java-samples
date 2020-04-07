@@ -14,13 +14,14 @@ public final class Uri {
     private final @NonNull String uri;
 
     public Uri(@NonNull String uri) {
-        if (uri.isBlank()) {
+        var uriVal = uri.strip();
+        if (uriVal.isBlank()) {
             throw new IllegalArgumentException("URI cannot be empty!");
         }
-        if (uri.trim().length() > 20) {
+        if (uriVal.length() > 20) {
             throw new IllegalArgumentException("URI cannot be longer than 20 characters!");
         }
-        this.uri = uri.trim();
+        this.uri = uriVal;
     }
 
     public String value() {

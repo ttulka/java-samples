@@ -14,13 +14,14 @@ public final class Code {
     private final @NonNull String code;
 
     public Code(@NonNull String code) {
-        if (code.isBlank()) {
+        var codeVal = code.strip();
+        if (codeVal.isBlank()) {
             throw new IllegalArgumentException("Code cannot be empty!");
         }
-        if (code.trim().length() > 50) {
+        if (codeVal.length() > 50) {
             throw new IllegalArgumentException("Code cannot be longer than 50 characters!");
         }
-        this.code = code.trim();
+        this.code = codeVal;
     }
 
     public String value() {

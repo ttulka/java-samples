@@ -14,14 +14,14 @@ public final class CategoryId {
     private final @NonNull String id;
 
     public CategoryId(@NonNull Object id) {
-        String idString = id.toString().trim();
-        if (idString.isBlank()) {
+        String idVal = id.toString().strip();
+        if (idVal.isBlank()) {
             throw new IllegalArgumentException("ID cannot be empty!");
         }
-        if (idString.length() > 64) {
+        if (idVal.length() > 64) {
             throw new IllegalArgumentException("ID cannot be longer than 64 characters!");
         }
-        this.id = idString;
+        this.id = idVal;
     }
 
     public String value() {

@@ -14,13 +14,14 @@ public final class Title {
     private final @NonNull String title;
 
     public Title(@NonNull String title) {
-        if (title.isBlank()) {
+        var titleVal = title.strip();
+        if (titleVal.isBlank()) {
             throw new IllegalArgumentException("Title cannot be empty!");
         }
-        if (title.trim().length() > 20) {
+        if (titleVal.length() > 20) {
             throw new IllegalArgumentException("Title cannot be longer than 20 characters!");
         }
-        this.title = title.trim();
+        this.title = titleVal;
     }
 
     public String value() {

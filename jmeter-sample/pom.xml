@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>2.3.4.RELEASE</version>
+    </parent>
+    <groupId>com.ttulka.samples</groupId>
+    <artifactId>jmeter-demo</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>jmeter-demo</name>
+
+    <properties>
+        <jmeter.install.dir></jmeter.install.dir>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack-jmeter</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${containerInstallFolder}</outputDirectory>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>de.zeiss.forum.provisioning</groupId>
+                                    <artifactId>distribution</artifactId>
+                                    <version>5.0-SNAPSHOT</version>
+                                    <type>zip</type>
+                                </artifactItem>
+                            </artifactItems>
+                            <!-- Hier nur noch DB notwendig -->
+                            <includes>provisioning/**</includes>
+                            <skip>${noDataBase}</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>run-jmeter</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${jmeter.install.dir}${file.separator}bin${file.separator}jmeter</executable>
+                            <arguments>
+                                <argument>-t</argument>
+                                <argument>tests</argument>
+                            </arguments>
+                            <async>true</async>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+

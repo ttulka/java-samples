@@ -14,9 +14,10 @@ checkstyle {
 	config = resources.text.fromArchiveEntry(configurations.checkstyleConfig, 'google_checks.xml')
 	configProperties["org.checkstyle.google.suppressionfilter.config"] = file("./checkstyle-suppressions.xml").absolutePath
 }
+tasks.withType(Checkstyle) {
+	if (project.hasProperty("checkstyle.include")) include project.getProperty("checkstyle.include")
+}
 
-group = 'com.ttulka.samples'
-version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 repositories {

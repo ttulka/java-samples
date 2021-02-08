@@ -6,7 +6,7 @@ plugins {
 }
 
 checkstyle {
-	toolVersion '8.40'
+	toolVersion '8.39'
 	configFile file("./checkstyle-google.xml")
 	configProperties["org.checkstyle.google.suppressionfilter.config"] = file("./checkstyle-suppressions.xml")
 }

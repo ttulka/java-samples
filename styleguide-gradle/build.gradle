@@ -5,10 +5,14 @@ plugins {
 	id 'checkstyle'
 }
 
+configurations {
+	checkstyleConfig
+}
+
 checkstyle {
 	toolVersion '8.39'
-	configFile file("./checkstyle-google.xml")
-	configProperties["org.checkstyle.google.suppressionfilter.config"] = file("./checkstyle-suppressions.xml")
+	config = resources.text.fromArchiveEntry(configurations.checkstyleConfig, 'google_checks.xml')
+	configProperties["org.checkstyle.google.suppressionfilter.config"] = file("./checkstyle-suppressions.xml").absolutePath
 }
 
 group = 'com.ttulka.samples'
@@ -22,4 +26,6 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	checkstyleConfig("com.puppycrawl.tools:checkstyle:8.39") { transitive = false }
 }
